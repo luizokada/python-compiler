@@ -1,7 +1,4 @@
-int main(){
-    int a = 1;
-    int b = 2;
-    int c = a + b;
-    return c;
-}
+1 + 5 + 6;
+5 + 3 + 5;
+10 + 10;
 /*AAAAAAAAAAAAAAAAAAAAAAAAAAAA*/

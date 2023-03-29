@@ -2,8 +2,8 @@
 import ply.lex as lex
 
 class Lexer():
-    def __init__(self):
-        self.lexer = lex.lex(module=self)
+    def __init__(self,**kwargs):
+        self.lexer = lex.lex(module=self, **kwargs)
 
     #ALL TOKENS 
     tokens = (
@@ -141,5 +141,9 @@ class Lexer():
         print(f"Illegal character {t.value[0]}")
         t.lexer.skip(1)
 
-    def get_lexer(self):
-        return self.lexer
+    def build(self, **kwargs):
+        self.lexer = lex.lex(module=self, **kwargs)
+
+    def tokenize(self, data):
+        return self.lexer.input(data)
+        return list(iter(self.lexer.token, None))
