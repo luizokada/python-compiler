@@ -34,7 +34,7 @@ class Lexer():
         'FLOAT',
         'CHAR',
         'DOUBLE',
-        'FOR',
+        'T_FOR',
         'WHILE',
         'IF',
         'ELSE',
@@ -165,4 +165,3 @@ class Lexer():
 
     def tokenize(self, data):
         return self.lexer.input(data)
-        return list(iter(self.lexer.token, None))

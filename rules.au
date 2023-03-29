@@ -1,0 +1,66 @@
+scope : OPEN_BRACE declarations statements CLOSE_BRACE
+      | OPEN_BRACE statements CLOSE_BRACE
+      ;
+
+declarations : declaration declarations
+             | declaration
+             ;
+
+declaration : type identifier_list SEMICOLON
+            ;
+
+identifier_list : IDENTIFIER
+                | IDENTIFIER COMMA identifier_list
+                ;
+
+statements : statement statements
+           | statement
+           ;
+
+statement : assignment SEMICOLON
+          | declaration
+          | if_statement
+          | while_statement
+          | do_while_statement
+          | for_statement
+          | return_statement SEMICOLON
+          | break_statement SEMICOLON
+          | continue_statement SEMICOLON
+          | block
+          | expression SEMICOLON
+          ;
+
+if_statement : IF OPEN_PAREN expression CLOSE_PAREN statement
+             | IF OPEN_PAREN expression CLOSE_PAREN statement ELSE statement
+             ;
+
+while_statement : WHILE OPEN_PAREN expression CLOSE_PAREN statement
+                ;
+
+do_while_statement : DO statement WHILE OPEN_PAREN expression CLOSE_PAREN SEMICOLON
+                   ;
+
+for_statement : FOR OPEN_PAREN for_initializer SEMICOLON expression SEMICOLON for_step CLOSE_PAREN scope
+              ;
+
+for_initializer : assignment
+                | declarations
+                ;
+
+for_step : SEMICOLON
+         | assignment
+         ;
+
+return_statement : RETURN expression
+                 | RETURN
+                 ;
+
+break_statement : BREAK
+                ;
+
+continue_statement : CONTINUE
+                   ;
+
+block : scope
+      | statement
+      ;

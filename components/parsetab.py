@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND ASSING BREAK CHAR CLOSE_BRAKETS CLOSE_PAREN COMMA DIV DO DOUBLE ELSE EQUALS FLOAT FOR GREATER GREATER_OR_EQUALS IDENTIFIER IF INT LESSER LESSER_OR_EQUALS MAIN MUL NOT NUMBER OPEN_BRAKETS OPEN_PAREN OR PRINT RETURN SEMI_COLON SUB SUM WHILE\n        main : type MAIN param scope\n        \n        scope : OPEN_BRAKETS statements CLOSE_BRAKETS\n        \n        statements : statement SEMI_COLON statements\n                   | statement SEMI_COLON \n        \n        statement : expression\n                  | assignment\n                  | declaration\n        \n        assignment : term ASSING expression\n                    | term ASSING term\n                    | term ASSING factor \n        \n        expression : expression SUM expression\n                   | expression SUB expression\n                   | expression MUL expression\n                   | expression DIV expression\n        \n        expression : term\n                    | factor\n        \n        term : IDENTIFIER\n\n        \n        factor : NUMBER\n        \n        type : INT\n             | FLOAT\n             | CHAR\n        \n        declaration : type term\n                    | type assignment \n        \n        declarations : declaration COMMA declarations\n                     | declaration\n        \n        param : OPEN_PAREN declarations CLOSE_PAREN\n              | OPEN_PAREN CLOSE_PAREN\n        '
+_lr_signature = 'AND ASSING BREAK CHAR CLOSE_BRAKETS CLOSE_PAREN COMMA DIV DO DOUBLE ELSE EQUALS FLOAT GREATER GREATER_OR_EQUALS IDENTIFIER IF INT LESSER LESSER_OR_EQUALS MAIN MUL NOT NUMBER OPEN_BRAKETS OPEN_PAREN OR PRINT RETURN SEMI_COLON SUB SUM T_FOR WHILE\n        main : type MAIN param scope\n        \n        scope : OPEN_BRAKETS statements CLOSE_BRAKETS\n              \n        \n        statements : statement SEMI_COLON statements\n                   | statement SEMI_COLON \n                   | if_statement statement\n                   | if_statement\n                   | for_statement\n                   \n        \n        statement : expression\n                  | assignment\n                  | declaration\n        \n        assignment : term ASSING expression\n                    | term ASSING term\n                    | term ASSING factor \n        \n        expression : expression SUM expression\n                   | expression SUB expression\n                   | expression MUL expression\n                   | expression DIV expression\n                   | expression OR expression\n                   | expression NOT expression\n                   | expression EQUALS expression\n                   | expression GREATER expression\n                   | expression LESSER expression\n                   | expression GREATER_OR_EQUALS expression\n                   | expression LESSER_OR_EQUALS expression\n        \n        expression : term\n                    | factor\n        \n        term : IDENTIFIER\n\n        \n        for_statement : T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope\n        \n        if_statement : IF OPEN_PAREN expression CLOSE_PAREN scope \n                            | IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope\n        \n        factor : NUMBER\n        \n        type : INT\n             | FLOAT\n             | CHAR\n        \n        declaration : type term\n                    | type assignment \n        \n        declarations : declaration COMMA declarations\n                     | declaration\n        \n        param : OPEN_PAREN declarations CLOSE_PAREN\n              | OPEN_PAREN CLOSE_PAREN\n        '
     
-_lr_action_items = {'INT':([0,8,10,25,29,],[3,3,3,3,3,]),'FLOAT':([0,8,10,25,29,],[4,4,4,4,4,]),'CHAR':([0,8,10,25,29,],[5,5,5,5,5,]),'$end':([1,9,28,],[0,-1,-2,]),'MAIN':([2,3,4,5,],[6,-19,-20,-21,]),'IDENTIFIER':([3,4,5,10,14,29,30,31,32,33,34,],[-19,-20,-21,22,22,22,22,22,22,22,22,]),'OPEN_PAREN':([6,],[8,]),'OPEN_BRAKETS':([7,12,24,],[10,-27,-26,]),'CLOSE_PAREN':([8,11,13,21,22,23,26,27,35,37,38,39,40,41,42,43,44,],[12,24,-25,-16,-17,-18,-22,-23,-24,-11,-15,-12,-13,-14,-9,-8,-10,]),'NUMBER':([10,29,30,31,32,33,34,],[23,23,23,23,23,23,23,]),'COMMA':([13,21,22,23,26,27,37,38,39,40,41,42,43,44,],[25,-16,-17,-18,-22,-23,-11,-15,-12,-13,-14,-9,-8,-10,]),'CLOSE_BRAKETS':([15,29,36,],[28,-4,-3,]),'SEMI_COLON':([16,17,18,19,20,21,22,23,26,27,37,38,39,40,41,42,43,44,],[29,-5,-6,-7,-15,-16,-17,-18,-22,-23,-11,-15,-12,-13,-14,-9,-8,-10,]),'SUM':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[30,-15,-16,-17,-18,30,-15,30,30,30,-15,30,-16,]),'SUB':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[31,-15,-16,-17,-18,31,-15,31,31,31,-15,31,-16,]),'MUL':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[32,-15,-16,-17,-18,32,-15,32,32,32,-15,32,-16,]),'DIV':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[33,-15,-16,-17,-18,33,-15,33,33,33,-15,33,-16,]),'ASSING':([20,22,26,],[34,-17,34,]),}
+_lr_action_items = {'INT':([0,8,10,17,29,32,33,70,74,],[3,3,3,3,3,-2,3,-29,-30,]),'FLOAT':([0,8,10,17,29,32,33,70,74,],[4,4,4,4,4,-2,4,-29,-30,]),'CHAR':([0,8,10,17,29,32,33,70,74,],[5,5,5,5,5,-2,5,-29,-30,]),'$end':([1,9,32,],[0,-1,-2,]),'MAIN':([2,3,4,5,],[6,-32,-33,-34,]),'IDENTIFIER':([3,4,5,10,14,17,32,33,35,36,37,38,39,40,41,42,43,44,45,46,47,48,69,70,73,74,],[-32,-33,-34,26,26,26,-2,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,-29,26,-30,]),'OPEN_PAREN':([6,22,23,],[8,46,47,]),'OPEN_BRAKETS':([7,12,28,68,72,76,],[10,-40,-39,10,10,10,]),'CLOSE_PAREN':([8,11,13,25,26,27,30,31,49,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,75,],[12,28,-38,-26,-27,-31,-35,-36,-37,-14,-25,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,68,-12,-11,-13,76,]),'IF':([10,33,],[22,22,]),'T_FOR':([10,33,],[23,23,]),'NUMBER':([10,17,32,33,35,36,37,38,39,40,41,42,43,44,45,46,47,48,69,70,73,74,],[27,27,-2,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,-29,27,-30,]),'COMMA':([13,25,26,27,30,31,51,52,53,54,55,56,57,58,59,60,61,62,65,66,67,],[29,-26,-27,-31,-35,-36,-14,-25,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-12,-11,-13,]),'CLOSE_BRAKETS':([15,17,18,19,20,21,24,25,26,27,30,31,32,33,34,50,51,52,53,54,55,56,57,58,59,60,61,62,65,66,67,70,74,77,],[32,-6,-7,-8,-9,-10,-25,-26,-27,-31,-35,-36,-2,-4,-5,-3,-14,-25,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-12,-11,-13,-29,-30,-28,]),'SEMI_COLON':([16,19,20,21,24,25,26,27,30,31,51,52,53,54,55,56,57,58,59,60,61,62,64,65,66,67,71,],[33,-8,-9,-10,-25,-26,-27,-31,-35,-36,-14,-25,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,69,-12,-11,-13,73,]),'SUM':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[35,-25,-26,-27,-31,35,-25,35,35,35,35,35,35,35,35,35,35,35,35,-25,35,-26,35,35,]),'SUB':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[36,-25,-26,-27,-31,36,-25,36,36,36,36,36,36,36,36,36,36,36,36,-25,36,-26,36,36,]),'MUL':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[37,-25,-26,-27,-31,37,-25,37,37,37,37,37,37,37,37,37,37,37,37,-25,37,-26,37,37,]),'DIV':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[38,-25,-26,-27,-31,38,-25,38,38,38,38,38,38,38,38,38,38,38,38,-25,38,-26,38,38,]),'OR':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[39,-25,-26,-27,-31,39,-25,39,39,39,39,39,39,39,39,39,39,39,39,-25,39,-26,39,39,]),'NOT':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[40,-25,-26,-27,-31,40,-25,40,40,40,40,40,40,40,40,40,40,40,40,-25,40,-26,40,40,]),'EQUALS':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[41,-25,-26,-27,-31,41,-25,41,41,41,41,41,41,41,41,41,41,41,41,-25,41,-26,41,41,]),'GREATER':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[42,-25,-26,-27,-31,42,-25,42,42,42,42,42,42,42,42,42,42,42,42,-25,42,-26,42,42,]),'LESSER':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[43,-25,-26,-27,-31,43,-25,43,43,43,43,43,43,43,43,43,43,43,43,-25,43,-26,43,43,]),'GREATER_OR_EQUALS':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[44,-25,-26,-27,-31,44,-25,44,44,44,44,44,44,44,44,44,44,44,44,-25,44,-26,44,44,]),'LESSER_OR_EQUALS':([19,24,25,26,27,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,71,75,],[45,-25,-26,-27,-31,45,-25,45,45,45,45,45,45,45,45,45,45,45,45,-25,45,-26,45,45,]),'ASSING':([24,26,30,],[48,-27,48,]),'ELSE':([32,70,],[-2,72,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'main':([0,],[1,]),'type':([0,8,10,25,29,],[2,14,14,14,14,]),'param':([6,],[7,]),'scope':([7,],[9,]),'declarations':([8,25,],[11,35,]),'declaration':([8,10,25,29,],[13,19,13,19,]),'statements':([10,29,],[15,36,]),'statement':([10,29,],[16,16,]),'expression':([10,29,30,31,32,33,34,],[17,17,37,39,40,41,43,]),'assignment':([10,14,29,],[18,27,18,]),'term':([10,14,29,30,31,32,33,34,],[20,26,20,38,38,38,38,42,]),'factor':([10,29,30,31,32,33,34,],[21,21,21,21,21,21,44,]),}
+_lr_goto_items = {'main':([0,],[1,]),'type':([0,8,10,17,29,33,],[2,14,14,14,14,14,]),'param':([6,],[7,]),'scope':([7,68,72,76,],[9,70,74,77,]),'declarations':([8,29,],[11,49,]),'declaration':([8,10,17,29,33,],[13,21,21,13,21,]),'statements':([10,33,],[15,50,]),'statement':([10,17,33,],[16,34,16,]),'if_statement':([10,33,],[17,17,]),'for_statement':([10,33,],[18,18,]),'expression':([10,17,33,35,36,37,38,39,40,41,42,43,44,45,46,47,48,69,73,],[19,19,19,51,53,54,55,56,57,58,59,60,61,62,63,64,66,71,75,]),'assignment':([10,14,17,33,],[20,31,20,20,]),'term':([10,14,17,33,35,36,37,38,39,40,41,42,43,44,45,46,47,48,69,73,],[24,30,24,24,52,52,52,52,52,52,52,52,52,52,52,52,52,65,52,52,]),'factor':([10,17,33,35,36,37,38,39,40,41,42,43,44,45,46,47,48,69,73,],[25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,67,25,25,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,31 +27,44 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> main","S'",1,None,None,None),
-  ('main -> type MAIN param scope','main',4,'p_start','parser.py',30),
-  ('scope -> OPEN_BRAKETS statements CLOSE_BRAKETS','scope',3,'p_scope','parser.py',38),
-  ('statements -> statement SEMI_COLON statements','statements',3,'p_statements','parser.py',44),
-  ('statements -> statement SEMI_COLON','statements',2,'p_statements','parser.py',45),
-  ('statement -> expression','statement',1,'p_statement','parser.py',54),
-  ('statement -> assignment','statement',1,'p_statement','parser.py',55),
-  ('statement -> declaration','statement',1,'p_statement','parser.py',56),
-  ('assignment -> term ASSING expression','assignment',3,'p_assignment','parser.py',62),
-  ('assignment -> term ASSING term','assignment',3,'p_assignment','parser.py',63),
-  ('assignment -> term ASSING factor','assignment',3,'p_assignment','parser.py',64),
-  ('expression -> expression SUM expression','expression',3,'p_expression_binop','parser.py',71),
-  ('expression -> expression SUB expression','expression',3,'p_expression_binop','parser.py',72),
-  ('expression -> expression MUL expression','expression',3,'p_expression_binop','parser.py',73),
-  ('expression -> expression DIV expression','expression',3,'p_expression_binop','parser.py',74),
-  ('expression -> term','expression',1,'p_expression_term','parser.py',80),
-  ('expression -> factor','expression',1,'p_expression_term','parser.py',81),
-  ('term -> IDENTIFIER','term',1,'p_term','parser.py',87),
-  ('factor -> NUMBER','factor',1,'p_factor_num','parser.py',97),
-  ('type -> INT','type',1,'p_type','parser.py',103),
-  ('type -> FLOAT','type',1,'p_type','parser.py',104),
-  ('type -> CHAR','type',1,'p_type','parser.py',105),
-  ('declaration -> type term','declaration',2,'p_declaration','parser.py',113),
-  ('declaration -> type assignment','declaration',2,'p_declaration','parser.py',114),
-  ('declarations -> declaration COMMA declarations','declarations',3,'p_declarations','parser.py',132),
-  ('declarations -> declaration','declarations',1,'p_declarations','parser.py',133),
-  ('param -> OPEN_PAREN declarations CLOSE_PAREN','param',3,'p_param','parser.py',143),
-  ('param -> OPEN_PAREN CLOSE_PAREN','param',2,'p_param','parser.py',144),
+  ('main -> type MAIN param scope','main',4,'p_start','parser.py',32),
+  ('scope -> OPEN_BRAKETS statements CLOSE_BRAKETS','scope',3,'p_scope','parser.py',40),
+  ('statements -> statement SEMI_COLON statements','statements',3,'p_statements','parser.py',51),
+  ('statements -> statement SEMI_COLON','statements',2,'p_statements','parser.py',52),
+  ('statements -> if_statement statement','statements',2,'p_statements','parser.py',53),
+  ('statements -> if_statement','statements',1,'p_statements','parser.py',54),
+  ('statements -> for_statement','statements',1,'p_statements','parser.py',55),
+  ('statement -> expression','statement',1,'p_statement','parser.py',66),
+  ('statement -> assignment','statement',1,'p_statement','parser.py',67),
+  ('statement -> declaration','statement',1,'p_statement','parser.py',68),
+  ('assignment -> term ASSING expression','assignment',3,'p_assignment','parser.py',74),
+  ('assignment -> term ASSING term','assignment',3,'p_assignment','parser.py',75),
+  ('assignment -> term ASSING factor','assignment',3,'p_assignment','parser.py',76),
+  ('expression -> expression SUM expression','expression',3,'p_expression_binop','parser.py',85),
+  ('expression -> expression SUB expression','expression',3,'p_expression_binop','parser.py',86),
+  ('expression -> expression MUL expression','expression',3,'p_expression_binop','parser.py',87),
+  ('expression -> expression DIV expression','expression',3,'p_expression_binop','parser.py',88),
+  ('expression -> expression OR expression','expression',3,'p_expression_binop','parser.py',89),
+  ('expression -> expression NOT expression','expression',3,'p_expression_binop','parser.py',90),
+  ('expression -> expression EQUALS expression','expression',3,'p_expression_binop','parser.py',91),
+  ('expression -> expression GREATER expression','expression',3,'p_expression_binop','parser.py',92),
+  ('expression -> expression LESSER expression','expression',3,'p_expression_binop','parser.py',93),
+  ('expression -> expression GREATER_OR_EQUALS expression','expression',3,'p_expression_binop','parser.py',94),
+  ('expression -> expression LESSER_OR_EQUALS expression','expression',3,'p_expression_binop','parser.py',95),
+  ('expression -> term','expression',1,'p_expression_term','parser.py',101),
+  ('expression -> factor','expression',1,'p_expression_term','parser.py',102),
+  ('term -> IDENTIFIER','term',1,'p_term','parser.py',108),
+  ('for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope','for_statement',9,'p_for_statement','parser.py',117),
+  ('if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope','if_statement',5,'p_if_statement','parser.py',122),
+  ('if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope','if_statement',7,'p_if_statement','parser.py',123),
+  ('factor -> NUMBER','factor',1,'p_factor_num','parser.py',134),
+  ('type -> INT','type',1,'p_type','parser.py',140),
+  ('type -> FLOAT','type',1,'p_type','parser.py',141),
+  ('type -> CHAR','type',1,'p_type','parser.py',142),
+  ('declaration -> type term','declaration',2,'p_declaration','parser.py',150),
+  ('declaration -> type assignment','declaration',2,'p_declaration','parser.py',151),
+  ('declarations -> declaration COMMA declarations','declarations',3,'p_declarations','parser.py',169),
+  ('declarations -> declaration','declarations',1,'p_declarations','parser.py',170),
+  ('param -> OPEN_PAREN declarations CLOSE_PAREN','param',3,'p_param','parser.py',180),
+  ('param -> OPEN_PAREN CLOSE_PAREN','param',2,'p_param','parser.py',181),
 ]

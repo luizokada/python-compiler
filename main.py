@@ -1,6 +1,6 @@
 from components.lexer import Lexer
 from components.parser import Parser
-from components.parser import variabes
+from components.parser import variables
 
 
 fille = open("./tests/simpleSum.c")
@@ -9,6 +9,9 @@ lexer = Lexer()
 lexer.build()
 tokens = lexer.lexer.input(text)
 
+"""for token in lexer.lexer:
+    print (token)
+"""
 #input_str = [f"{tok[0]}:{tok[1]}" for tok in tokens]
 parser = Parser(lexer.tokens)
 test = parser.parser.parse(text, lexer=lexer.lexer)
@@ -24,4 +27,4 @@ def print_tree(node, level=0):
     for child in node.children:
         print_tree(child, level + 1)
 print_tree(test)
-print(variabes)
+print(variables)

@@ -1,4 +1,4 @@
-int main(int a,char b,float c){
+int main(){
     
     5 + 3 + 5;
     10 + 10;
@@ -6,4 +6,9 @@ int main(int a,char b,float c){
     a = 10;
     int b;
     int c = a + b;
+    if(a==b){
+        b = a;
+    }else{
+        b = b;
+    }
 } /*AAAAAAAAAAAAAAAAAAAAAAAAAAAA*/

@@ -6,16 +6,6 @@ Unused terminals:
     BREAK
     DO
     DOUBLE
-    ELSE
-    EQUALS
-    FOR
-    GREATER
-    GREATER_OR_EQUALS
-    IF
-    LESSER
-    LESSER_OR_EQUALS
-    NOT
-    OR
     PRINT
     RETURN
     WHILE
@@ -27,82 +17,97 @@ Rule 1     main -> type MAIN param scope
 Rule 2     scope -> OPEN_BRAKETS statements CLOSE_BRAKETS
 Rule 3     statements -> statement SEMI_COLON statements
 Rule 4     statements -> statement SEMI_COLON
-Rule 5     statement -> expression
-Rule 6     statement -> assignment
-Rule 7     statement -> declaration
-Rule 8     assignment -> term ASSING expression
-Rule 9     assignment -> term ASSING term
-Rule 10    assignment -> term ASSING factor
-Rule 11    expression -> expression SUM expression
-Rule 12    expression -> expression SUB expression
-Rule 13    expression -> expression MUL expression
-Rule 14    expression -> expression DIV expression
-Rule 15    expression -> term
-Rule 16    expression -> factor
-Rule 17    term -> IDENTIFIER
-Rule 18    factor -> NUMBER
-Rule 19    type -> INT
-Rule 20    type -> FLOAT
-Rule 21    type -> CHAR
-Rule 22    declaration -> type term
-Rule 23    declaration -> type assignment
-Rule 24    declarations -> declaration COMMA declarations
-Rule 25    declarations -> declaration
-Rule 26    param -> OPEN_PAREN declarations CLOSE_PAREN
-Rule 27    param -> OPEN_PAREN CLOSE_PAREN
+Rule 5     statements -> if_statement statement
+Rule 6     statements -> if_statement
+Rule 7     statements -> for_statement
+Rule 8     statement -> expression
+Rule 9     statement -> assignment
+Rule 10    statement -> declaration
+Rule 11    assignment -> term ASSING expression
+Rule 12    assignment -> term ASSING term
+Rule 13    assignment -> term ASSING factor
+Rule 14    expression -> expression SUM expression
+Rule 15    expression -> expression SUB expression
+Rule 16    expression -> expression MUL expression
+Rule 17    expression -> expression DIV expression
+Rule 18    expression -> expression OR expression
+Rule 19    expression -> expression NOT expression
+Rule 20    expression -> expression EQUALS expression
+Rule 21    expression -> expression GREATER expression
+Rule 22    expression -> expression LESSER expression
+Rule 23    expression -> expression GREATER_OR_EQUALS expression
+Rule 24    expression -> expression LESSER_OR_EQUALS expression
+Rule 25    expression -> term
+Rule 26    expression -> factor
+Rule 27    term -> IDENTIFIER
+Rule 28    for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope
+Rule 29    if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope
+Rule 30    if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope
+Rule 31    factor -> NUMBER
+Rule 32    type -> INT
+Rule 33    type -> FLOAT
+Rule 34    type -> CHAR
+Rule 35    declaration -> type term
+Rule 36    declaration -> type assignment
+Rule 37    declarations -> declaration COMMA declarations
+Rule 38    declarations -> declaration
+Rule 39    param -> OPEN_PAREN declarations CLOSE_PAREN
+Rule 40    param -> OPEN_PAREN CLOSE_PAREN
 
 Terminals, with rules where they appear
 
 AND                  : 
-ASSING               : 8 9 10
+ASSING               : 11 12 13
 BREAK                : 
-CHAR                 : 21
+CHAR                 : 34
 CLOSE_BRAKETS        : 2
-CLOSE_PAREN          : 26 27
-COMMA                : 24
-DIV                  : 14
+CLOSE_PAREN          : 28 29 30 39 40
+COMMA                : 37
+DIV                  : 17
 DO                   : 
 DOUBLE               : 
-ELSE                 : 
-EQUALS               : 
-FLOAT                : 20
-FOR                  : 
-GREATER              : 
-GREATER_OR_EQUALS    : 
-IDENTIFIER           : 17
-IF                   : 
-INT                  : 19
-LESSER               : 
-LESSER_OR_EQUALS     : 
+ELSE                 : 30
+EQUALS               : 20
+FLOAT                : 33
+GREATER              : 21
+GREATER_OR_EQUALS    : 23
+IDENTIFIER           : 27
+IF                   : 29 30
+INT                  : 32
+LESSER               : 22
+LESSER_OR_EQUALS     : 24
 MAIN                 : 1
-MUL                  : 13
-NOT                  : 
-NUMBER               : 18
+MUL                  : 16
+NOT                  : 19
+NUMBER               : 31
 OPEN_BRAKETS         : 2
-OPEN_PAREN           : 26 27
-OR                   : 
+OPEN_PAREN           : 28 29 30 39 40
+OR                   : 18
 PRINT                : 
 RETURN               : 
-SEMI_COLON           : 3 4
-SUB                  : 12
-SUM                  : 11
+SEMI_COLON           : 3 4 28 28
+SUB                  : 15
+SUM                  : 14
+T_FOR                : 28
 WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-assignment           : 6 23
-declaration          : 7 24 25
-declarations         : 24 26
-expression           : 5 8 11 11 12 12 13 13 14 14
-factor               : 10 16
+assignment           : 9 36
+declaration          : 10 37 38
+declarations         : 37 39
+expression           : 8 11 14 14 15 15 16 16 17 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 28 28 28 29 30
+factor               : 13 26
+for_statement        : 7
+if_statement         : 5 6
 main                 : 0
 param                : 1
-scope                : 1
-statement            : 3 4
+scope                : 1 28 29 30 30
+statement            : 3 4 5
 statements           : 2 3
-term                 : 8 9 9 10 15 22
-type                 : 1 22 23
+term                 : 11 12 12 13 25 35
+type                 : 1 35 36
 
 Parsing method: LALR
 
@@ -110,9 +115,9 @@ state 0
 
     (0) S' -> . main
     (1) main -> . type MAIN param scope
-    (19) type -> . INT
-    (20) type -> . FLOAT
-    (21) type -> . CHAR
+    (32) type -> . INT
+    (33) type -> . FLOAT
+    (34) type -> . CHAR
 
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
@@ -136,33 +141,33 @@ state 2
 
 state 3
 
-    (19) type -> INT .
+    (32) type -> INT .
 
-    MAIN            reduce using rule 19 (type -> INT .)
-    IDENTIFIER      reduce using rule 19 (type -> INT .)
+    MAIN            reduce using rule 32 (type -> INT .)
+    IDENTIFIER      reduce using rule 32 (type -> INT .)
 
 
 state 4
 
-    (20) type -> FLOAT .
+    (33) type -> FLOAT .
 
-    MAIN            reduce using rule 20 (type -> FLOAT .)
-    IDENTIFIER      reduce using rule 20 (type -> FLOAT .)
+    MAIN            reduce using rule 33 (type -> FLOAT .)
+    IDENTIFIER      reduce using rule 33 (type -> FLOAT .)
 
 
 state 5
 
-    (21) type -> CHAR .
+    (34) type -> CHAR .
 
-    MAIN            reduce using rule 21 (type -> CHAR .)
-    IDENTIFIER      reduce using rule 21 (type -> CHAR .)
+    MAIN            reduce using rule 34 (type -> CHAR .)
+    IDENTIFIER      reduce using rule 34 (type -> CHAR .)
 
 
 state 6
 
     (1) main -> type MAIN . param scope
-    (26) param -> . OPEN_PAREN declarations CLOSE_PAREN
-    (27) param -> . OPEN_PAREN CLOSE_PAREN
+    (39) param -> . OPEN_PAREN declarations CLOSE_PAREN
+    (40) param -> . OPEN_PAREN CLOSE_PAREN
 
     OPEN_PAREN      shift and go to state 8
 
@@ -179,15 +184,15 @@ state 7
 
 state 8
 
-    (26) param -> OPEN_PAREN . declarations CLOSE_PAREN
-    (27) param -> OPEN_PAREN . CLOSE_PAREN
-    (24) declarations -> . declaration COMMA declarations
-    (25) declarations -> . declaration
-    (22) declaration -> . type term
-    (23) declaration -> . type assignment
-    (19) type -> . INT
-    (20) type -> . FLOAT
-    (21) type -> . CHAR
+    (39) param -> OPEN_PAREN . declarations CLOSE_PAREN
+    (40) param -> OPEN_PAREN . CLOSE_PAREN
+    (37) declarations -> . declaration COMMA declarations
+    (38) declarations -> . declaration
+    (35) declaration -> . type term
+    (36) declaration -> . type assignment
+    (32) type -> . INT
+    (33) type -> . FLOAT
+    (34) type -> . CHAR
 
     CLOSE_PAREN     shift and go to state 12
     INT             shift and go to state 3
@@ -210,83 +215,100 @@ state 10
     (2) scope -> OPEN_BRAKETS . statements CLOSE_BRAKETS
     (3) statements -> . statement SEMI_COLON statements
     (4) statements -> . statement SEMI_COLON
-    (5) statement -> . expression
-    (6) statement -> . assignment
-    (7) statement -> . declaration
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (8) assignment -> . term ASSING expression
-    (9) assignment -> . term ASSING term
-    (10) assignment -> . term ASSING factor
-    (22) declaration -> . type term
-    (23) declaration -> . type assignment
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
-    (19) type -> . INT
-    (20) type -> . FLOAT
-    (21) type -> . CHAR
+    (5) statements -> . if_statement statement
+    (6) statements -> . if_statement
+    (7) statements -> . for_statement
+    (8) statement -> . expression
+    (9) statement -> . assignment
+    (10) statement -> . declaration
+    (29) if_statement -> . IF OPEN_PAREN expression CLOSE_PAREN scope
+    (30) if_statement -> . IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope
+    (28) for_statement -> . T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (11) assignment -> . term ASSING expression
+    (12) assignment -> . term ASSING term
+    (13) assignment -> . term ASSING factor
+    (35) declaration -> . type term
+    (36) declaration -> . type assignment
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+    (32) type -> . INT
+    (33) type -> . FLOAT
+    (34) type -> . CHAR
 
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
+    IF              shift and go to state 22
+    T_FOR           shift and go to state 23
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
 
     statements                     shift and go to state 15
     statement                      shift and go to state 16
-    expression                     shift and go to state 17
-    assignment                     shift and go to state 18
-    declaration                    shift and go to state 19
-    term                           shift and go to state 20
-    factor                         shift and go to state 21
+    if_statement                   shift and go to state 17
+    for_statement                  shift and go to state 18
+    expression                     shift and go to state 19
+    assignment                     shift and go to state 20
+    declaration                    shift and go to state 21
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
     type                           shift and go to state 14
 
 state 11
 
-    (26) param -> OPEN_PAREN declarations . CLOSE_PAREN
+    (39) param -> OPEN_PAREN declarations . CLOSE_PAREN
 
-    CLOSE_PAREN     shift and go to state 24
+    CLOSE_PAREN     shift and go to state 28
 
 
 state 12
 
-    (27) param -> OPEN_PAREN CLOSE_PAREN .
+    (40) param -> OPEN_PAREN CLOSE_PAREN .
 
-    OPEN_BRAKETS    reduce using rule 27 (param -> OPEN_PAREN CLOSE_PAREN .)
+    OPEN_BRAKETS    reduce using rule 40 (param -> OPEN_PAREN CLOSE_PAREN .)
 
 
 state 13
 
-    (24) declarations -> declaration . COMMA declarations
-    (25) declarations -> declaration .
+    (37) declarations -> declaration . COMMA declarations
+    (38) declarations -> declaration .
 
-    COMMA           shift and go to state 25
-    CLOSE_PAREN     reduce using rule 25 (declarations -> declaration .)
+    COMMA           shift and go to state 29
+    CLOSE_PAREN     reduce using rule 38 (declarations -> declaration .)
 
 
 state 14
 
-    (22) declaration -> type . term
-    (23) declaration -> type . assignment
-    (17) term -> . IDENTIFIER
-    (8) assignment -> . term ASSING expression
-    (9) assignment -> . term ASSING term
-    (10) assignment -> . term ASSING factor
+    (35) declaration -> type . term
+    (36) declaration -> type . assignment
+    (27) term -> . IDENTIFIER
+    (11) assignment -> . term ASSING expression
+    (12) assignment -> . term ASSING term
+    (13) assignment -> . term ASSING factor
 
-    IDENTIFIER      shift and go to state 22
+    IDENTIFIER      shift and go to state 26
 
-    term                           shift and go to state 26
-    assignment                     shift and go to state 27
+    term                           shift and go to state 30
+    assignment                     shift and go to state 31
 
 state 15
 
     (2) scope -> OPEN_BRAKETS statements . CLOSE_BRAKETS
 
-    CLOSE_BRAKETS   shift and go to state 28
+    CLOSE_BRAKETS   shift and go to state 32
 
 
 state 16
@@ -294,496 +316,1795 @@ state 16
     (3) statements -> statement . SEMI_COLON statements
     (4) statements -> statement . SEMI_COLON
 
-    SEMI_COLON      shift and go to state 29
+    SEMI_COLON      shift and go to state 33
 
 
 state 17
 
-    (5) statement -> expression .
-    (11) expression -> expression . SUM expression
-    (12) expression -> expression . SUB expression
-    (13) expression -> expression . MUL expression
-    (14) expression -> expression . DIV expression
+    (5) statements -> if_statement . statement
+    (6) statements -> if_statement .
+    (8) statement -> . expression
+    (9) statement -> . assignment
+    (10) statement -> . declaration
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (11) assignment -> . term ASSING expression
+    (12) assignment -> . term ASSING term
+    (13) assignment -> . term ASSING factor
+    (35) declaration -> . type term
+    (36) declaration -> . type assignment
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+    (32) type -> . INT
+    (33) type -> . FLOAT
+    (34) type -> . CHAR
 
-    SEMI_COLON      reduce using rule 5 (statement -> expression .)
-    SUM             shift and go to state 30
-    SUB             shift and go to state 31
-    MUL             shift and go to state 32
-    DIV             shift and go to state 33
+    CLOSE_BRAKETS   reduce using rule 6 (statements -> if_statement .)
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+    INT             shift and go to state 3
+    FLOAT           shift and go to state 4
+    CHAR            shift and go to state 5
 
+    statement                      shift and go to state 34
+    expression                     shift and go to state 19
+    assignment                     shift and go to state 20
+    declaration                    shift and go to state 21
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
+    type                           shift and go to state 14
 
 state 18
 
-    (6) statement -> assignment .
+    (7) statements -> for_statement .
 
-    SEMI_COLON      reduce using rule 6 (statement -> assignment .)
+    CLOSE_BRAKETS   reduce using rule 7 (statements -> for_statement .)
 
 
 state 19
 
-    (7) statement -> declaration .
+    (8) statement -> expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
 
-    SEMI_COLON      reduce using rule 7 (statement -> declaration .)
+    SEMI_COLON      reduce using rule 8 (statement -> expression .)
+    CLOSE_BRAKETS   reduce using rule 8 (statement -> expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
 
 
 state 20
 
-    (15) expression -> term .
-    (8) assignment -> term . ASSING expression
-    (9) assignment -> term . ASSING term
-    (10) assignment -> term . ASSING factor
+    (9) statement -> assignment .
 
-    SUM             reduce using rule 15 (expression -> term .)
-    SUB             reduce using rule 15 (expression -> term .)
-    MUL             reduce using rule 15 (expression -> term .)
-    DIV             reduce using rule 15 (expression -> term .)
-    SEMI_COLON      reduce using rule 15 (expression -> term .)
-    ASSING          shift and go to state 34
+    SEMI_COLON      reduce using rule 9 (statement -> assignment .)
+    CLOSE_BRAKETS   reduce using rule 9 (statement -> assignment .)
 
 
 state 21
 
-    (16) expression -> factor .
+    (10) statement -> declaration .
 
-    SUM             reduce using rule 16 (expression -> factor .)
-    SUB             reduce using rule 16 (expression -> factor .)
-    MUL             reduce using rule 16 (expression -> factor .)
-    DIV             reduce using rule 16 (expression -> factor .)
-    SEMI_COLON      reduce using rule 16 (expression -> factor .)
-    COMMA           reduce using rule 16 (expression -> factor .)
-    CLOSE_PAREN     reduce using rule 16 (expression -> factor .)
+    SEMI_COLON      reduce using rule 10 (statement -> declaration .)
+    CLOSE_BRAKETS   reduce using rule 10 (statement -> declaration .)
 
 
 state 22
 
-    (17) term -> IDENTIFIER .
+    (29) if_statement -> IF . OPEN_PAREN expression CLOSE_PAREN scope
+    (30) if_statement -> IF . OPEN_PAREN expression CLOSE_PAREN scope ELSE scope
 
-    ASSING          reduce using rule 17 (term -> IDENTIFIER .)
-    SUM             reduce using rule 17 (term -> IDENTIFIER .)
-    SUB             reduce using rule 17 (term -> IDENTIFIER .)
-    MUL             reduce using rule 17 (term -> IDENTIFIER .)
-    DIV             reduce using rule 17 (term -> IDENTIFIER .)
-    SEMI_COLON      reduce using rule 17 (term -> IDENTIFIER .)
-    COMMA           reduce using rule 17 (term -> IDENTIFIER .)
-    CLOSE_PAREN     reduce using rule 17 (term -> IDENTIFIER .)
+    OPEN_PAREN      shift and go to state 46
 
 
 state 23
 
-    (18) factor -> NUMBER .
+    (28) for_statement -> T_FOR . OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope
 
-    SUM             reduce using rule 18 (factor -> NUMBER .)
-    SUB             reduce using rule 18 (factor -> NUMBER .)
-    MUL             reduce using rule 18 (factor -> NUMBER .)
-    DIV             reduce using rule 18 (factor -> NUMBER .)
-    SEMI_COLON      reduce using rule 18 (factor -> NUMBER .)
-    COMMA           reduce using rule 18 (factor -> NUMBER .)
-    CLOSE_PAREN     reduce using rule 18 (factor -> NUMBER .)
+    OPEN_PAREN      shift and go to state 47
 
 
 state 24
 
-    (26) param -> OPEN_PAREN declarations CLOSE_PAREN .
+    (25) expression -> term .
+    (11) assignment -> term . ASSING expression
+    (12) assignment -> term . ASSING term
+    (13) assignment -> term . ASSING factor
 
-    OPEN_BRAKETS    reduce using rule 26 (param -> OPEN_PAREN declarations CLOSE_PAREN .)
+    SUM             reduce using rule 25 (expression -> term .)
+    SUB             reduce using rule 25 (expression -> term .)
+    MUL             reduce using rule 25 (expression -> term .)
+    DIV             reduce using rule 25 (expression -> term .)
+    OR              reduce using rule 25 (expression -> term .)
+    NOT             reduce using rule 25 (expression -> term .)
+    EQUALS          reduce using rule 25 (expression -> term .)
+    GREATER         reduce using rule 25 (expression -> term .)
+    LESSER          reduce using rule 25 (expression -> term .)
+    GREATER_OR_EQUALS reduce using rule 25 (expression -> term .)
+    LESSER_OR_EQUALS reduce using rule 25 (expression -> term .)
+    SEMI_COLON      reduce using rule 25 (expression -> term .)
+    CLOSE_BRAKETS   reduce using rule 25 (expression -> term .)
+    ASSING          shift and go to state 48
 
 
 state 25
 
-    (24) declarations -> declaration COMMA . declarations
-    (24) declarations -> . declaration COMMA declarations
-    (25) declarations -> . declaration
-    (22) declaration -> . type term
-    (23) declaration -> . type assignment
-    (19) type -> . INT
-    (20) type -> . FLOAT
-    (21) type -> . CHAR
+    (26) expression -> factor .
+
+    SUM             reduce using rule 26 (expression -> factor .)
+    SUB             reduce using rule 26 (expression -> factor .)
+    MUL             reduce using rule 26 (expression -> factor .)
+    DIV             reduce using rule 26 (expression -> factor .)
+    OR              reduce using rule 26 (expression -> factor .)
+    NOT             reduce using rule 26 (expression -> factor .)
+    EQUALS          reduce using rule 26 (expression -> factor .)
+    GREATER         reduce using rule 26 (expression -> factor .)
+    LESSER          reduce using rule 26 (expression -> factor .)
+    GREATER_OR_EQUALS reduce using rule 26 (expression -> factor .)
+    LESSER_OR_EQUALS reduce using rule 26 (expression -> factor .)
+    SEMI_COLON      reduce using rule 26 (expression -> factor .)
+    CLOSE_BRAKETS   reduce using rule 26 (expression -> factor .)
+    CLOSE_PAREN     reduce using rule 26 (expression -> factor .)
+    COMMA           reduce using rule 26 (expression -> factor .)
+
+
+state 26
+
+    (27) term -> IDENTIFIER .
+
+    ASSING          reduce using rule 27 (term -> IDENTIFIER .)
+    SUM             reduce using rule 27 (term -> IDENTIFIER .)
+    SUB             reduce using rule 27 (term -> IDENTIFIER .)
+    MUL             reduce using rule 27 (term -> IDENTIFIER .)
+    DIV             reduce using rule 27 (term -> IDENTIFIER .)
+    OR              reduce using rule 27 (term -> IDENTIFIER .)
+    NOT             reduce using rule 27 (term -> IDENTIFIER .)
+    EQUALS          reduce using rule 27 (term -> IDENTIFIER .)
+    GREATER         reduce using rule 27 (term -> IDENTIFIER .)
+    LESSER          reduce using rule 27 (term -> IDENTIFIER .)
+    GREATER_OR_EQUALS reduce using rule 27 (term -> IDENTIFIER .)
+    LESSER_OR_EQUALS reduce using rule 27 (term -> IDENTIFIER .)
+    SEMI_COLON      reduce using rule 27 (term -> IDENTIFIER .)
+    COMMA           reduce using rule 27 (term -> IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 27 (term -> IDENTIFIER .)
+    CLOSE_BRAKETS   reduce using rule 27 (term -> IDENTIFIER .)
+
+
+state 27
+
+    (31) factor -> NUMBER .
+
+    SUM             reduce using rule 31 (factor -> NUMBER .)
+    SUB             reduce using rule 31 (factor -> NUMBER .)
+    MUL             reduce using rule 31 (factor -> NUMBER .)
+    DIV             reduce using rule 31 (factor -> NUMBER .)
+    OR              reduce using rule 31 (factor -> NUMBER .)
+    NOT             reduce using rule 31 (factor -> NUMBER .)
+    EQUALS          reduce using rule 31 (factor -> NUMBER .)
+    GREATER         reduce using rule 31 (factor -> NUMBER .)
+    LESSER          reduce using rule 31 (factor -> NUMBER .)
+    GREATER_OR_EQUALS reduce using rule 31 (factor -> NUMBER .)
+    LESSER_OR_EQUALS reduce using rule 31 (factor -> NUMBER .)
+    SEMI_COLON      reduce using rule 31 (factor -> NUMBER .)
+    CLOSE_BRAKETS   reduce using rule 31 (factor -> NUMBER .)
+    CLOSE_PAREN     reduce using rule 31 (factor -> NUMBER .)
+    COMMA           reduce using rule 31 (factor -> NUMBER .)
+
+
+state 28
+
+    (39) param -> OPEN_PAREN declarations CLOSE_PAREN .
+
+    OPEN_BRAKETS    reduce using rule 39 (param -> OPEN_PAREN declarations CLOSE_PAREN .)
+
+
+state 29
+
+    (37) declarations -> declaration COMMA . declarations
+    (37) declarations -> . declaration COMMA declarations
+    (38) declarations -> . declaration
+    (35) declaration -> . type term
+    (36) declaration -> . type assignment
+    (32) type -> . INT
+    (33) type -> . FLOAT
+    (34) type -> . CHAR
 
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
 
     declaration                    shift and go to state 13
-    declarations                   shift and go to state 35
+    declarations                   shift and go to state 49
     type                           shift and go to state 14
 
-state 26
+state 30
 
-    (22) declaration -> type term .
-    (8) assignment -> term . ASSING expression
-    (9) assignment -> term . ASSING term
-    (10) assignment -> term . ASSING factor
+    (35) declaration -> type term .
+    (11) assignment -> term . ASSING expression
+    (12) assignment -> term . ASSING term
+    (13) assignment -> term . ASSING factor
 
-    COMMA           reduce using rule 22 (declaration -> type term .)
-    CLOSE_PAREN     reduce using rule 22 (declaration -> type term .)
-    SEMI_COLON      reduce using rule 22 (declaration -> type term .)
-    ASSING          shift and go to state 34
-
-
-state 27
-
-    (23) declaration -> type assignment .
-
-    COMMA           reduce using rule 23 (declaration -> type assignment .)
-    CLOSE_PAREN     reduce using rule 23 (declaration -> type assignment .)
-    SEMI_COLON      reduce using rule 23 (declaration -> type assignment .)
+    COMMA           reduce using rule 35 (declaration -> type term .)
+    CLOSE_PAREN     reduce using rule 35 (declaration -> type term .)
+    SEMI_COLON      reduce using rule 35 (declaration -> type term .)
+    CLOSE_BRAKETS   reduce using rule 35 (declaration -> type term .)
+    ASSING          shift and go to state 48
 
 
-state 28
+state 31
+
+    (36) declaration -> type assignment .
+
+    COMMA           reduce using rule 36 (declaration -> type assignment .)
+    CLOSE_PAREN     reduce using rule 36 (declaration -> type assignment .)
+    SEMI_COLON      reduce using rule 36 (declaration -> type assignment .)
+    CLOSE_BRAKETS   reduce using rule 36 (declaration -> type assignment .)
+
+
+state 32
 
     (2) scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .
 
     $end            reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    ELSE            reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    IDENTIFIER      reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    NUMBER          reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    INT             reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    FLOAT           reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    CHAR            reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
+    CLOSE_BRAKETS   reduce using rule 2 (scope -> OPEN_BRAKETS statements CLOSE_BRAKETS .)
 
 
-state 29
+state 33
 
     (3) statements -> statement SEMI_COLON . statements
     (4) statements -> statement SEMI_COLON .
     (3) statements -> . statement SEMI_COLON statements
     (4) statements -> . statement SEMI_COLON
-    (5) statement -> . expression
-    (6) statement -> . assignment
-    (7) statement -> . declaration
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (8) assignment -> . term ASSING expression
-    (9) assignment -> . term ASSING term
-    (10) assignment -> . term ASSING factor
-    (22) declaration -> . type term
-    (23) declaration -> . type assignment
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
-    (19) type -> . INT
-    (20) type -> . FLOAT
-    (21) type -> . CHAR
+    (5) statements -> . if_statement statement
+    (6) statements -> . if_statement
+    (7) statements -> . for_statement
+    (8) statement -> . expression
+    (9) statement -> . assignment
+    (10) statement -> . declaration
+    (29) if_statement -> . IF OPEN_PAREN expression CLOSE_PAREN scope
+    (30) if_statement -> . IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope
+    (28) for_statement -> . T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (11) assignment -> . term ASSING expression
+    (12) assignment -> . term ASSING term
+    (13) assignment -> . term ASSING factor
+    (35) declaration -> . type term
+    (36) declaration -> . type assignment
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+    (32) type -> . INT
+    (33) type -> . FLOAT
+    (34) type -> . CHAR
 
     CLOSE_BRAKETS   reduce using rule 4 (statements -> statement SEMI_COLON .)
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
+    IF              shift and go to state 22
+    T_FOR           shift and go to state 23
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
 
     statement                      shift and go to state 16
-    statements                     shift and go to state 36
-    expression                     shift and go to state 17
-    assignment                     shift and go to state 18
-    declaration                    shift and go to state 19
-    term                           shift and go to state 20
-    factor                         shift and go to state 21
+    statements                     shift and go to state 50
+    if_statement                   shift and go to state 17
+    for_statement                  shift and go to state 18
+    expression                     shift and go to state 19
+    assignment                     shift and go to state 20
+    declaration                    shift and go to state 21
+    term                           shift and go to state 24
+    factor                         shift and go to state 25
     type                           shift and go to state 14
-
-state 30
-
-    (11) expression -> expression SUM . expression
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
-
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
-
-    expression                     shift and go to state 37
-    term                           shift and go to state 38
-    factor                         shift and go to state 21
-
-state 31
-
-    (12) expression -> expression SUB . expression
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
-
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
-
-    expression                     shift and go to state 39
-    term                           shift and go to state 38
-    factor                         shift and go to state 21
-
-state 32
-
-    (13) expression -> expression MUL . expression
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
-
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
-
-    expression                     shift and go to state 40
-    term                           shift and go to state 38
-    factor                         shift and go to state 21
-
-state 33
-
-    (14) expression -> expression DIV . expression
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
-
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
-
-    expression                     shift and go to state 41
-    term                           shift and go to state 38
-    factor                         shift and go to state 21
 
 state 34
 
-    (8) assignment -> term ASSING . expression
-    (9) assignment -> term ASSING . term
-    (10) assignment -> term ASSING . factor
-    (11) expression -> . expression SUM expression
-    (12) expression -> . expression SUB expression
-    (13) expression -> . expression MUL expression
-    (14) expression -> . expression DIV expression
-    (15) expression -> . term
-    (16) expression -> . factor
-    (17) term -> . IDENTIFIER
-    (18) factor -> . NUMBER
+    (5) statements -> if_statement statement .
 
-    IDENTIFIER      shift and go to state 22
-    NUMBER          shift and go to state 23
+    CLOSE_BRAKETS   reduce using rule 5 (statements -> if_statement statement .)
 
-    term                           shift and go to state 42
-    expression                     shift and go to state 43
-    factor                         shift and go to state 44
 
 state 35
 
-    (24) declarations -> declaration COMMA declarations .
+    (14) expression -> expression SUM . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
 
-    CLOSE_PAREN     reduce using rule 24 (declarations -> declaration COMMA declarations .)
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
 
+    expression                     shift and go to state 51
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
 
 state 36
+
+    (15) expression -> expression SUB . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 53
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 37
+
+    (16) expression -> expression MUL . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 54
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 38
+
+    (17) expression -> expression DIV . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 55
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 39
+
+    (18) expression -> expression OR . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 56
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 40
+
+    (19) expression -> expression NOT . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 57
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 41
+
+    (20) expression -> expression EQUALS . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 58
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 42
+
+    (21) expression -> expression GREATER . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 59
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 43
+
+    (22) expression -> expression LESSER . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 60
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 44
+
+    (23) expression -> expression GREATER_OR_EQUALS . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 61
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 45
+
+    (24) expression -> expression LESSER_OR_EQUALS . expression
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 62
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 46
+
+    (29) if_statement -> IF OPEN_PAREN . expression CLOSE_PAREN scope
+    (30) if_statement -> IF OPEN_PAREN . expression CLOSE_PAREN scope ELSE scope
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 63
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 47
+
+    (28) for_statement -> T_FOR OPEN_PAREN . expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 64
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 48
+
+    (11) assignment -> term ASSING . expression
+    (12) assignment -> term ASSING . term
+    (13) assignment -> term ASSING . factor
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    term                           shift and go to state 65
+    expression                     shift and go to state 66
+    factor                         shift and go to state 67
+
+state 49
+
+    (37) declarations -> declaration COMMA declarations .
+
+    CLOSE_PAREN     reduce using rule 37 (declarations -> declaration COMMA declarations .)
+
+
+state 50
 
     (3) statements -> statement SEMI_COLON statements .
 
     CLOSE_BRAKETS   reduce using rule 3 (statements -> statement SEMI_COLON statements .)
 
 
-state 37
+state 51
 
-    (11) expression -> expression SUM expression .
-    (11) expression -> expression . SUM expression
-    (12) expression -> expression . SUB expression
-    (13) expression -> expression . MUL expression
-    (14) expression -> expression . DIV expression
-
-  ! shift/reduce conflict for SUM resolved as shift
-  ! shift/reduce conflict for SUB resolved as shift
-  ! shift/reduce conflict for MUL resolved as shift
-  ! shift/reduce conflict for DIV resolved as shift
-    SEMI_COLON      reduce using rule 11 (expression -> expression SUM expression .)
-    COMMA           reduce using rule 11 (expression -> expression SUM expression .)
-    CLOSE_PAREN     reduce using rule 11 (expression -> expression SUM expression .)
-    SUM             shift and go to state 30
-    SUB             shift and go to state 31
-    MUL             shift and go to state 32
-    DIV             shift and go to state 33
-
-  ! SUM             [ reduce using rule 11 (expression -> expression SUM expression .) ]
-  ! SUB             [ reduce using rule 11 (expression -> expression SUM expression .) ]
-  ! MUL             [ reduce using rule 11 (expression -> expression SUM expression .) ]
-  ! DIV             [ reduce using rule 11 (expression -> expression SUM expression .) ]
-
-
-state 38
-
-    (15) expression -> term .
-
-    SUM             reduce using rule 15 (expression -> term .)
-    SUB             reduce using rule 15 (expression -> term .)
-    MUL             reduce using rule 15 (expression -> term .)
-    DIV             reduce using rule 15 (expression -> term .)
-    SEMI_COLON      reduce using rule 15 (expression -> term .)
-    COMMA           reduce using rule 15 (expression -> term .)
-    CLOSE_PAREN     reduce using rule 15 (expression -> term .)
-
-
-state 39
-
-    (12) expression -> expression SUB expression .
-    (11) expression -> expression . SUM expression
-    (12) expression -> expression . SUB expression
-    (13) expression -> expression . MUL expression
-    (14) expression -> expression . DIV expression
+    (14) expression -> expression SUM expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
 
   ! shift/reduce conflict for SUM resolved as shift
   ! shift/reduce conflict for SUB resolved as shift
   ! shift/reduce conflict for MUL resolved as shift
   ! shift/reduce conflict for DIV resolved as shift
-    SEMI_COLON      reduce using rule 12 (expression -> expression SUB expression .)
-    COMMA           reduce using rule 12 (expression -> expression SUB expression .)
-    CLOSE_PAREN     reduce using rule 12 (expression -> expression SUB expression .)
-    SUM             shift and go to state 30
-    SUB             shift and go to state 31
-    MUL             shift and go to state 32
-    DIV             shift and go to state 33
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 14 (expression -> expression SUM expression .)
+    CLOSE_BRAKETS   reduce using rule 14 (expression -> expression SUM expression .)
+    CLOSE_PAREN     reduce using rule 14 (expression -> expression SUM expression .)
+    COMMA           reduce using rule 14 (expression -> expression SUM expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
 
-  ! SUM             [ reduce using rule 12 (expression -> expression SUB expression .) ]
-  ! SUB             [ reduce using rule 12 (expression -> expression SUB expression .) ]
-  ! MUL             [ reduce using rule 12 (expression -> expression SUB expression .) ]
-  ! DIV             [ reduce using rule 12 (expression -> expression SUB expression .) ]
+  ! SUM             [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! SUB             [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! MUL             [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! DIV             [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! OR              [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! NOT             [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! EQUALS          [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! GREATER         [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! LESSER          [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 14 (expression -> expression SUM expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 14 (expression -> expression SUM expression .) ]
 
 
-state 40
+state 52
 
-    (13) expression -> expression MUL expression .
-    (11) expression -> expression . SUM expression
-    (12) expression -> expression . SUB expression
-    (13) expression -> expression . MUL expression
-    (14) expression -> expression . DIV expression
+    (25) expression -> term .
+
+    SUM             reduce using rule 25 (expression -> term .)
+    SUB             reduce using rule 25 (expression -> term .)
+    MUL             reduce using rule 25 (expression -> term .)
+    DIV             reduce using rule 25 (expression -> term .)
+    OR              reduce using rule 25 (expression -> term .)
+    NOT             reduce using rule 25 (expression -> term .)
+    EQUALS          reduce using rule 25 (expression -> term .)
+    GREATER         reduce using rule 25 (expression -> term .)
+    LESSER          reduce using rule 25 (expression -> term .)
+    GREATER_OR_EQUALS reduce using rule 25 (expression -> term .)
+    LESSER_OR_EQUALS reduce using rule 25 (expression -> term .)
+    SEMI_COLON      reduce using rule 25 (expression -> term .)
+    CLOSE_BRAKETS   reduce using rule 25 (expression -> term .)
+    CLOSE_PAREN     reduce using rule 25 (expression -> term .)
+    COMMA           reduce using rule 25 (expression -> term .)
+
+
+state 53
+
+    (15) expression -> expression SUB expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
 
   ! shift/reduce conflict for SUM resolved as shift
   ! shift/reduce conflict for SUB resolved as shift
   ! shift/reduce conflict for MUL resolved as shift
   ! shift/reduce conflict for DIV resolved as shift
-    SEMI_COLON      reduce using rule 13 (expression -> expression MUL expression .)
-    COMMA           reduce using rule 13 (expression -> expression MUL expression .)
-    CLOSE_PAREN     reduce using rule 13 (expression -> expression MUL expression .)
-    SUM             shift and go to state 30
-    SUB             shift and go to state 31
-    MUL             shift and go to state 32
-    DIV             shift and go to state 33
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 15 (expression -> expression SUB expression .)
+    CLOSE_BRAKETS   reduce using rule 15 (expression -> expression SUB expression .)
+    CLOSE_PAREN     reduce using rule 15 (expression -> expression SUB expression .)
+    COMMA           reduce using rule 15 (expression -> expression SUB expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
 
-  ! SUM             [ reduce using rule 13 (expression -> expression MUL expression .) ]
-  ! SUB             [ reduce using rule 13 (expression -> expression MUL expression .) ]
-  ! MUL             [ reduce using rule 13 (expression -> expression MUL expression .) ]
-  ! DIV             [ reduce using rule 13 (expression -> expression MUL expression .) ]
+  ! SUM             [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! SUB             [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! MUL             [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! DIV             [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! OR              [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! NOT             [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! EQUALS          [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! GREATER         [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! LESSER          [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 15 (expression -> expression SUB expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 15 (expression -> expression SUB expression .) ]
 
 
-state 41
+state 54
 
-    (14) expression -> expression DIV expression .
-    (11) expression -> expression . SUM expression
-    (12) expression -> expression . SUB expression
-    (13) expression -> expression . MUL expression
-    (14) expression -> expression . DIV expression
+    (16) expression -> expression MUL expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
 
   ! shift/reduce conflict for SUM resolved as shift
   ! shift/reduce conflict for SUB resolved as shift
   ! shift/reduce conflict for MUL resolved as shift
   ! shift/reduce conflict for DIV resolved as shift
-    SEMI_COLON      reduce using rule 14 (expression -> expression DIV expression .)
-    COMMA           reduce using rule 14 (expression -> expression DIV expression .)
-    CLOSE_PAREN     reduce using rule 14 (expression -> expression DIV expression .)
-    SUM             shift and go to state 30
-    SUB             shift and go to state 31
-    MUL             shift and go to state 32
-    DIV             shift and go to state 33
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 16 (expression -> expression MUL expression .)
+    CLOSE_BRAKETS   reduce using rule 16 (expression -> expression MUL expression .)
+    CLOSE_PAREN     reduce using rule 16 (expression -> expression MUL expression .)
+    COMMA           reduce using rule 16 (expression -> expression MUL expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
 
-  ! SUM             [ reduce using rule 14 (expression -> expression DIV expression .) ]
-  ! SUB             [ reduce using rule 14 (expression -> expression DIV expression .) ]
-  ! MUL             [ reduce using rule 14 (expression -> expression DIV expression .) ]
-  ! DIV             [ reduce using rule 14 (expression -> expression DIV expression .) ]
-
-
-state 42
-
-    (9) assignment -> term ASSING term .
-    (15) expression -> term .
-
-  ! reduce/reduce conflict for SEMI_COLON resolved using rule 9 (assignment -> term ASSING term .)
-  ! reduce/reduce conflict for COMMA resolved using rule 9 (assignment -> term ASSING term .)
-  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 9 (assignment -> term ASSING term .)
-    SEMI_COLON      reduce using rule 9 (assignment -> term ASSING term .)
-    COMMA           reduce using rule 9 (assignment -> term ASSING term .)
-    CLOSE_PAREN     reduce using rule 9 (assignment -> term ASSING term .)
-    SUM             reduce using rule 15 (expression -> term .)
-    SUB             reduce using rule 15 (expression -> term .)
-    MUL             reduce using rule 15 (expression -> term .)
-    DIV             reduce using rule 15 (expression -> term .)
-
-  ! SEMI_COLON      [ reduce using rule 15 (expression -> term .) ]
-  ! COMMA           [ reduce using rule 15 (expression -> term .) ]
-  ! CLOSE_PAREN     [ reduce using rule 15 (expression -> term .) ]
-
-
-state 43
-
-    (8) assignment -> term ASSING expression .
-    (11) expression -> expression . SUM expression
-    (12) expression -> expression . SUB expression
-    (13) expression -> expression . MUL expression
-    (14) expression -> expression . DIV expression
-
-    SEMI_COLON      reduce using rule 8 (assignment -> term ASSING expression .)
-    COMMA           reduce using rule 8 (assignment -> term ASSING expression .)
-    CLOSE_PAREN     reduce using rule 8 (assignment -> term ASSING expression .)
-    SUM             shift and go to state 30
-    SUB             shift and go to state 31
-    MUL             shift and go to state 32
-    DIV             shift and go to state 33
+  ! SUM             [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! SUB             [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! MUL             [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! DIV             [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! OR              [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! NOT             [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! EQUALS          [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! GREATER         [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! LESSER          [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 16 (expression -> expression MUL expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 16 (expression -> expression MUL expression .) ]
 
 
-state 44
+state 55
 
-    (10) assignment -> term ASSING factor .
-    (16) expression -> factor .
+    (17) expression -> expression DIV expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
 
-  ! reduce/reduce conflict for SEMI_COLON resolved using rule 10 (assignment -> term ASSING factor .)
-  ! reduce/reduce conflict for COMMA resolved using rule 10 (assignment -> term ASSING factor .)
-  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 10 (assignment -> term ASSING factor .)
-    SEMI_COLON      reduce using rule 10 (assignment -> term ASSING factor .)
-    COMMA           reduce using rule 10 (assignment -> term ASSING factor .)
-    CLOSE_PAREN     reduce using rule 10 (assignment -> term ASSING factor .)
-    SUM             reduce using rule 16 (expression -> factor .)
-    SUB             reduce using rule 16 (expression -> factor .)
-    MUL             reduce using rule 16 (expression -> factor .)
-    DIV             reduce using rule 16 (expression -> factor .)
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 17 (expression -> expression DIV expression .)
+    CLOSE_BRAKETS   reduce using rule 17 (expression -> expression DIV expression .)
+    CLOSE_PAREN     reduce using rule 17 (expression -> expression DIV expression .)
+    COMMA           reduce using rule 17 (expression -> expression DIV expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
 
-  ! SEMI_COLON      [ reduce using rule 16 (expression -> factor .) ]
-  ! COMMA           [ reduce using rule 16 (expression -> factor .) ]
-  ! CLOSE_PAREN     [ reduce using rule 16 (expression -> factor .) ]
+  ! SUM             [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! SUB             [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! MUL             [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! DIV             [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! OR              [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! NOT             [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! EQUALS          [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! GREATER         [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! LESSER          [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 17 (expression -> expression DIV expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 17 (expression -> expression DIV expression .) ]
+
+
+state 56
+
+    (18) expression -> expression OR expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 18 (expression -> expression OR expression .)
+    CLOSE_BRAKETS   reduce using rule 18 (expression -> expression OR expression .)
+    CLOSE_PAREN     reduce using rule 18 (expression -> expression OR expression .)
+    COMMA           reduce using rule 18 (expression -> expression OR expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! SUB             [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! MUL             [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! DIV             [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! OR              [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! NOT             [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! EQUALS          [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! GREATER         [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! LESSER          [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 18 (expression -> expression OR expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 18 (expression -> expression OR expression .) ]
+
+
+state 57
+
+    (19) expression -> expression NOT expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 19 (expression -> expression NOT expression .)
+    CLOSE_BRAKETS   reduce using rule 19 (expression -> expression NOT expression .)
+    CLOSE_PAREN     reduce using rule 19 (expression -> expression NOT expression .)
+    COMMA           reduce using rule 19 (expression -> expression NOT expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! SUB             [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! MUL             [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! DIV             [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! OR              [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! NOT             [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! EQUALS          [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! GREATER         [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! LESSER          [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 19 (expression -> expression NOT expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 19 (expression -> expression NOT expression .) ]
+
+
+state 58
+
+    (20) expression -> expression EQUALS expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 20 (expression -> expression EQUALS expression .)
+    CLOSE_BRAKETS   reduce using rule 20 (expression -> expression EQUALS expression .)
+    CLOSE_PAREN     reduce using rule 20 (expression -> expression EQUALS expression .)
+    COMMA           reduce using rule 20 (expression -> expression EQUALS expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! SUB             [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! MUL             [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! DIV             [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! OR              [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! NOT             [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! EQUALS          [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! GREATER         [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! LESSER          [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 20 (expression -> expression EQUALS expression .) ]
+
+
+state 59
+
+    (21) expression -> expression GREATER expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 21 (expression -> expression GREATER expression .)
+    CLOSE_BRAKETS   reduce using rule 21 (expression -> expression GREATER expression .)
+    CLOSE_PAREN     reduce using rule 21 (expression -> expression GREATER expression .)
+    COMMA           reduce using rule 21 (expression -> expression GREATER expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! SUB             [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! MUL             [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! DIV             [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! OR              [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! NOT             [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! EQUALS          [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! GREATER         [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! LESSER          [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 21 (expression -> expression GREATER expression .) ]
+
+
+state 60
+
+    (22) expression -> expression LESSER expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 22 (expression -> expression LESSER expression .)
+    CLOSE_BRAKETS   reduce using rule 22 (expression -> expression LESSER expression .)
+    CLOSE_PAREN     reduce using rule 22 (expression -> expression LESSER expression .)
+    COMMA           reduce using rule 22 (expression -> expression LESSER expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! SUB             [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! MUL             [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! DIV             [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! OR              [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! NOT             [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! EQUALS          [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! GREATER         [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! LESSER          [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 22 (expression -> expression LESSER expression .) ]
+
+
+state 61
+
+    (23) expression -> expression GREATER_OR_EQUALS expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .)
+    CLOSE_BRAKETS   reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .)
+    CLOSE_PAREN     reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .)
+    COMMA           reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! SUB             [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! MUL             [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! DIV             [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! OR              [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! NOT             [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! EQUALS          [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! GREATER         [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! LESSER          [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 23 (expression -> expression GREATER_OR_EQUALS expression .) ]
+
+
+state 62
+
+    (24) expression -> expression LESSER_OR_EQUALS expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for NOT resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESSER resolved as shift
+  ! shift/reduce conflict for GREATER_OR_EQUALS resolved as shift
+  ! shift/reduce conflict for LESSER_OR_EQUALS resolved as shift
+    SEMI_COLON      reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .)
+    CLOSE_BRAKETS   reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .)
+    CLOSE_PAREN     reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .)
+    COMMA           reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+  ! SUM             [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! SUB             [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! MUL             [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! DIV             [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! OR              [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! NOT             [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! EQUALS          [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! GREATER         [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! LESSER          [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! GREATER_OR_EQUALS [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+  ! LESSER_OR_EQUALS [ reduce using rule 24 (expression -> expression LESSER_OR_EQUALS expression .) ]
+
+
+state 63
+
+    (29) if_statement -> IF OPEN_PAREN expression . CLOSE_PAREN scope
+    (30) if_statement -> IF OPEN_PAREN expression . CLOSE_PAREN scope ELSE scope
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+    CLOSE_PAREN     shift and go to state 68
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+
+state 64
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression . SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+    SEMI_COLON      shift and go to state 69
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+
+state 65
+
+    (12) assignment -> term ASSING term .
+    (25) expression -> term .
+
+  ! reduce/reduce conflict for SEMI_COLON resolved using rule 12 (assignment -> term ASSING term .)
+  ! reduce/reduce conflict for COMMA resolved using rule 12 (assignment -> term ASSING term .)
+  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 12 (assignment -> term ASSING term .)
+  ! reduce/reduce conflict for CLOSE_BRAKETS resolved using rule 12 (assignment -> term ASSING term .)
+    SEMI_COLON      reduce using rule 12 (assignment -> term ASSING term .)
+    COMMA           reduce using rule 12 (assignment -> term ASSING term .)
+    CLOSE_PAREN     reduce using rule 12 (assignment -> term ASSING term .)
+    CLOSE_BRAKETS   reduce using rule 12 (assignment -> term ASSING term .)
+    SUM             reduce using rule 25 (expression -> term .)
+    SUB             reduce using rule 25 (expression -> term .)
+    MUL             reduce using rule 25 (expression -> term .)
+    DIV             reduce using rule 25 (expression -> term .)
+    OR              reduce using rule 25 (expression -> term .)
+    NOT             reduce using rule 25 (expression -> term .)
+    EQUALS          reduce using rule 25 (expression -> term .)
+    GREATER         reduce using rule 25 (expression -> term .)
+    LESSER          reduce using rule 25 (expression -> term .)
+    GREATER_OR_EQUALS reduce using rule 25 (expression -> term .)
+    LESSER_OR_EQUALS reduce using rule 25 (expression -> term .)
+
+  ! SEMI_COLON      [ reduce using rule 25 (expression -> term .) ]
+  ! COMMA           [ reduce using rule 25 (expression -> term .) ]
+  ! CLOSE_PAREN     [ reduce using rule 25 (expression -> term .) ]
+  ! CLOSE_BRAKETS   [ reduce using rule 25 (expression -> term .) ]
+
+
+state 66
+
+    (11) assignment -> term ASSING expression .
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+    SEMI_COLON      reduce using rule 11 (assignment -> term ASSING expression .)
+    COMMA           reduce using rule 11 (assignment -> term ASSING expression .)
+    CLOSE_PAREN     reduce using rule 11 (assignment -> term ASSING expression .)
+    CLOSE_BRAKETS   reduce using rule 11 (assignment -> term ASSING expression .)
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+
+state 67
+
+    (13) assignment -> term ASSING factor .
+    (26) expression -> factor .
+
+  ! reduce/reduce conflict for SEMI_COLON resolved using rule 13 (assignment -> term ASSING factor .)
+  ! reduce/reduce conflict for COMMA resolved using rule 13 (assignment -> term ASSING factor .)
+  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 13 (assignment -> term ASSING factor .)
+  ! reduce/reduce conflict for CLOSE_BRAKETS resolved using rule 13 (assignment -> term ASSING factor .)
+    SEMI_COLON      reduce using rule 13 (assignment -> term ASSING factor .)
+    COMMA           reduce using rule 13 (assignment -> term ASSING factor .)
+    CLOSE_PAREN     reduce using rule 13 (assignment -> term ASSING factor .)
+    CLOSE_BRAKETS   reduce using rule 13 (assignment -> term ASSING factor .)
+    SUM             reduce using rule 26 (expression -> factor .)
+    SUB             reduce using rule 26 (expression -> factor .)
+    MUL             reduce using rule 26 (expression -> factor .)
+    DIV             reduce using rule 26 (expression -> factor .)
+    OR              reduce using rule 26 (expression -> factor .)
+    NOT             reduce using rule 26 (expression -> factor .)
+    EQUALS          reduce using rule 26 (expression -> factor .)
+    GREATER         reduce using rule 26 (expression -> factor .)
+    LESSER          reduce using rule 26 (expression -> factor .)
+    GREATER_OR_EQUALS reduce using rule 26 (expression -> factor .)
+    LESSER_OR_EQUALS reduce using rule 26 (expression -> factor .)
+
+  ! SEMI_COLON      [ reduce using rule 26 (expression -> factor .) ]
+  ! COMMA           [ reduce using rule 26 (expression -> factor .) ]
+  ! CLOSE_PAREN     [ reduce using rule 26 (expression -> factor .) ]
+  ! CLOSE_BRAKETS   [ reduce using rule 26 (expression -> factor .) ]
+
+
+state 68
+
+    (29) if_statement -> IF OPEN_PAREN expression CLOSE_PAREN . scope
+    (30) if_statement -> IF OPEN_PAREN expression CLOSE_PAREN . scope ELSE scope
+    (2) scope -> . OPEN_BRAKETS statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 70
+
+state 69
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON . expression SEMI_COLON expression CLOSE_PAREN scope
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 71
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 70
+
+    (29) if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .
+    (30) if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope . ELSE scope
+
+    IDENTIFIER      reduce using rule 29 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .)
+    NUMBER          reduce using rule 29 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .)
+    INT             reduce using rule 29 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .)
+    FLOAT           reduce using rule 29 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .)
+    CHAR            reduce using rule 29 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .)
+    CLOSE_BRAKETS   reduce using rule 29 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope .)
+    ELSE            shift and go to state 72
+
+
+state 71
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression . SEMI_COLON expression CLOSE_PAREN scope
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+    SEMI_COLON      shift and go to state 73
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+
+state 72
+
+    (30) if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE . scope
+    (2) scope -> . OPEN_BRAKETS statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 74
+
+state 73
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON . expression CLOSE_PAREN scope
+    (14) expression -> . expression SUM expression
+    (15) expression -> . expression SUB expression
+    (16) expression -> . expression MUL expression
+    (17) expression -> . expression DIV expression
+    (18) expression -> . expression OR expression
+    (19) expression -> . expression NOT expression
+    (20) expression -> . expression EQUALS expression
+    (21) expression -> . expression GREATER expression
+    (22) expression -> . expression LESSER expression
+    (23) expression -> . expression GREATER_OR_EQUALS expression
+    (24) expression -> . expression LESSER_OR_EQUALS expression
+    (25) expression -> . term
+    (26) expression -> . factor
+    (27) term -> . IDENTIFIER
+    (31) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 26
+    NUMBER          shift and go to state 27
+
+    expression                     shift and go to state 75
+    term                           shift and go to state 52
+    factor                         shift and go to state 25
+
+state 74
+
+    (30) if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .
+
+    IDENTIFIER      reduce using rule 30 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .)
+    NUMBER          reduce using rule 30 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .)
+    INT             reduce using rule 30 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .)
+    FLOAT           reduce using rule 30 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .)
+    CHAR            reduce using rule 30 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .)
+    CLOSE_BRAKETS   reduce using rule 30 (if_statement -> IF OPEN_PAREN expression CLOSE_PAREN scope ELSE scope .)
+
+
+state 75
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression . CLOSE_PAREN scope
+    (14) expression -> expression . SUM expression
+    (15) expression -> expression . SUB expression
+    (16) expression -> expression . MUL expression
+    (17) expression -> expression . DIV expression
+    (18) expression -> expression . OR expression
+    (19) expression -> expression . NOT expression
+    (20) expression -> expression . EQUALS expression
+    (21) expression -> expression . GREATER expression
+    (22) expression -> expression . LESSER expression
+    (23) expression -> expression . GREATER_OR_EQUALS expression
+    (24) expression -> expression . LESSER_OR_EQUALS expression
+
+    CLOSE_PAREN     shift and go to state 76
+    SUM             shift and go to state 35
+    SUB             shift and go to state 36
+    MUL             shift and go to state 37
+    DIV             shift and go to state 38
+    OR              shift and go to state 39
+    NOT             shift and go to state 40
+    EQUALS          shift and go to state 41
+    GREATER         shift and go to state 42
+    LESSER          shift and go to state 43
+    GREATER_OR_EQUALS shift and go to state 44
+    LESSER_OR_EQUALS shift and go to state 45
+
+
+state 76
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN . scope
+    (2) scope -> . OPEN_BRAKETS statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 77
+
+state 77
+
+    (28) for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope .
+
+    CLOSE_BRAKETS   reduce using rule 28 (for_statement -> T_FOR OPEN_PAREN expression SEMI_COLON expression SEMI_COLON expression CLOSE_PAREN scope .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for SUM in state 37 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 37 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 37 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 37 resolved as shift
-WARNING: shift/reduce conflict for SUM in state 39 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 39 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 39 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 39 resolved as shift
-WARNING: shift/reduce conflict for SUM in state 40 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 40 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 40 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 40 resolved as shift
-WARNING: shift/reduce conflict for SUM in state 41 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 41 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 41 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 41 resolved as shift
-WARNING: reduce/reduce conflict in state 42 resolved using rule (assignment -> term ASSING term)
-WARNING: rejected rule (expression -> term) in state 42
-WARNING: reduce/reduce conflict in state 44 resolved using rule (assignment -> term ASSING factor)
-WARNING: rejected rule (expression -> factor) in state 44
+WARNING: shift/reduce conflict for SUM in state 51 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 51 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 51 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 51 resolved as shift
+WARNING: shift/reduce conflict for OR in state 51 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 51 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 51 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 51 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 51 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 51 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 51 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 53 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 53 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 53 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 53 resolved as shift
+WARNING: shift/reduce conflict for OR in state 53 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 53 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 53 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 53 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 53 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 53 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 53 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 54 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 54 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 54 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 54 resolved as shift
+WARNING: shift/reduce conflict for OR in state 54 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 54 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 54 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 54 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 54 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 54 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 54 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 55 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 55 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 55 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 55 resolved as shift
+WARNING: shift/reduce conflict for OR in state 55 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 55 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 55 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 55 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 55 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 55 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 55 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 56 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 56 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 56 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 56 resolved as shift
+WARNING: shift/reduce conflict for OR in state 56 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 56 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 56 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 56 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 56 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 56 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 56 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 57 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 57 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 57 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 57 resolved as shift
+WARNING: shift/reduce conflict for OR in state 57 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 57 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 57 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 57 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 57 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 57 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 57 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 58 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 58 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 58 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 58 resolved as shift
+WARNING: shift/reduce conflict for OR in state 58 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 58 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 58 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 58 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 58 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 58 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 58 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 59 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 59 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 59 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 59 resolved as shift
+WARNING: shift/reduce conflict for OR in state 59 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 59 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 59 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 59 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 59 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 59 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 59 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 60 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 60 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 60 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 60 resolved as shift
+WARNING: shift/reduce conflict for OR in state 60 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 60 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 60 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 60 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 60 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 60 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 60 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 61 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 61 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 61 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 61 resolved as shift
+WARNING: shift/reduce conflict for OR in state 61 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 61 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 61 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 61 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 61 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 61 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 61 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 62 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 62 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 62 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 62 resolved as shift
+WARNING: shift/reduce conflict for OR in state 62 resolved as shift
+WARNING: shift/reduce conflict for NOT in state 62 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 62 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 62 resolved as shift
+WARNING: shift/reduce conflict for LESSER in state 62 resolved as shift
+WARNING: shift/reduce conflict for GREATER_OR_EQUALS in state 62 resolved as shift
+WARNING: shift/reduce conflict for LESSER_OR_EQUALS in state 62 resolved as shift
+WARNING: reduce/reduce conflict in state 65 resolved using rule (assignment -> term ASSING term)
+WARNING: rejected rule (expression -> term) in state 65
+WARNING: reduce/reduce conflict in state 67 resolved using rule (assignment -> term ASSING factor)
+WARNING: rejected rule (expression -> factor) in state 67
