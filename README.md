@@ -1,7 +1,12 @@
-C compiler in pyhton 
+Simple C compiler in pyhton 
 
 It's necessary to install ply to use this compiler 
 
 ```
 pip install ply
+```
+
+
+```
+pip install llvmlite
 ```
