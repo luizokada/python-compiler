@@ -8,8 +8,8 @@ text = fille.read()
 lexer = Lexer()
 lexer.build()
 tokens = lexer.lexer.input(text)
-"""
-for token in lexer.lexer:
+
+"""for token in lexer.lexer:
     print (token)"""
 
 #input_str = [f"{tok[0]}:{tok[1]}" for tok in tokens]

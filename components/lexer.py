@@ -45,6 +45,7 @@ class Lexer():
         'MAIN',
         'INCREMENT',
         'DECREMENT',
+        'STRING_LITERAL',
     )
     # Print
     def t_PRINT(self, t):
@@ -76,7 +77,7 @@ class Lexer():
     t_LESSER = r'\<'
     t_LESSER_OR_EQUALS = r'\<\='
     t_ASSING = r'\='
-    t_AND = r'\&&'
+    t_AND = r'\&\&'
     t_OR = r'\|\|'
     t_NOT = r'\!'
     t_INCREMENT = r'\+\+'
@@ -118,6 +119,12 @@ class Lexer():
         r'double'
         return t
 
+    def t_STRING_LITERAL(self, t):
+        r'\"([^\"]*)\"'
+        print(t.value)
+        t.value = t.value
+        return t
+    
     # KEYWORDS
     def t_FOR(self, t):
         r'for'
@@ -146,6 +153,7 @@ class Lexer():
     def t_RETURN(self, t):
         r'return'
         return t
+    
 
     # IDENTIFIERS
     def t_IDENTIFIER(self, t):
@@ -153,7 +161,7 @@ class Lexer():
         return t
 
     def t_error(self, t):
-        print(f"Illegal character {t.value[0]}")
+        print(f"Illegal character {t.value}")
         t.lexer.skip(1)
 
     def build(self, **kwargs):

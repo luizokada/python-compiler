@@ -1,7 +1,6 @@
 int main(){
     int a = 30;
-    if (a > 10)
-    {
+    if (a > 10){
         int a = 10;
     }
     else{
@@ -12,4 +11,17 @@ int main(){
         a++;
     }
 
+    do{
+        a--;
+    } while (a > 0);
+
+    int res;
+
+    while (a<10)
+    {
+        a++;
+        float a;
+    }
+
+    return 0;
 } /*AAAAAAAAAAAAAAAAAAAAAAAAAAAA*/

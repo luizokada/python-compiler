@@ -73,6 +73,10 @@ class Parser:
                   | declaration SEMI_COLON
                   | if_statement
                   | for_statement
+                  | do_while_statement
+                  | while_statement
+                  | call_function
+                  | return_statement
                  
         """
         p[0] =  Node('statement', [p[1]])
@@ -83,11 +87,9 @@ class Parser:
                     | term ASSING term
                     | term ASSING factor 
         """
-        if(len(p)>=3):
-            
-            p[0] = Node('assignment', [p[1], p[3]],p[2])
+        if(len(p)>=3):          
+           p[0] = Node('assignment', [p[1],Node('assing',leaf = p[2]), p[3]])
        
-            
         pass
     
 
@@ -101,11 +103,12 @@ class Parser:
                    | expression DECREMENT
                    | expression INCREMENT
                    
+                   
         """
         if(len(p)==4):       
-            p[0] = Node("binop", [p[1], p[3]], p[2])
+            p[0] = Node("binop", [p[1],Node('operation',leaf= p[2]), p[3]])
         else:
-            p[0] = p[0] = Node("iteration_op", [p[1]], p[2])
+            p[0] = p[0] = Node("iteration_op", [p[1] ,Node('operation',leaf= p[2])])
             
             
     def p_expression_term(self, p):
@@ -144,7 +147,7 @@ class Parser:
     def p_if_statement(self, p):
         """
         if_statement : IF OPEN_PAREN condition CLOSE_PAREN scope 
-                            | IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
+                     | IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
         """
         if len(p) == 6:
             p[0] = Node('if', [Node('IF', leaf=p[1]), Node('PAREN', leaf=p[2]), p[3], Node('PAREN', leaf=p[4]), p[5]])
@@ -180,7 +183,7 @@ class Parser:
                    | expression LESSER_OR_EQUALS expression
                    
         """
-        p[0] = Node("condition", [p[1], p[3]], p[2])
+        p[0] = Node("condition", [p[1],Node('operation',leaf= p[2]), p[3]])
         pass
 
     def p_declaration(self,p):
@@ -211,6 +214,18 @@ class Parser:
             p[0] = Node('declarations', [p[1], p[3]])
         else:
             p[0] = Node('declarations', [p[1]])
+    def p_passing_param(self,p):
+        """
+        passing_param : term COMMA passing_param
+                      | term
+                      | factor COMMA passing_param
+                      | factor
+        """
+        if(len(p)>3):
+            p[0] = Node('PASSIN_PARAM', [p[1],p[3]])
+        else:
+            p[0] = Node('PASSIN_PARAM', [p[1]])
+            
         
     
     def p_param(self,p):
@@ -225,6 +240,59 @@ class Parser:
         pass
   
         
+    def p_do_while_statement(self,p):
+        """
+        do_while_statement : DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
+      
+        """
+        p[0] = Node('DO',[p[2],Node('WHILE',[p[5]])])
+        
+    def p_while_statement(self,p):
+        """
+        while_statement : WHILE OPEN_PAREN condition CLOSE_PAREN scope
+        
+        """
+        p[0] = Node('WHILE',[p[3],p[5]])
+    
+    def p_print_statement(self,p):
+        """
+        print_statement : PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON
+                        | PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
+        """ 
+        if(len(p)<7):
+            p[0] = Node('PRINT',[Node("STRING",leaf=p[3])])
+        else:
+            p[0] = Node('PRINT',[Node("STRING",leaf=p[3]),p[5]])
+            
+        
+    def p_call_function(self,p):
+        """
+        call_function : IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON
+                      | IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON
+                      | print_statement
+                      
+        """
+        print(len(p))
+        if(len(p)>5):
+            p[0] = Node('call_function',[Node('IDENTIFIER',leaf=p[1]),p[3]])
+        elif (len(p)>2):
+            p[0] = Node('call_function',[Node('IDENTIFIER',leaf=p[1])])
+        else:
+             p[0] = p[1]
+        pass
+    
+    def p_return_statement(self,p):
+        """
+        return_statement : RETURN expression SEMI_COLON
+                         | RETURN SEMI_COLON
+        """
+        print(len(p))
+        if(len(p)>3):
+            p[0]= Node('return',[p[2]])
+        else:
+            p[0] = Node('return',leaf=p[1])
+      
+            
     def p_error(self, p):
         print("Syntax error in input at line: ", p.lineno)
         print(p)

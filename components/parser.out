@@ -4,11 +4,7 @@ Unused terminals:
 
     AND
     BREAK
-    DO
     DOUBLE
-    PRINT
-    RETURN
-    WHILE
 
 Grammar
 
@@ -23,100 +19,124 @@ Rule 7     statement -> assignment SEMI_COLON
 Rule 8     statement -> declaration SEMI_COLON
 Rule 9     statement -> if_statement
 Rule 10    statement -> for_statement
-Rule 11    assignment -> term ASSING expression
-Rule 12    assignment -> term ASSING term
-Rule 13    assignment -> term ASSING factor
-Rule 14    expression -> expression SUM expression
-Rule 15    expression -> expression SUB expression
-Rule 16    expression -> expression MUL expression
-Rule 17    expression -> expression DIV expression
-Rule 18    expression -> expression DECREMENT
-Rule 19    expression -> expression INCREMENT
-Rule 20    expression -> term
-Rule 21    expression -> factor
-Rule 22    term -> IDENTIFIER
-Rule 23    for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
-Rule 24    for_initilizer -> assignment
-Rule 25    for_initilizer -> declaration
-Rule 26    if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope
-Rule 27    if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
-Rule 28    factor -> NUMBER
-Rule 29    type -> INT
-Rule 30    type -> FLOAT
-Rule 31    type -> CHAR
-Rule 32    condition -> expression OR expression
-Rule 33    condition -> expression NOT expression
-Rule 34    condition -> expression EQUALS expression
-Rule 35    condition -> expression GREATER expression
-Rule 36    condition -> expression LESSER expression
-Rule 37    condition -> expression GREATER_OR_EQUALS expression
-Rule 38    condition -> expression LESSER_OR_EQUALS expression
-Rule 39    declaration -> type term
-Rule 40    declaration -> type assignment
-Rule 41    declarations -> declaration COMMA declarations
-Rule 42    declarations -> declaration
-Rule 43    param -> OPEN_PAREN declarations CLOSE_PAREN
-Rule 44    param -> OPEN_PAREN CLOSE_PAREN
+Rule 11    statement -> do_while_statement
+Rule 12    statement -> while_statement
+Rule 13    statement -> call_function
+Rule 14    statement -> return_statement
+Rule 15    assignment -> term ASSING expression
+Rule 16    assignment -> term ASSING term
+Rule 17    assignment -> term ASSING factor
+Rule 18    expression -> expression SUM expression
+Rule 19    expression -> expression SUB expression
+Rule 20    expression -> expression MUL expression
+Rule 21    expression -> expression DIV expression
+Rule 22    expression -> expression DECREMENT
+Rule 23    expression -> expression INCREMENT
+Rule 24    expression -> term
+Rule 25    expression -> factor
+Rule 26    term -> IDENTIFIER
+Rule 27    for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+Rule 28    for_initilizer -> assignment
+Rule 29    for_initilizer -> declaration
+Rule 30    if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope
+Rule 31    if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
+Rule 32    factor -> NUMBER
+Rule 33    type -> INT
+Rule 34    type -> FLOAT
+Rule 35    type -> CHAR
+Rule 36    condition -> expression OR expression
+Rule 37    condition -> expression NOT expression
+Rule 38    condition -> expression EQUALS expression
+Rule 39    condition -> expression GREATER expression
+Rule 40    condition -> expression LESSER expression
+Rule 41    condition -> expression GREATER_OR_EQUALS expression
+Rule 42    condition -> expression LESSER_OR_EQUALS expression
+Rule 43    declaration -> type term
+Rule 44    declaration -> type assignment
+Rule 45    declarations -> declaration COMMA declarations
+Rule 46    declarations -> declaration
+Rule 47    passing_param -> term COMMA passing_param
+Rule 48    passing_param -> term
+Rule 49    passing_param -> factor COMMA passing_param
+Rule 50    passing_param -> factor
+Rule 51    param -> OPEN_PAREN declarations CLOSE_PAREN
+Rule 52    param -> OPEN_PAREN CLOSE_PAREN
+Rule 53    do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
+Rule 54    while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope
+Rule 55    print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON
+Rule 56    print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
+Rule 57    call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON
+Rule 58    call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON
+Rule 59    call_function -> print_statement
+Rule 60    return_statement -> RETURN expression SEMI_COLON
+Rule 61    return_statement -> RETURN SEMI_COLON
 
 Terminals, with rules where they appear
 
 AND                  : 
-ASSING               : 11 12 13
+ASSING               : 15 16 17
 BREAK                : 
-CHAR                 : 31
+CHAR                 : 35
 CLOSE_BRAKETS        : 2
-CLOSE_PAREN          : 23 26 27 43 44
-COMMA                : 41
-DECREMENT            : 18
-DIV                  : 17
-DO                   : 
+CLOSE_PAREN          : 27 30 31 51 52 53 54 55 56 57 58
+COMMA                : 45 47 49 56
+DECREMENT            : 22
+DIV                  : 21
+DO                   : 53
 DOUBLE               : 
-ELSE                 : 27
-EQUALS               : 34
-FLOAT                : 30
-FOR                  : 23
-GREATER              : 35
-GREATER_OR_EQUALS    : 37
-IDENTIFIER           : 22
-IF                   : 26 27
-INCREMENT            : 19
-INT                  : 29
-LESSER               : 36
-LESSER_OR_EQUALS     : 38
+ELSE                 : 31
+EQUALS               : 38
+FLOAT                : 34
+FOR                  : 27
+GREATER              : 39
+GREATER_OR_EQUALS    : 41
+IDENTIFIER           : 26 57 58
+IF                   : 30 31
+INCREMENT            : 23
+INT                  : 33
+LESSER               : 40
+LESSER_OR_EQUALS     : 42
 MAIN                 : 1
-MUL                  : 16
-NOT                  : 33
-NUMBER               : 28
+MUL                  : 20
+NOT                  : 37
+NUMBER               : 32
 OPEN_BRAKETS         : 2
-OPEN_PAREN           : 23 26 27 43 44
-OR                   : 32
-PRINT                : 
-RETURN               : 
-SEMI_COLON           : 6 7 8 23 23
-SUB                  : 15
-SUM                  : 14
-WHILE                : 
+OPEN_PAREN           : 27 30 31 51 52 53 54 55 56 57 58
+OR                   : 36
+PRINT                : 55 56
+RETURN               : 60 61
+SEMI_COLON           : 6 7 8 27 27 53 55 56 57 58 60 61
+STRING_LITERAL       : 55 56
+SUB                  : 19
+SUM                  : 18
+WHILE                : 53 54
 error                : 
 
 Nonterminals, with rules where they appear
 
-assignment           : 7 24 40
-condition            : 23 26 27
-declaration          : 8 25 41 42
-declarations         : 41 43
-expression           : 6 11 14 14 15 15 16 16 17 17 18 19 23 32 32 33 33 34 34 35 35 36 36 37 37 38 38
-factor               : 13 21
-for_initilizer       : 23
+assignment           : 7 28 44
+call_function        : 13
+condition            : 27 30 31 53 54
+declaration          : 8 29 45 46
+declarations         : 45 51
+do_while_statement   : 11
+expression           : 6 15 18 18 19 19 20 20 21 21 22 23 27 36 36 37 37 38 38 39 39 40 40 41 41 42 42 60
+factor               : 17 25 49 50
+for_initilizer       : 27
 for_statement        : 10
 if_statement         : 9
 main                 : 0
 new_scope            : 2
 param                : 1
-scope                : 1 23 26 27 27
+passing_param        : 47 49 56 57
+print_statement      : 59
+return_statement     : 14
+scope                : 1 27 30 31 31 53 54
 statement            : 4 5
 statements           : 2 4
-term                 : 11 12 12 13 20 39
-type                 : 1 39 40
+term                 : 15 16 16 17 24 43 47 48
+type                 : 1 43 44
+while_statement      : 12
 
 Parsing method: LALR
 
@@ -124,9 +144,9 @@ state 0
 
     (0) S' -> . main
     (1) main -> . type MAIN param scope
-    (29) type -> . INT
-    (30) type -> . FLOAT
-    (31) type -> . CHAR
+    (33) type -> . INT
+    (34) type -> . FLOAT
+    (35) type -> . CHAR
 
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
@@ -150,33 +170,33 @@ state 2
 
 state 3
 
-    (29) type -> INT .
+    (33) type -> INT .
 
-    MAIN            reduce using rule 29 (type -> INT .)
-    IDENTIFIER      reduce using rule 29 (type -> INT .)
+    MAIN            reduce using rule 33 (type -> INT .)
+    IDENTIFIER      reduce using rule 33 (type -> INT .)
 
 
 state 4
 
-    (30) type -> FLOAT .
+    (34) type -> FLOAT .
 
-    MAIN            reduce using rule 30 (type -> FLOAT .)
-    IDENTIFIER      reduce using rule 30 (type -> FLOAT .)
+    MAIN            reduce using rule 34 (type -> FLOAT .)
+    IDENTIFIER      reduce using rule 34 (type -> FLOAT .)
 
 
 state 5
 
-    (31) type -> CHAR .
+    (35) type -> CHAR .
 
-    MAIN            reduce using rule 31 (type -> CHAR .)
-    IDENTIFIER      reduce using rule 31 (type -> CHAR .)
+    MAIN            reduce using rule 35 (type -> CHAR .)
+    IDENTIFIER      reduce using rule 35 (type -> CHAR .)
 
 
 state 6
 
     (1) main -> type MAIN . param scope
-    (43) param -> . OPEN_PAREN declarations CLOSE_PAREN
-    (44) param -> . OPEN_PAREN CLOSE_PAREN
+    (51) param -> . OPEN_PAREN declarations CLOSE_PAREN
+    (52) param -> . OPEN_PAREN CLOSE_PAREN
 
     OPEN_PAREN      shift and go to state 8
 
@@ -193,15 +213,15 @@ state 7
 
 state 8
 
-    (43) param -> OPEN_PAREN . declarations CLOSE_PAREN
-    (44) param -> OPEN_PAREN . CLOSE_PAREN
-    (41) declarations -> . declaration COMMA declarations
-    (42) declarations -> . declaration
-    (39) declaration -> . type term
-    (40) declaration -> . type assignment
-    (29) type -> . INT
-    (30) type -> . FLOAT
-    (31) type -> . CHAR
+    (51) param -> OPEN_PAREN . declarations CLOSE_PAREN
+    (52) param -> OPEN_PAREN . CLOSE_PAREN
+    (45) declarations -> . declaration COMMA declarations
+    (46) declarations -> . declaration
+    (43) declaration -> . type term
+    (44) declaration -> . type assignment
+    (33) type -> . INT
+    (34) type -> . FLOAT
+    (35) type -> . CHAR
 
     CLOSE_PAREN     shift and go to state 12
     INT             shift and go to state 3
@@ -226,45 +246,49 @@ state 10
 
     IF              reduce using rule 3 (new_scope -> .)
     FOR             reduce using rule 3 (new_scope -> .)
+    DO              reduce using rule 3 (new_scope -> .)
+    WHILE           reduce using rule 3 (new_scope -> .)
     IDENTIFIER      reduce using rule 3 (new_scope -> .)
+    RETURN          reduce using rule 3 (new_scope -> .)
     NUMBER          reduce using rule 3 (new_scope -> .)
     INT             reduce using rule 3 (new_scope -> .)
     FLOAT           reduce using rule 3 (new_scope -> .)
     CHAR            reduce using rule 3 (new_scope -> .)
+    PRINT           reduce using rule 3 (new_scope -> .)
 
     new_scope                      shift and go to state 15
 
 state 11
 
-    (43) param -> OPEN_PAREN declarations . CLOSE_PAREN
+    (51) param -> OPEN_PAREN declarations . CLOSE_PAREN
 
     CLOSE_PAREN     shift and go to state 16
 
 
 state 12
 
-    (44) param -> OPEN_PAREN CLOSE_PAREN .
+    (52) param -> OPEN_PAREN CLOSE_PAREN .
 
-    OPEN_BRAKETS    reduce using rule 44 (param -> OPEN_PAREN CLOSE_PAREN .)
+    OPEN_BRAKETS    reduce using rule 52 (param -> OPEN_PAREN CLOSE_PAREN .)
 
 
 state 13
 
-    (41) declarations -> declaration . COMMA declarations
-    (42) declarations -> declaration .
+    (45) declarations -> declaration . COMMA declarations
+    (46) declarations -> declaration .
 
     COMMA           shift and go to state 17
-    CLOSE_PAREN     reduce using rule 42 (declarations -> declaration .)
+    CLOSE_PAREN     reduce using rule 46 (declarations -> declaration .)
 
 
 state 14
 
-    (39) declaration -> type . term
-    (40) declaration -> type . assignment
-    (22) term -> . IDENTIFIER
-    (11) assignment -> . term ASSING expression
-    (12) assignment -> . term ASSING term
-    (13) assignment -> . term ASSING factor
+    (43) declaration -> type . term
+    (44) declaration -> type . assignment
+    (26) term -> . IDENTIFIER
+    (15) assignment -> . term ASSING expression
+    (16) assignment -> . term ASSING term
+    (17) assignment -> . term ASSING factor
 
     IDENTIFIER      shift and go to state 20
 
@@ -281,35 +305,52 @@ state 15
     (8) statement -> . declaration SEMI_COLON
     (9) statement -> . if_statement
     (10) statement -> . for_statement
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (11) assignment -> . term ASSING expression
-    (12) assignment -> . term ASSING term
-    (13) assignment -> . term ASSING factor
-    (39) declaration -> . type term
-    (40) declaration -> . type assignment
-    (26) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope
-    (27) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
-    (23) for_statement -> . FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
-    (29) type -> . INT
-    (30) type -> . FLOAT
-    (31) type -> . CHAR
+    (11) statement -> . do_while_statement
+    (12) statement -> . while_statement
+    (13) statement -> . call_function
+    (14) statement -> . return_statement
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (15) assignment -> . term ASSING expression
+    (16) assignment -> . term ASSING term
+    (17) assignment -> . term ASSING factor
+    (43) declaration -> . type term
+    (44) declaration -> . type assignment
+    (30) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope
+    (31) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
+    (27) for_statement -> . FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+    (53) do_while_statement -> . DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
+    (54) while_statement -> . WHILE OPEN_PAREN condition CLOSE_PAREN scope
+    (57) call_function -> . IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON
+    (58) call_function -> . IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON
+    (59) call_function -> . print_statement
+    (60) return_statement -> . RETURN expression SEMI_COLON
+    (61) return_statement -> . RETURN SEMI_COLON
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+    (33) type -> . INT
+    (34) type -> . FLOAT
+    (35) type -> . CHAR
+    (55) print_statement -> . PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON
+    (56) print_statement -> . PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
 
-    IF              shift and go to state 30
-    FOR             shift and go to state 31
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    IF              shift and go to state 34
+    FOR             shift and go to state 35
+    DO              shift and go to state 36
+    WHILE           shift and go to state 37
+    IDENTIFIER      shift and go to state 38
+    RETURN          shift and go to state 40
+    NUMBER          shift and go to state 41
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
+    PRINT           shift and go to state 42
 
     statements                     shift and go to state 21
     statement                      shift and go to state 22
@@ -318,86 +359,91 @@ state 15
     declaration                    shift and go to state 25
     if_statement                   shift and go to state 26
     for_statement                  shift and go to state 27
-    term                           shift and go to state 28
-    factor                         shift and go to state 29
+    do_while_statement             shift and go to state 28
+    while_statement                shift and go to state 29
+    call_function                  shift and go to state 30
+    return_statement               shift and go to state 31
+    term                           shift and go to state 32
+    factor                         shift and go to state 33
     type                           shift and go to state 14
+    print_statement                shift and go to state 39
 
 state 16
 
-    (43) param -> OPEN_PAREN declarations CLOSE_PAREN .
+    (51) param -> OPEN_PAREN declarations CLOSE_PAREN .
 
-    OPEN_BRAKETS    reduce using rule 43 (param -> OPEN_PAREN declarations CLOSE_PAREN .)
+    OPEN_BRAKETS    reduce using rule 51 (param -> OPEN_PAREN declarations CLOSE_PAREN .)
 
 
 state 17
 
-    (41) declarations -> declaration COMMA . declarations
-    (41) declarations -> . declaration COMMA declarations
-    (42) declarations -> . declaration
-    (39) declaration -> . type term
-    (40) declaration -> . type assignment
-    (29) type -> . INT
-    (30) type -> . FLOAT
-    (31) type -> . CHAR
+    (45) declarations -> declaration COMMA . declarations
+    (45) declarations -> . declaration COMMA declarations
+    (46) declarations -> . declaration
+    (43) declaration -> . type term
+    (44) declaration -> . type assignment
+    (33) type -> . INT
+    (34) type -> . FLOAT
+    (35) type -> . CHAR
 
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
 
     declaration                    shift and go to state 13
-    declarations                   shift and go to state 33
+    declarations                   shift and go to state 43
     type                           shift and go to state 14
 
 state 18
 
-    (39) declaration -> type term .
-    (11) assignment -> term . ASSING expression
-    (12) assignment -> term . ASSING term
-    (13) assignment -> term . ASSING factor
+    (43) declaration -> type term .
+    (15) assignment -> term . ASSING expression
+    (16) assignment -> term . ASSING term
+    (17) assignment -> term . ASSING factor
 
-    COMMA           reduce using rule 39 (declaration -> type term .)
-    CLOSE_PAREN     reduce using rule 39 (declaration -> type term .)
-    SEMI_COLON      reduce using rule 39 (declaration -> type term .)
-    ASSING          shift and go to state 34
+    COMMA           reduce using rule 43 (declaration -> type term .)
+    CLOSE_PAREN     reduce using rule 43 (declaration -> type term .)
+    SEMI_COLON      reduce using rule 43 (declaration -> type term .)
+    ASSING          shift and go to state 44
 
 
 state 19
 
-    (40) declaration -> type assignment .
+    (44) declaration -> type assignment .
 
-    COMMA           reduce using rule 40 (declaration -> type assignment .)
-    CLOSE_PAREN     reduce using rule 40 (declaration -> type assignment .)
-    SEMI_COLON      reduce using rule 40 (declaration -> type assignment .)
+    COMMA           reduce using rule 44 (declaration -> type assignment .)
+    CLOSE_PAREN     reduce using rule 44 (declaration -> type assignment .)
+    SEMI_COLON      reduce using rule 44 (declaration -> type assignment .)
 
 
 state 20
 
-    (22) term -> IDENTIFIER .
+    (26) term -> IDENTIFIER .
 
-    ASSING          reduce using rule 22 (term -> IDENTIFIER .)
-    COMMA           reduce using rule 22 (term -> IDENTIFIER .)
-    CLOSE_PAREN     reduce using rule 22 (term -> IDENTIFIER .)
-    SEMI_COLON      reduce using rule 22 (term -> IDENTIFIER .)
-    SUM             reduce using rule 22 (term -> IDENTIFIER .)
-    SUB             reduce using rule 22 (term -> IDENTIFIER .)
-    MUL             reduce using rule 22 (term -> IDENTIFIER .)
-    DIV             reduce using rule 22 (term -> IDENTIFIER .)
-    DECREMENT       reduce using rule 22 (term -> IDENTIFIER .)
-    INCREMENT       reduce using rule 22 (term -> IDENTIFIER .)
-    OR              reduce using rule 22 (term -> IDENTIFIER .)
-    NOT             reduce using rule 22 (term -> IDENTIFIER .)
-    EQUALS          reduce using rule 22 (term -> IDENTIFIER .)
-    GREATER         reduce using rule 22 (term -> IDENTIFIER .)
-    LESSER          reduce using rule 22 (term -> IDENTIFIER .)
-    GREATER_OR_EQUALS reduce using rule 22 (term -> IDENTIFIER .)
-    LESSER_OR_EQUALS reduce using rule 22 (term -> IDENTIFIER .)
+    ASSING          reduce using rule 26 (term -> IDENTIFIER .)
+    COMMA           reduce using rule 26 (term -> IDENTIFIER .)
+    CLOSE_PAREN     reduce using rule 26 (term -> IDENTIFIER .)
+    SEMI_COLON      reduce using rule 26 (term -> IDENTIFIER .)
+    SUM             reduce using rule 26 (term -> IDENTIFIER .)
+    SUB             reduce using rule 26 (term -> IDENTIFIER .)
+    MUL             reduce using rule 26 (term -> IDENTIFIER .)
+    DIV             reduce using rule 26 (term -> IDENTIFIER .)
+    DECREMENT       reduce using rule 26 (term -> IDENTIFIER .)
+    INCREMENT       reduce using rule 26 (term -> IDENTIFIER .)
+    OR              reduce using rule 26 (term -> IDENTIFIER .)
+    NOT             reduce using rule 26 (term -> IDENTIFIER .)
+    EQUALS          reduce using rule 26 (term -> IDENTIFIER .)
+    GREATER         reduce using rule 26 (term -> IDENTIFIER .)
+    LESSER          reduce using rule 26 (term -> IDENTIFIER .)
+    GREATER_OR_EQUALS reduce using rule 26 (term -> IDENTIFIER .)
+    LESSER_OR_EQUALS reduce using rule 26 (term -> IDENTIFIER .)
 
 
 state 21
 
     (2) scope -> OPEN_BRAKETS new_scope statements . CLOSE_BRAKETS
 
-    CLOSE_BRAKETS   shift and go to state 35
+    CLOSE_BRAKETS   shift and go to state 45
 
 
 state 22
@@ -411,79 +457,101 @@ state 22
     (8) statement -> . declaration SEMI_COLON
     (9) statement -> . if_statement
     (10) statement -> . for_statement
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (11) assignment -> . term ASSING expression
-    (12) assignment -> . term ASSING term
-    (13) assignment -> . term ASSING factor
-    (39) declaration -> . type term
-    (40) declaration -> . type assignment
-    (26) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope
-    (27) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
-    (23) for_statement -> . FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
-    (29) type -> . INT
-    (30) type -> . FLOAT
-    (31) type -> . CHAR
+    (11) statement -> . do_while_statement
+    (12) statement -> . while_statement
+    (13) statement -> . call_function
+    (14) statement -> . return_statement
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (15) assignment -> . term ASSING expression
+    (16) assignment -> . term ASSING term
+    (17) assignment -> . term ASSING factor
+    (43) declaration -> . type term
+    (44) declaration -> . type assignment
+    (30) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope
+    (31) if_statement -> . IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
+    (27) for_statement -> . FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+    (53) do_while_statement -> . DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
+    (54) while_statement -> . WHILE OPEN_PAREN condition CLOSE_PAREN scope
+    (57) call_function -> . IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON
+    (58) call_function -> . IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON
+    (59) call_function -> . print_statement
+    (60) return_statement -> . RETURN expression SEMI_COLON
+    (61) return_statement -> . RETURN SEMI_COLON
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+    (33) type -> . INT
+    (34) type -> . FLOAT
+    (35) type -> . CHAR
+    (55) print_statement -> . PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON
+    (56) print_statement -> . PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
 
     CLOSE_BRAKETS   reduce using rule 5 (statements -> statement .)
-    IF              shift and go to state 30
-    FOR             shift and go to state 31
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    IF              shift and go to state 34
+    FOR             shift and go to state 35
+    DO              shift and go to state 36
+    WHILE           shift and go to state 37
+    IDENTIFIER      shift and go to state 38
+    RETURN          shift and go to state 40
+    NUMBER          shift and go to state 41
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
+    PRINT           shift and go to state 42
 
     statement                      shift and go to state 22
-    statements                     shift and go to state 36
+    statements                     shift and go to state 46
     expression                     shift and go to state 23
     assignment                     shift and go to state 24
     declaration                    shift and go to state 25
     if_statement                   shift and go to state 26
     for_statement                  shift and go to state 27
-    term                           shift and go to state 28
-    factor                         shift and go to state 29
+    do_while_statement             shift and go to state 28
+    while_statement                shift and go to state 29
+    call_function                  shift and go to state 30
+    return_statement               shift and go to state 31
+    term                           shift and go to state 32
+    factor                         shift and go to state 33
     type                           shift and go to state 14
+    print_statement                shift and go to state 39
 
 state 23
 
     (6) statement -> expression . SEMI_COLON
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    SEMI_COLON      shift and go to state 37
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    SEMI_COLON      shift and go to state 47
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
 
 state 24
 
     (7) statement -> assignment . SEMI_COLON
 
-    SEMI_COLON      shift and go to state 44
+    SEMI_COLON      shift and go to state 54
 
 
 state 25
 
     (8) statement -> declaration . SEMI_COLON
 
-    SEMI_COLON      shift and go to state 45
+    SEMI_COLON      shift and go to state 55
 
 
 state 26
@@ -492,11 +560,15 @@ state 26
 
     IF              reduce using rule 9 (statement -> if_statement .)
     FOR             reduce using rule 9 (statement -> if_statement .)
+    DO              reduce using rule 9 (statement -> if_statement .)
+    WHILE           reduce using rule 9 (statement -> if_statement .)
     IDENTIFIER      reduce using rule 9 (statement -> if_statement .)
+    RETURN          reduce using rule 9 (statement -> if_statement .)
     NUMBER          reduce using rule 9 (statement -> if_statement .)
     INT             reduce using rule 9 (statement -> if_statement .)
     FLOAT           reduce using rule 9 (statement -> if_statement .)
     CHAR            reduce using rule 9 (statement -> if_statement .)
+    PRINT           reduce using rule 9 (statement -> if_statement .)
     CLOSE_BRAKETS   reduce using rule 9 (statement -> if_statement .)
 
 
@@ -506,1153 +578,1765 @@ state 27
 
     IF              reduce using rule 10 (statement -> for_statement .)
     FOR             reduce using rule 10 (statement -> for_statement .)
+    DO              reduce using rule 10 (statement -> for_statement .)
+    WHILE           reduce using rule 10 (statement -> for_statement .)
     IDENTIFIER      reduce using rule 10 (statement -> for_statement .)
+    RETURN          reduce using rule 10 (statement -> for_statement .)
     NUMBER          reduce using rule 10 (statement -> for_statement .)
     INT             reduce using rule 10 (statement -> for_statement .)
     FLOAT           reduce using rule 10 (statement -> for_statement .)
     CHAR            reduce using rule 10 (statement -> for_statement .)
+    PRINT           reduce using rule 10 (statement -> for_statement .)
     CLOSE_BRAKETS   reduce using rule 10 (statement -> for_statement .)
 
 
 state 28
 
-    (20) expression -> term .
-    (11) assignment -> term . ASSING expression
-    (12) assignment -> term . ASSING term
-    (13) assignment -> term . ASSING factor
+    (11) statement -> do_while_statement .
 
-    SEMI_COLON      reduce using rule 20 (expression -> term .)
-    SUM             reduce using rule 20 (expression -> term .)
-    SUB             reduce using rule 20 (expression -> term .)
-    MUL             reduce using rule 20 (expression -> term .)
-    DIV             reduce using rule 20 (expression -> term .)
-    DECREMENT       reduce using rule 20 (expression -> term .)
-    INCREMENT       reduce using rule 20 (expression -> term .)
-    ASSING          shift and go to state 34
+    IF              reduce using rule 11 (statement -> do_while_statement .)
+    FOR             reduce using rule 11 (statement -> do_while_statement .)
+    DO              reduce using rule 11 (statement -> do_while_statement .)
+    WHILE           reduce using rule 11 (statement -> do_while_statement .)
+    IDENTIFIER      reduce using rule 11 (statement -> do_while_statement .)
+    RETURN          reduce using rule 11 (statement -> do_while_statement .)
+    NUMBER          reduce using rule 11 (statement -> do_while_statement .)
+    INT             reduce using rule 11 (statement -> do_while_statement .)
+    FLOAT           reduce using rule 11 (statement -> do_while_statement .)
+    CHAR            reduce using rule 11 (statement -> do_while_statement .)
+    PRINT           reduce using rule 11 (statement -> do_while_statement .)
+    CLOSE_BRAKETS   reduce using rule 11 (statement -> do_while_statement .)
 
 
 state 29
 
-    (21) expression -> factor .
+    (12) statement -> while_statement .
 
-    SEMI_COLON      reduce using rule 21 (expression -> factor .)
-    SUM             reduce using rule 21 (expression -> factor .)
-    SUB             reduce using rule 21 (expression -> factor .)
-    MUL             reduce using rule 21 (expression -> factor .)
-    DIV             reduce using rule 21 (expression -> factor .)
-    DECREMENT       reduce using rule 21 (expression -> factor .)
-    INCREMENT       reduce using rule 21 (expression -> factor .)
-    COMMA           reduce using rule 21 (expression -> factor .)
-    CLOSE_PAREN     reduce using rule 21 (expression -> factor .)
-    OR              reduce using rule 21 (expression -> factor .)
-    NOT             reduce using rule 21 (expression -> factor .)
-    EQUALS          reduce using rule 21 (expression -> factor .)
-    GREATER         reduce using rule 21 (expression -> factor .)
-    LESSER          reduce using rule 21 (expression -> factor .)
-    GREATER_OR_EQUALS reduce using rule 21 (expression -> factor .)
-    LESSER_OR_EQUALS reduce using rule 21 (expression -> factor .)
+    IF              reduce using rule 12 (statement -> while_statement .)
+    FOR             reduce using rule 12 (statement -> while_statement .)
+    DO              reduce using rule 12 (statement -> while_statement .)
+    WHILE           reduce using rule 12 (statement -> while_statement .)
+    IDENTIFIER      reduce using rule 12 (statement -> while_statement .)
+    RETURN          reduce using rule 12 (statement -> while_statement .)
+    NUMBER          reduce using rule 12 (statement -> while_statement .)
+    INT             reduce using rule 12 (statement -> while_statement .)
+    FLOAT           reduce using rule 12 (statement -> while_statement .)
+    CHAR            reduce using rule 12 (statement -> while_statement .)
+    PRINT           reduce using rule 12 (statement -> while_statement .)
+    CLOSE_BRAKETS   reduce using rule 12 (statement -> while_statement .)
 
 
 state 30
 
-    (26) if_statement -> IF . OPEN_PAREN condition CLOSE_PAREN scope
-    (27) if_statement -> IF . OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
+    (13) statement -> call_function .
 
-    OPEN_PAREN      shift and go to state 46
+    IF              reduce using rule 13 (statement -> call_function .)
+    FOR             reduce using rule 13 (statement -> call_function .)
+    DO              reduce using rule 13 (statement -> call_function .)
+    WHILE           reduce using rule 13 (statement -> call_function .)
+    IDENTIFIER      reduce using rule 13 (statement -> call_function .)
+    RETURN          reduce using rule 13 (statement -> call_function .)
+    NUMBER          reduce using rule 13 (statement -> call_function .)
+    INT             reduce using rule 13 (statement -> call_function .)
+    FLOAT           reduce using rule 13 (statement -> call_function .)
+    CHAR            reduce using rule 13 (statement -> call_function .)
+    PRINT           reduce using rule 13 (statement -> call_function .)
+    CLOSE_BRAKETS   reduce using rule 13 (statement -> call_function .)
 
 
 state 31
 
-    (23) for_statement -> FOR . OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+    (14) statement -> return_statement .
 
-    OPEN_PAREN      shift and go to state 47
+    IF              reduce using rule 14 (statement -> return_statement .)
+    FOR             reduce using rule 14 (statement -> return_statement .)
+    DO              reduce using rule 14 (statement -> return_statement .)
+    WHILE           reduce using rule 14 (statement -> return_statement .)
+    IDENTIFIER      reduce using rule 14 (statement -> return_statement .)
+    RETURN          reduce using rule 14 (statement -> return_statement .)
+    NUMBER          reduce using rule 14 (statement -> return_statement .)
+    INT             reduce using rule 14 (statement -> return_statement .)
+    FLOAT           reduce using rule 14 (statement -> return_statement .)
+    CHAR            reduce using rule 14 (statement -> return_statement .)
+    PRINT           reduce using rule 14 (statement -> return_statement .)
+    CLOSE_BRAKETS   reduce using rule 14 (statement -> return_statement .)
 
 
 state 32
 
-    (28) factor -> NUMBER .
+    (24) expression -> term .
+    (15) assignment -> term . ASSING expression
+    (16) assignment -> term . ASSING term
+    (17) assignment -> term . ASSING factor
 
-    SEMI_COLON      reduce using rule 28 (factor -> NUMBER .)
-    SUM             reduce using rule 28 (factor -> NUMBER .)
-    SUB             reduce using rule 28 (factor -> NUMBER .)
-    MUL             reduce using rule 28 (factor -> NUMBER .)
-    DIV             reduce using rule 28 (factor -> NUMBER .)
-    DECREMENT       reduce using rule 28 (factor -> NUMBER .)
-    INCREMENT       reduce using rule 28 (factor -> NUMBER .)
-    COMMA           reduce using rule 28 (factor -> NUMBER .)
-    CLOSE_PAREN     reduce using rule 28 (factor -> NUMBER .)
-    OR              reduce using rule 28 (factor -> NUMBER .)
-    NOT             reduce using rule 28 (factor -> NUMBER .)
-    EQUALS          reduce using rule 28 (factor -> NUMBER .)
-    GREATER         reduce using rule 28 (factor -> NUMBER .)
-    LESSER          reduce using rule 28 (factor -> NUMBER .)
-    GREATER_OR_EQUALS reduce using rule 28 (factor -> NUMBER .)
-    LESSER_OR_EQUALS reduce using rule 28 (factor -> NUMBER .)
+    SEMI_COLON      reduce using rule 24 (expression -> term .)
+    SUM             reduce using rule 24 (expression -> term .)
+    SUB             reduce using rule 24 (expression -> term .)
+    MUL             reduce using rule 24 (expression -> term .)
+    DIV             reduce using rule 24 (expression -> term .)
+    DECREMENT       reduce using rule 24 (expression -> term .)
+    INCREMENT       reduce using rule 24 (expression -> term .)
+    ASSING          shift and go to state 44
 
 
 state 33
 
-    (41) declarations -> declaration COMMA declarations .
+    (25) expression -> factor .
 
-    CLOSE_PAREN     reduce using rule 41 (declarations -> declaration COMMA declarations .)
+    SEMI_COLON      reduce using rule 25 (expression -> factor .)
+    SUM             reduce using rule 25 (expression -> factor .)
+    SUB             reduce using rule 25 (expression -> factor .)
+    MUL             reduce using rule 25 (expression -> factor .)
+    DIV             reduce using rule 25 (expression -> factor .)
+    DECREMENT       reduce using rule 25 (expression -> factor .)
+    INCREMENT       reduce using rule 25 (expression -> factor .)
+    COMMA           reduce using rule 25 (expression -> factor .)
+    CLOSE_PAREN     reduce using rule 25 (expression -> factor .)
+    OR              reduce using rule 25 (expression -> factor .)
+    NOT             reduce using rule 25 (expression -> factor .)
+    EQUALS          reduce using rule 25 (expression -> factor .)
+    GREATER         reduce using rule 25 (expression -> factor .)
+    LESSER          reduce using rule 25 (expression -> factor .)
+    GREATER_OR_EQUALS reduce using rule 25 (expression -> factor .)
+    LESSER_OR_EQUALS reduce using rule 25 (expression -> factor .)
 
 
 state 34
 
-    (11) assignment -> term ASSING . expression
-    (12) assignment -> term ASSING . term
-    (13) assignment -> term ASSING . factor
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (30) if_statement -> IF . OPEN_PAREN condition CLOSE_PAREN scope
+    (31) if_statement -> IF . OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    OPEN_PAREN      shift and go to state 56
 
-    term                           shift and go to state 48
-    expression                     shift and go to state 49
-    factor                         shift and go to state 50
 
 state 35
+
+    (27) for_statement -> FOR . OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+
+    OPEN_PAREN      shift and go to state 57
+
+
+state 36
+
+    (53) do_while_statement -> DO . scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
+    (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 58
+
+state 37
+
+    (54) while_statement -> WHILE . OPEN_PAREN condition CLOSE_PAREN scope
+
+    OPEN_PAREN      shift and go to state 59
+
+
+state 38
+
+    (57) call_function -> IDENTIFIER . OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON
+    (58) call_function -> IDENTIFIER . OPEN_PAREN CLOSE_PAREN SEMI_COLON
+    (26) term -> IDENTIFIER .
+
+    OPEN_PAREN      shift and go to state 60
+    ASSING          reduce using rule 26 (term -> IDENTIFIER .)
+    SEMI_COLON      reduce using rule 26 (term -> IDENTIFIER .)
+    SUM             reduce using rule 26 (term -> IDENTIFIER .)
+    SUB             reduce using rule 26 (term -> IDENTIFIER .)
+    MUL             reduce using rule 26 (term -> IDENTIFIER .)
+    DIV             reduce using rule 26 (term -> IDENTIFIER .)
+    DECREMENT       reduce using rule 26 (term -> IDENTIFIER .)
+    INCREMENT       reduce using rule 26 (term -> IDENTIFIER .)
+
+
+state 39
+
+    (59) call_function -> print_statement .
+
+    IF              reduce using rule 59 (call_function -> print_statement .)
+    FOR             reduce using rule 59 (call_function -> print_statement .)
+    DO              reduce using rule 59 (call_function -> print_statement .)
+    WHILE           reduce using rule 59 (call_function -> print_statement .)
+    IDENTIFIER      reduce using rule 59 (call_function -> print_statement .)
+    RETURN          reduce using rule 59 (call_function -> print_statement .)
+    NUMBER          reduce using rule 59 (call_function -> print_statement .)
+    INT             reduce using rule 59 (call_function -> print_statement .)
+    FLOAT           reduce using rule 59 (call_function -> print_statement .)
+    CHAR            reduce using rule 59 (call_function -> print_statement .)
+    PRINT           reduce using rule 59 (call_function -> print_statement .)
+    CLOSE_BRAKETS   reduce using rule 59 (call_function -> print_statement .)
+
+
+state 40
+
+    (60) return_statement -> RETURN . expression SEMI_COLON
+    (61) return_statement -> RETURN . SEMI_COLON
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    SEMI_COLON      shift and go to state 62
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 61
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 41
+
+    (32) factor -> NUMBER .
+
+    SEMI_COLON      reduce using rule 32 (factor -> NUMBER .)
+    SUM             reduce using rule 32 (factor -> NUMBER .)
+    SUB             reduce using rule 32 (factor -> NUMBER .)
+    MUL             reduce using rule 32 (factor -> NUMBER .)
+    DIV             reduce using rule 32 (factor -> NUMBER .)
+    DECREMENT       reduce using rule 32 (factor -> NUMBER .)
+    INCREMENT       reduce using rule 32 (factor -> NUMBER .)
+    COMMA           reduce using rule 32 (factor -> NUMBER .)
+    CLOSE_PAREN     reduce using rule 32 (factor -> NUMBER .)
+    OR              reduce using rule 32 (factor -> NUMBER .)
+    NOT             reduce using rule 32 (factor -> NUMBER .)
+    EQUALS          reduce using rule 32 (factor -> NUMBER .)
+    GREATER         reduce using rule 32 (factor -> NUMBER .)
+    LESSER          reduce using rule 32 (factor -> NUMBER .)
+    GREATER_OR_EQUALS reduce using rule 32 (factor -> NUMBER .)
+    LESSER_OR_EQUALS reduce using rule 32 (factor -> NUMBER .)
+
+
+state 42
+
+    (55) print_statement -> PRINT . OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON
+    (56) print_statement -> PRINT . OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
+
+    OPEN_PAREN      shift and go to state 64
+
+
+state 43
+
+    (45) declarations -> declaration COMMA declarations .
+
+    CLOSE_PAREN     reduce using rule 45 (declarations -> declaration COMMA declarations .)
+
+
+state 44
+
+    (15) assignment -> term ASSING . expression
+    (16) assignment -> term ASSING . term
+    (17) assignment -> term ASSING . factor
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    term                           shift and go to state 65
+    expression                     shift and go to state 66
+    factor                         shift and go to state 67
+
+state 45
 
     (2) scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .
 
     $end            reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
+    WHILE           reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     ELSE            reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     IF              reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     FOR             reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
+    DO              reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     IDENTIFIER      reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
+    RETURN          reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     NUMBER          reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     INT             reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     FLOAT           reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     CHAR            reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
+    PRINT           reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
     CLOSE_BRAKETS   reduce using rule 2 (scope -> OPEN_BRAKETS new_scope statements CLOSE_BRAKETS .)
 
 
-state 36
+state 46
 
     (4) statements -> statement statements .
 
     CLOSE_BRAKETS   reduce using rule 4 (statements -> statement statements .)
 
 
-state 37
+state 47
 
     (6) statement -> expression SEMI_COLON .
 
     IF              reduce using rule 6 (statement -> expression SEMI_COLON .)
     FOR             reduce using rule 6 (statement -> expression SEMI_COLON .)
+    DO              reduce using rule 6 (statement -> expression SEMI_COLON .)
+    WHILE           reduce using rule 6 (statement -> expression SEMI_COLON .)
     IDENTIFIER      reduce using rule 6 (statement -> expression SEMI_COLON .)
+    RETURN          reduce using rule 6 (statement -> expression SEMI_COLON .)
     NUMBER          reduce using rule 6 (statement -> expression SEMI_COLON .)
     INT             reduce using rule 6 (statement -> expression SEMI_COLON .)
     FLOAT           reduce using rule 6 (statement -> expression SEMI_COLON .)
     CHAR            reduce using rule 6 (statement -> expression SEMI_COLON .)
+    PRINT           reduce using rule 6 (statement -> expression SEMI_COLON .)
     CLOSE_BRAKETS   reduce using rule 6 (statement -> expression SEMI_COLON .)
 
 
-state 38
+state 48
 
-    (14) expression -> expression SUM . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
-
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
-
-    expression                     shift and go to state 51
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
-
-state 39
-
-    (15) expression -> expression SUB . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (18) expression -> expression SUM . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
     IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    NUMBER          shift and go to state 41
 
-    expression                     shift and go to state 53
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+    expression                     shift and go to state 68
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
 
-state 40
+state 49
 
-    (16) expression -> expression MUL . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
-
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
-
-    expression                     shift and go to state 54
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
-
-state 41
-
-    (17) expression -> expression DIV . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (19) expression -> expression SUB . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
     IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    NUMBER          shift and go to state 41
 
-    expression                     shift and go to state 55
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+    expression                     shift and go to state 69
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
 
-state 42
+state 50
 
-    (18) expression -> expression DECREMENT .
+    (20) expression -> expression MUL . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
-    SEMI_COLON      reduce using rule 18 (expression -> expression DECREMENT .)
-    SUM             reduce using rule 18 (expression -> expression DECREMENT .)
-    SUB             reduce using rule 18 (expression -> expression DECREMENT .)
-    MUL             reduce using rule 18 (expression -> expression DECREMENT .)
-    DIV             reduce using rule 18 (expression -> expression DECREMENT .)
-    DECREMENT       reduce using rule 18 (expression -> expression DECREMENT .)
-    INCREMENT       reduce using rule 18 (expression -> expression DECREMENT .)
-    COMMA           reduce using rule 18 (expression -> expression DECREMENT .)
-    CLOSE_PAREN     reduce using rule 18 (expression -> expression DECREMENT .)
-    OR              reduce using rule 18 (expression -> expression DECREMENT .)
-    NOT             reduce using rule 18 (expression -> expression DECREMENT .)
-    EQUALS          reduce using rule 18 (expression -> expression DECREMENT .)
-    GREATER         reduce using rule 18 (expression -> expression DECREMENT .)
-    LESSER          reduce using rule 18 (expression -> expression DECREMENT .)
-    GREATER_OR_EQUALS reduce using rule 18 (expression -> expression DECREMENT .)
-    LESSER_OR_EQUALS reduce using rule 18 (expression -> expression DECREMENT .)
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 70
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 51
+
+    (21) expression -> expression DIV . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 71
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 52
+
+    (22) expression -> expression DECREMENT .
+
+    SEMI_COLON      reduce using rule 22 (expression -> expression DECREMENT .)
+    SUM             reduce using rule 22 (expression -> expression DECREMENT .)
+    SUB             reduce using rule 22 (expression -> expression DECREMENT .)
+    MUL             reduce using rule 22 (expression -> expression DECREMENT .)
+    DIV             reduce using rule 22 (expression -> expression DECREMENT .)
+    DECREMENT       reduce using rule 22 (expression -> expression DECREMENT .)
+    INCREMENT       reduce using rule 22 (expression -> expression DECREMENT .)
+    COMMA           reduce using rule 22 (expression -> expression DECREMENT .)
+    CLOSE_PAREN     reduce using rule 22 (expression -> expression DECREMENT .)
+    OR              reduce using rule 22 (expression -> expression DECREMENT .)
+    NOT             reduce using rule 22 (expression -> expression DECREMENT .)
+    EQUALS          reduce using rule 22 (expression -> expression DECREMENT .)
+    GREATER         reduce using rule 22 (expression -> expression DECREMENT .)
+    LESSER          reduce using rule 22 (expression -> expression DECREMENT .)
+    GREATER_OR_EQUALS reduce using rule 22 (expression -> expression DECREMENT .)
+    LESSER_OR_EQUALS reduce using rule 22 (expression -> expression DECREMENT .)
 
 
-state 43
+state 53
 
-    (19) expression -> expression INCREMENT .
+    (23) expression -> expression INCREMENT .
 
-    SEMI_COLON      reduce using rule 19 (expression -> expression INCREMENT .)
-    SUM             reduce using rule 19 (expression -> expression INCREMENT .)
-    SUB             reduce using rule 19 (expression -> expression INCREMENT .)
-    MUL             reduce using rule 19 (expression -> expression INCREMENT .)
-    DIV             reduce using rule 19 (expression -> expression INCREMENT .)
-    DECREMENT       reduce using rule 19 (expression -> expression INCREMENT .)
-    INCREMENT       reduce using rule 19 (expression -> expression INCREMENT .)
-    COMMA           reduce using rule 19 (expression -> expression INCREMENT .)
-    CLOSE_PAREN     reduce using rule 19 (expression -> expression INCREMENT .)
-    OR              reduce using rule 19 (expression -> expression INCREMENT .)
-    NOT             reduce using rule 19 (expression -> expression INCREMENT .)
-    EQUALS          reduce using rule 19 (expression -> expression INCREMENT .)
-    GREATER         reduce using rule 19 (expression -> expression INCREMENT .)
-    LESSER          reduce using rule 19 (expression -> expression INCREMENT .)
-    GREATER_OR_EQUALS reduce using rule 19 (expression -> expression INCREMENT .)
-    LESSER_OR_EQUALS reduce using rule 19 (expression -> expression INCREMENT .)
+    SEMI_COLON      reduce using rule 23 (expression -> expression INCREMENT .)
+    SUM             reduce using rule 23 (expression -> expression INCREMENT .)
+    SUB             reduce using rule 23 (expression -> expression INCREMENT .)
+    MUL             reduce using rule 23 (expression -> expression INCREMENT .)
+    DIV             reduce using rule 23 (expression -> expression INCREMENT .)
+    DECREMENT       reduce using rule 23 (expression -> expression INCREMENT .)
+    INCREMENT       reduce using rule 23 (expression -> expression INCREMENT .)
+    COMMA           reduce using rule 23 (expression -> expression INCREMENT .)
+    CLOSE_PAREN     reduce using rule 23 (expression -> expression INCREMENT .)
+    OR              reduce using rule 23 (expression -> expression INCREMENT .)
+    NOT             reduce using rule 23 (expression -> expression INCREMENT .)
+    EQUALS          reduce using rule 23 (expression -> expression INCREMENT .)
+    GREATER         reduce using rule 23 (expression -> expression INCREMENT .)
+    LESSER          reduce using rule 23 (expression -> expression INCREMENT .)
+    GREATER_OR_EQUALS reduce using rule 23 (expression -> expression INCREMENT .)
+    LESSER_OR_EQUALS reduce using rule 23 (expression -> expression INCREMENT .)
 
 
-state 44
+state 54
 
     (7) statement -> assignment SEMI_COLON .
 
     IF              reduce using rule 7 (statement -> assignment SEMI_COLON .)
     FOR             reduce using rule 7 (statement -> assignment SEMI_COLON .)
+    DO              reduce using rule 7 (statement -> assignment SEMI_COLON .)
+    WHILE           reduce using rule 7 (statement -> assignment SEMI_COLON .)
     IDENTIFIER      reduce using rule 7 (statement -> assignment SEMI_COLON .)
+    RETURN          reduce using rule 7 (statement -> assignment SEMI_COLON .)
     NUMBER          reduce using rule 7 (statement -> assignment SEMI_COLON .)
     INT             reduce using rule 7 (statement -> assignment SEMI_COLON .)
     FLOAT           reduce using rule 7 (statement -> assignment SEMI_COLON .)
     CHAR            reduce using rule 7 (statement -> assignment SEMI_COLON .)
+    PRINT           reduce using rule 7 (statement -> assignment SEMI_COLON .)
     CLOSE_BRAKETS   reduce using rule 7 (statement -> assignment SEMI_COLON .)
 
 
-state 45
+state 55
 
     (8) statement -> declaration SEMI_COLON .
 
     IF              reduce using rule 8 (statement -> declaration SEMI_COLON .)
     FOR             reduce using rule 8 (statement -> declaration SEMI_COLON .)
+    DO              reduce using rule 8 (statement -> declaration SEMI_COLON .)
+    WHILE           reduce using rule 8 (statement -> declaration SEMI_COLON .)
     IDENTIFIER      reduce using rule 8 (statement -> declaration SEMI_COLON .)
+    RETURN          reduce using rule 8 (statement -> declaration SEMI_COLON .)
     NUMBER          reduce using rule 8 (statement -> declaration SEMI_COLON .)
     INT             reduce using rule 8 (statement -> declaration SEMI_COLON .)
     FLOAT           reduce using rule 8 (statement -> declaration SEMI_COLON .)
     CHAR            reduce using rule 8 (statement -> declaration SEMI_COLON .)
+    PRINT           reduce using rule 8 (statement -> declaration SEMI_COLON .)
     CLOSE_BRAKETS   reduce using rule 8 (statement -> declaration SEMI_COLON .)
 
 
-state 46
+state 56
 
-    (26) if_statement -> IF OPEN_PAREN . condition CLOSE_PAREN scope
-    (27) if_statement -> IF OPEN_PAREN . condition CLOSE_PAREN scope ELSE scope
-    (32) condition -> . expression OR expression
-    (33) condition -> . expression NOT expression
-    (34) condition -> . expression EQUALS expression
-    (35) condition -> . expression GREATER expression
-    (36) condition -> . expression LESSER expression
-    (37) condition -> . expression GREATER_OR_EQUALS expression
-    (38) condition -> . expression LESSER_OR_EQUALS expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (30) if_statement -> IF OPEN_PAREN . condition CLOSE_PAREN scope
+    (31) if_statement -> IF OPEN_PAREN . condition CLOSE_PAREN scope ELSE scope
+    (36) condition -> . expression OR expression
+    (37) condition -> . expression NOT expression
+    (38) condition -> . expression EQUALS expression
+    (39) condition -> . expression GREATER expression
+    (40) condition -> . expression LESSER expression
+    (41) condition -> . expression GREATER_OR_EQUALS expression
+    (42) condition -> . expression LESSER_OR_EQUALS expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
     IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    NUMBER          shift and go to state 41
 
-    condition                      shift and go to state 56
-    expression                     shift and go to state 57
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+    condition                      shift and go to state 72
+    expression                     shift and go to state 73
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
 
-state 47
+state 57
 
-    (23) for_statement -> FOR OPEN_PAREN . for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
-    (24) for_initilizer -> . assignment
-    (25) for_initilizer -> . declaration
-    (11) assignment -> . term ASSING expression
-    (12) assignment -> . term ASSING term
-    (13) assignment -> . term ASSING factor
-    (39) declaration -> . type term
-    (40) declaration -> . type assignment
-    (22) term -> . IDENTIFIER
-    (29) type -> . INT
-    (30) type -> . FLOAT
-    (31) type -> . CHAR
+    (27) for_statement -> FOR OPEN_PAREN . for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+    (28) for_initilizer -> . assignment
+    (29) for_initilizer -> . declaration
+    (15) assignment -> . term ASSING expression
+    (16) assignment -> . term ASSING term
+    (17) assignment -> . term ASSING factor
+    (43) declaration -> . type term
+    (44) declaration -> . type assignment
+    (26) term -> . IDENTIFIER
+    (33) type -> . INT
+    (34) type -> . FLOAT
+    (35) type -> . CHAR
 
     IDENTIFIER      shift and go to state 20
     INT             shift and go to state 3
     FLOAT           shift and go to state 4
     CHAR            shift and go to state 5
 
-    for_initilizer                 shift and go to state 58
-    assignment                     shift and go to state 59
-    declaration                    shift and go to state 60
-    term                           shift and go to state 61
+    for_initilizer                 shift and go to state 74
+    assignment                     shift and go to state 75
+    declaration                    shift and go to state 76
+    term                           shift and go to state 77
     type                           shift and go to state 14
-
-state 48
-
-    (12) assignment -> term ASSING term .
-    (20) expression -> term .
-
-  ! reduce/reduce conflict for COMMA resolved using rule 12 (assignment -> term ASSING term .)
-  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 12 (assignment -> term ASSING term .)
-  ! reduce/reduce conflict for SEMI_COLON resolved using rule 12 (assignment -> term ASSING term .)
-    COMMA           reduce using rule 12 (assignment -> term ASSING term .)
-    CLOSE_PAREN     reduce using rule 12 (assignment -> term ASSING term .)
-    SEMI_COLON      reduce using rule 12 (assignment -> term ASSING term .)
-    SUM             reduce using rule 20 (expression -> term .)
-    SUB             reduce using rule 20 (expression -> term .)
-    MUL             reduce using rule 20 (expression -> term .)
-    DIV             reduce using rule 20 (expression -> term .)
-    DECREMENT       reduce using rule 20 (expression -> term .)
-    INCREMENT       reduce using rule 20 (expression -> term .)
-
-  ! COMMA           [ reduce using rule 20 (expression -> term .) ]
-  ! CLOSE_PAREN     [ reduce using rule 20 (expression -> term .) ]
-  ! SEMI_COLON      [ reduce using rule 20 (expression -> term .) ]
-
-
-state 49
-
-    (11) assignment -> term ASSING expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
-
-    COMMA           reduce using rule 11 (assignment -> term ASSING expression .)
-    CLOSE_PAREN     reduce using rule 11 (assignment -> term ASSING expression .)
-    SEMI_COLON      reduce using rule 11 (assignment -> term ASSING expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
-
-
-state 50
-
-    (13) assignment -> term ASSING factor .
-    (21) expression -> factor .
-
-  ! reduce/reduce conflict for COMMA resolved using rule 13 (assignment -> term ASSING factor .)
-  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 13 (assignment -> term ASSING factor .)
-  ! reduce/reduce conflict for SEMI_COLON resolved using rule 13 (assignment -> term ASSING factor .)
-    COMMA           reduce using rule 13 (assignment -> term ASSING factor .)
-    CLOSE_PAREN     reduce using rule 13 (assignment -> term ASSING factor .)
-    SEMI_COLON      reduce using rule 13 (assignment -> term ASSING factor .)
-    SUM             reduce using rule 21 (expression -> factor .)
-    SUB             reduce using rule 21 (expression -> factor .)
-    MUL             reduce using rule 21 (expression -> factor .)
-    DIV             reduce using rule 21 (expression -> factor .)
-    DECREMENT       reduce using rule 21 (expression -> factor .)
-    INCREMENT       reduce using rule 21 (expression -> factor .)
-
-  ! COMMA           [ reduce using rule 21 (expression -> factor .) ]
-  ! CLOSE_PAREN     [ reduce using rule 21 (expression -> factor .) ]
-  ! SEMI_COLON      [ reduce using rule 21 (expression -> factor .) ]
-
-
-state 51
-
-    (14) expression -> expression SUM expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
-
-  ! shift/reduce conflict for SUM resolved as shift
-  ! shift/reduce conflict for SUB resolved as shift
-  ! shift/reduce conflict for MUL resolved as shift
-  ! shift/reduce conflict for DIV resolved as shift
-  ! shift/reduce conflict for DECREMENT resolved as shift
-  ! shift/reduce conflict for INCREMENT resolved as shift
-    SEMI_COLON      reduce using rule 14 (expression -> expression SUM expression .)
-    COMMA           reduce using rule 14 (expression -> expression SUM expression .)
-    CLOSE_PAREN     reduce using rule 14 (expression -> expression SUM expression .)
-    OR              reduce using rule 14 (expression -> expression SUM expression .)
-    NOT             reduce using rule 14 (expression -> expression SUM expression .)
-    EQUALS          reduce using rule 14 (expression -> expression SUM expression .)
-    GREATER         reduce using rule 14 (expression -> expression SUM expression .)
-    LESSER          reduce using rule 14 (expression -> expression SUM expression .)
-    GREATER_OR_EQUALS reduce using rule 14 (expression -> expression SUM expression .)
-    LESSER_OR_EQUALS reduce using rule 14 (expression -> expression SUM expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
-
-  ! SUM             [ reduce using rule 14 (expression -> expression SUM expression .) ]
-  ! SUB             [ reduce using rule 14 (expression -> expression SUM expression .) ]
-  ! MUL             [ reduce using rule 14 (expression -> expression SUM expression .) ]
-  ! DIV             [ reduce using rule 14 (expression -> expression SUM expression .) ]
-  ! DECREMENT       [ reduce using rule 14 (expression -> expression SUM expression .) ]
-  ! INCREMENT       [ reduce using rule 14 (expression -> expression SUM expression .) ]
-
-
-state 52
-
-    (20) expression -> term .
-
-    SUM             reduce using rule 20 (expression -> term .)
-    SUB             reduce using rule 20 (expression -> term .)
-    MUL             reduce using rule 20 (expression -> term .)
-    DIV             reduce using rule 20 (expression -> term .)
-    DECREMENT       reduce using rule 20 (expression -> term .)
-    INCREMENT       reduce using rule 20 (expression -> term .)
-    SEMI_COLON      reduce using rule 20 (expression -> term .)
-    COMMA           reduce using rule 20 (expression -> term .)
-    CLOSE_PAREN     reduce using rule 20 (expression -> term .)
-    OR              reduce using rule 20 (expression -> term .)
-    NOT             reduce using rule 20 (expression -> term .)
-    EQUALS          reduce using rule 20 (expression -> term .)
-    GREATER         reduce using rule 20 (expression -> term .)
-    LESSER          reduce using rule 20 (expression -> term .)
-    GREATER_OR_EQUALS reduce using rule 20 (expression -> term .)
-    LESSER_OR_EQUALS reduce using rule 20 (expression -> term .)
-
-
-state 53
-
-    (15) expression -> expression SUB expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
-
-  ! shift/reduce conflict for SUM resolved as shift
-  ! shift/reduce conflict for SUB resolved as shift
-  ! shift/reduce conflict for MUL resolved as shift
-  ! shift/reduce conflict for DIV resolved as shift
-  ! shift/reduce conflict for DECREMENT resolved as shift
-  ! shift/reduce conflict for INCREMENT resolved as shift
-    SEMI_COLON      reduce using rule 15 (expression -> expression SUB expression .)
-    COMMA           reduce using rule 15 (expression -> expression SUB expression .)
-    CLOSE_PAREN     reduce using rule 15 (expression -> expression SUB expression .)
-    OR              reduce using rule 15 (expression -> expression SUB expression .)
-    NOT             reduce using rule 15 (expression -> expression SUB expression .)
-    EQUALS          reduce using rule 15 (expression -> expression SUB expression .)
-    GREATER         reduce using rule 15 (expression -> expression SUB expression .)
-    LESSER          reduce using rule 15 (expression -> expression SUB expression .)
-    GREATER_OR_EQUALS reduce using rule 15 (expression -> expression SUB expression .)
-    LESSER_OR_EQUALS reduce using rule 15 (expression -> expression SUB expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
-
-  ! SUM             [ reduce using rule 15 (expression -> expression SUB expression .) ]
-  ! SUB             [ reduce using rule 15 (expression -> expression SUB expression .) ]
-  ! MUL             [ reduce using rule 15 (expression -> expression SUB expression .) ]
-  ! DIV             [ reduce using rule 15 (expression -> expression SUB expression .) ]
-  ! DECREMENT       [ reduce using rule 15 (expression -> expression SUB expression .) ]
-  ! INCREMENT       [ reduce using rule 15 (expression -> expression SUB expression .) ]
-
-
-state 54
-
-    (16) expression -> expression MUL expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
-
-  ! shift/reduce conflict for SUM resolved as shift
-  ! shift/reduce conflict for SUB resolved as shift
-  ! shift/reduce conflict for MUL resolved as shift
-  ! shift/reduce conflict for DIV resolved as shift
-  ! shift/reduce conflict for DECREMENT resolved as shift
-  ! shift/reduce conflict for INCREMENT resolved as shift
-    SEMI_COLON      reduce using rule 16 (expression -> expression MUL expression .)
-    COMMA           reduce using rule 16 (expression -> expression MUL expression .)
-    CLOSE_PAREN     reduce using rule 16 (expression -> expression MUL expression .)
-    OR              reduce using rule 16 (expression -> expression MUL expression .)
-    NOT             reduce using rule 16 (expression -> expression MUL expression .)
-    EQUALS          reduce using rule 16 (expression -> expression MUL expression .)
-    GREATER         reduce using rule 16 (expression -> expression MUL expression .)
-    LESSER          reduce using rule 16 (expression -> expression MUL expression .)
-    GREATER_OR_EQUALS reduce using rule 16 (expression -> expression MUL expression .)
-    LESSER_OR_EQUALS reduce using rule 16 (expression -> expression MUL expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
-
-  ! SUM             [ reduce using rule 16 (expression -> expression MUL expression .) ]
-  ! SUB             [ reduce using rule 16 (expression -> expression MUL expression .) ]
-  ! MUL             [ reduce using rule 16 (expression -> expression MUL expression .) ]
-  ! DIV             [ reduce using rule 16 (expression -> expression MUL expression .) ]
-  ! DECREMENT       [ reduce using rule 16 (expression -> expression MUL expression .) ]
-  ! INCREMENT       [ reduce using rule 16 (expression -> expression MUL expression .) ]
-
-
-state 55
-
-    (17) expression -> expression DIV expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
-
-  ! shift/reduce conflict for SUM resolved as shift
-  ! shift/reduce conflict for SUB resolved as shift
-  ! shift/reduce conflict for MUL resolved as shift
-  ! shift/reduce conflict for DIV resolved as shift
-  ! shift/reduce conflict for DECREMENT resolved as shift
-  ! shift/reduce conflict for INCREMENT resolved as shift
-    SEMI_COLON      reduce using rule 17 (expression -> expression DIV expression .)
-    COMMA           reduce using rule 17 (expression -> expression DIV expression .)
-    CLOSE_PAREN     reduce using rule 17 (expression -> expression DIV expression .)
-    OR              reduce using rule 17 (expression -> expression DIV expression .)
-    NOT             reduce using rule 17 (expression -> expression DIV expression .)
-    EQUALS          reduce using rule 17 (expression -> expression DIV expression .)
-    GREATER         reduce using rule 17 (expression -> expression DIV expression .)
-    LESSER          reduce using rule 17 (expression -> expression DIV expression .)
-    GREATER_OR_EQUALS reduce using rule 17 (expression -> expression DIV expression .)
-    LESSER_OR_EQUALS reduce using rule 17 (expression -> expression DIV expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
-
-  ! SUM             [ reduce using rule 17 (expression -> expression DIV expression .) ]
-  ! SUB             [ reduce using rule 17 (expression -> expression DIV expression .) ]
-  ! MUL             [ reduce using rule 17 (expression -> expression DIV expression .) ]
-  ! DIV             [ reduce using rule 17 (expression -> expression DIV expression .) ]
-  ! DECREMENT       [ reduce using rule 17 (expression -> expression DIV expression .) ]
-  ! INCREMENT       [ reduce using rule 17 (expression -> expression DIV expression .) ]
-
-
-state 56
-
-    (26) if_statement -> IF OPEN_PAREN condition . CLOSE_PAREN scope
-    (27) if_statement -> IF OPEN_PAREN condition . CLOSE_PAREN scope ELSE scope
-
-    CLOSE_PAREN     shift and go to state 62
-
-
-state 57
-
-    (32) condition -> expression . OR expression
-    (33) condition -> expression . NOT expression
-    (34) condition -> expression . EQUALS expression
-    (35) condition -> expression . GREATER expression
-    (36) condition -> expression . LESSER expression
-    (37) condition -> expression . GREATER_OR_EQUALS expression
-    (38) condition -> expression . LESSER_OR_EQUALS expression
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
-
-    OR              shift and go to state 63
-    NOT             shift and go to state 64
-    EQUALS          shift and go to state 65
-    GREATER         shift and go to state 66
-    LESSER          shift and go to state 67
-    GREATER_OR_EQUALS shift and go to state 68
-    LESSER_OR_EQUALS shift and go to state 69
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
-
 
 state 58
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer . SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
+    (53) do_while_statement -> DO scope . WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
 
-    SEMI_COLON      shift and go to state 70
+    WHILE           shift and go to state 78
 
 
 state 59
 
-    (24) for_initilizer -> assignment .
+    (54) while_statement -> WHILE OPEN_PAREN . condition CLOSE_PAREN scope
+    (36) condition -> . expression OR expression
+    (37) condition -> . expression NOT expression
+    (38) condition -> . expression EQUALS expression
+    (39) condition -> . expression GREATER expression
+    (40) condition -> . expression LESSER expression
+    (41) condition -> . expression GREATER_OR_EQUALS expression
+    (42) condition -> . expression LESSER_OR_EQUALS expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
-    SEMI_COLON      reduce using rule 24 (for_initilizer -> assignment .)
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
 
+    condition                      shift and go to state 79
+    expression                     shift and go to state 73
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
 
 state 60
 
-    (25) for_initilizer -> declaration .
+    (57) call_function -> IDENTIFIER OPEN_PAREN . passing_param CLOSE_PAREN SEMI_COLON
+    (58) call_function -> IDENTIFIER OPEN_PAREN . CLOSE_PAREN SEMI_COLON
+    (47) passing_param -> . term COMMA passing_param
+    (48) passing_param -> . term
+    (49) passing_param -> . factor COMMA passing_param
+    (50) passing_param -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
-    SEMI_COLON      reduce using rule 25 (for_initilizer -> declaration .)
+    CLOSE_PAREN     shift and go to state 81
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
 
+    passing_param                  shift and go to state 80
+    term                           shift and go to state 82
+    factor                         shift and go to state 83
 
 state 61
 
-    (11) assignment -> term . ASSING expression
-    (12) assignment -> term . ASSING term
-    (13) assignment -> term . ASSING factor
+    (60) return_statement -> RETURN expression . SEMI_COLON
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    ASSING          shift and go to state 34
+    SEMI_COLON      shift and go to state 84
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
 
 state 62
 
-    (26) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN . scope
-    (27) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN . scope ELSE scope
-    (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+    (61) return_statement -> RETURN SEMI_COLON .
 
-    OPEN_BRAKETS    shift and go to state 10
+    IF              reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    FOR             reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    DO              reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    WHILE           reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    IDENTIFIER      reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    RETURN          reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    NUMBER          reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    INT             reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    FLOAT           reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    CHAR            reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    PRINT           reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 61 (return_statement -> RETURN SEMI_COLON .)
 
-    scope                          shift and go to state 71
 
 state 63
 
-    (32) condition -> expression OR . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (24) expression -> term .
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    SEMI_COLON      reduce using rule 24 (expression -> term .)
+    SUM             reduce using rule 24 (expression -> term .)
+    SUB             reduce using rule 24 (expression -> term .)
+    MUL             reduce using rule 24 (expression -> term .)
+    DIV             reduce using rule 24 (expression -> term .)
+    DECREMENT       reduce using rule 24 (expression -> term .)
+    INCREMENT       reduce using rule 24 (expression -> term .)
+    COMMA           reduce using rule 24 (expression -> term .)
+    CLOSE_PAREN     reduce using rule 24 (expression -> term .)
+    OR              reduce using rule 24 (expression -> term .)
+    NOT             reduce using rule 24 (expression -> term .)
+    EQUALS          reduce using rule 24 (expression -> term .)
+    GREATER         reduce using rule 24 (expression -> term .)
+    LESSER          reduce using rule 24 (expression -> term .)
+    GREATER_OR_EQUALS reduce using rule 24 (expression -> term .)
+    LESSER_OR_EQUALS reduce using rule 24 (expression -> term .)
 
-    expression                     shift and go to state 72
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
 
 state 64
 
-    (33) condition -> expression NOT . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (55) print_statement -> PRINT OPEN_PAREN . STRING_LITERAL CLOSE_PAREN SEMI_COLON
+    (56) print_statement -> PRINT OPEN_PAREN . STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    STRING_LITERAL  shift and go to state 85
 
-    expression                     shift and go to state 73
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
 
 state 65
 
-    (34) condition -> expression EQUALS . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (16) assignment -> term ASSING term .
+    (24) expression -> term .
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+  ! reduce/reduce conflict for COMMA resolved using rule 16 (assignment -> term ASSING term .)
+  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 16 (assignment -> term ASSING term .)
+  ! reduce/reduce conflict for SEMI_COLON resolved using rule 16 (assignment -> term ASSING term .)
+    COMMA           reduce using rule 16 (assignment -> term ASSING term .)
+    CLOSE_PAREN     reduce using rule 16 (assignment -> term ASSING term .)
+    SEMI_COLON      reduce using rule 16 (assignment -> term ASSING term .)
+    SUM             reduce using rule 24 (expression -> term .)
+    SUB             reduce using rule 24 (expression -> term .)
+    MUL             reduce using rule 24 (expression -> term .)
+    DIV             reduce using rule 24 (expression -> term .)
+    DECREMENT       reduce using rule 24 (expression -> term .)
+    INCREMENT       reduce using rule 24 (expression -> term .)
 
-    expression                     shift and go to state 74
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+  ! COMMA           [ reduce using rule 24 (expression -> term .) ]
+  ! CLOSE_PAREN     [ reduce using rule 24 (expression -> term .) ]
+  ! SEMI_COLON      [ reduce using rule 24 (expression -> term .) ]
+
 
 state 66
 
-    (35) condition -> expression GREATER . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (15) assignment -> term ASSING expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    COMMA           reduce using rule 15 (assignment -> term ASSING expression .)
+    CLOSE_PAREN     reduce using rule 15 (assignment -> term ASSING expression .)
+    SEMI_COLON      reduce using rule 15 (assignment -> term ASSING expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
-    expression                     shift and go to state 75
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
 
 state 67
 
-    (36) condition -> expression LESSER . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (17) assignment -> term ASSING factor .
+    (25) expression -> factor .
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+  ! reduce/reduce conflict for COMMA resolved using rule 17 (assignment -> term ASSING factor .)
+  ! reduce/reduce conflict for CLOSE_PAREN resolved using rule 17 (assignment -> term ASSING factor .)
+  ! reduce/reduce conflict for SEMI_COLON resolved using rule 17 (assignment -> term ASSING factor .)
+    COMMA           reduce using rule 17 (assignment -> term ASSING factor .)
+    CLOSE_PAREN     reduce using rule 17 (assignment -> term ASSING factor .)
+    SEMI_COLON      reduce using rule 17 (assignment -> term ASSING factor .)
+    SUM             reduce using rule 25 (expression -> factor .)
+    SUB             reduce using rule 25 (expression -> factor .)
+    MUL             reduce using rule 25 (expression -> factor .)
+    DIV             reduce using rule 25 (expression -> factor .)
+    DECREMENT       reduce using rule 25 (expression -> factor .)
+    INCREMENT       reduce using rule 25 (expression -> factor .)
 
-    expression                     shift and go to state 76
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+  ! COMMA           [ reduce using rule 25 (expression -> factor .) ]
+  ! CLOSE_PAREN     [ reduce using rule 25 (expression -> factor .) ]
+  ! SEMI_COLON      [ reduce using rule 25 (expression -> factor .) ]
+
 
 state 68
 
-    (37) condition -> expression GREATER_OR_EQUALS . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (18) expression -> expression SUM expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for DECREMENT resolved as shift
+  ! shift/reduce conflict for INCREMENT resolved as shift
+    SEMI_COLON      reduce using rule 18 (expression -> expression SUM expression .)
+    COMMA           reduce using rule 18 (expression -> expression SUM expression .)
+    CLOSE_PAREN     reduce using rule 18 (expression -> expression SUM expression .)
+    OR              reduce using rule 18 (expression -> expression SUM expression .)
+    NOT             reduce using rule 18 (expression -> expression SUM expression .)
+    EQUALS          reduce using rule 18 (expression -> expression SUM expression .)
+    GREATER         reduce using rule 18 (expression -> expression SUM expression .)
+    LESSER          reduce using rule 18 (expression -> expression SUM expression .)
+    GREATER_OR_EQUALS reduce using rule 18 (expression -> expression SUM expression .)
+    LESSER_OR_EQUALS reduce using rule 18 (expression -> expression SUM expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
-    expression                     shift and go to state 77
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+  ! SUM             [ reduce using rule 18 (expression -> expression SUM expression .) ]
+  ! SUB             [ reduce using rule 18 (expression -> expression SUM expression .) ]
+  ! MUL             [ reduce using rule 18 (expression -> expression SUM expression .) ]
+  ! DIV             [ reduce using rule 18 (expression -> expression SUM expression .) ]
+  ! DECREMENT       [ reduce using rule 18 (expression -> expression SUM expression .) ]
+  ! INCREMENT       [ reduce using rule 18 (expression -> expression SUM expression .) ]
+
 
 state 69
 
-    (38) condition -> expression LESSER_OR_EQUALS . expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (19) expression -> expression SUB expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for DECREMENT resolved as shift
+  ! shift/reduce conflict for INCREMENT resolved as shift
+    SEMI_COLON      reduce using rule 19 (expression -> expression SUB expression .)
+    COMMA           reduce using rule 19 (expression -> expression SUB expression .)
+    CLOSE_PAREN     reduce using rule 19 (expression -> expression SUB expression .)
+    OR              reduce using rule 19 (expression -> expression SUB expression .)
+    NOT             reduce using rule 19 (expression -> expression SUB expression .)
+    EQUALS          reduce using rule 19 (expression -> expression SUB expression .)
+    GREATER         reduce using rule 19 (expression -> expression SUB expression .)
+    LESSER          reduce using rule 19 (expression -> expression SUB expression .)
+    GREATER_OR_EQUALS reduce using rule 19 (expression -> expression SUB expression .)
+    LESSER_OR_EQUALS reduce using rule 19 (expression -> expression SUB expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
-    expression                     shift and go to state 78
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+  ! SUM             [ reduce using rule 19 (expression -> expression SUB expression .) ]
+  ! SUB             [ reduce using rule 19 (expression -> expression SUB expression .) ]
+  ! MUL             [ reduce using rule 19 (expression -> expression SUB expression .) ]
+  ! DIV             [ reduce using rule 19 (expression -> expression SUB expression .) ]
+  ! DECREMENT       [ reduce using rule 19 (expression -> expression SUB expression .) ]
+  ! INCREMENT       [ reduce using rule 19 (expression -> expression SUB expression .) ]
+
 
 state 70
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON . condition SEMI_COLON expression CLOSE_PAREN scope
-    (32) condition -> . expression OR expression
-    (33) condition -> . expression NOT expression
-    (34) condition -> . expression EQUALS expression
-    (35) condition -> . expression GREATER expression
-    (36) condition -> . expression LESSER expression
-    (37) condition -> . expression GREATER_OR_EQUALS expression
-    (38) condition -> . expression LESSER_OR_EQUALS expression
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (20) expression -> expression MUL expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for DECREMENT resolved as shift
+  ! shift/reduce conflict for INCREMENT resolved as shift
+    SEMI_COLON      reduce using rule 20 (expression -> expression MUL expression .)
+    COMMA           reduce using rule 20 (expression -> expression MUL expression .)
+    CLOSE_PAREN     reduce using rule 20 (expression -> expression MUL expression .)
+    OR              reduce using rule 20 (expression -> expression MUL expression .)
+    NOT             reduce using rule 20 (expression -> expression MUL expression .)
+    EQUALS          reduce using rule 20 (expression -> expression MUL expression .)
+    GREATER         reduce using rule 20 (expression -> expression MUL expression .)
+    LESSER          reduce using rule 20 (expression -> expression MUL expression .)
+    GREATER_OR_EQUALS reduce using rule 20 (expression -> expression MUL expression .)
+    LESSER_OR_EQUALS reduce using rule 20 (expression -> expression MUL expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
-    condition                      shift and go to state 79
-    expression                     shift and go to state 57
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
+  ! SUM             [ reduce using rule 20 (expression -> expression MUL expression .) ]
+  ! SUB             [ reduce using rule 20 (expression -> expression MUL expression .) ]
+  ! MUL             [ reduce using rule 20 (expression -> expression MUL expression .) ]
+  ! DIV             [ reduce using rule 20 (expression -> expression MUL expression .) ]
+  ! DECREMENT       [ reduce using rule 20 (expression -> expression MUL expression .) ]
+  ! INCREMENT       [ reduce using rule 20 (expression -> expression MUL expression .) ]
+
 
 state 71
 
-    (26) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .
-    (27) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope . ELSE scope
+    (21) expression -> expression DIV expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    IF              reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    FOR             reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    IDENTIFIER      reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    NUMBER          reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    INT             reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    FLOAT           reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    CHAR            reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    CLOSE_BRAKETS   reduce using rule 26 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
-    ELSE            shift and go to state 80
+  ! shift/reduce conflict for SUM resolved as shift
+  ! shift/reduce conflict for SUB resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for DECREMENT resolved as shift
+  ! shift/reduce conflict for INCREMENT resolved as shift
+    SEMI_COLON      reduce using rule 21 (expression -> expression DIV expression .)
+    COMMA           reduce using rule 21 (expression -> expression DIV expression .)
+    CLOSE_PAREN     reduce using rule 21 (expression -> expression DIV expression .)
+    OR              reduce using rule 21 (expression -> expression DIV expression .)
+    NOT             reduce using rule 21 (expression -> expression DIV expression .)
+    EQUALS          reduce using rule 21 (expression -> expression DIV expression .)
+    GREATER         reduce using rule 21 (expression -> expression DIV expression .)
+    LESSER          reduce using rule 21 (expression -> expression DIV expression .)
+    GREATER_OR_EQUALS reduce using rule 21 (expression -> expression DIV expression .)
+    LESSER_OR_EQUALS reduce using rule 21 (expression -> expression DIV expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+  ! SUM             [ reduce using rule 21 (expression -> expression DIV expression .) ]
+  ! SUB             [ reduce using rule 21 (expression -> expression DIV expression .) ]
+  ! MUL             [ reduce using rule 21 (expression -> expression DIV expression .) ]
+  ! DIV             [ reduce using rule 21 (expression -> expression DIV expression .) ]
+  ! DECREMENT       [ reduce using rule 21 (expression -> expression DIV expression .) ]
+  ! INCREMENT       [ reduce using rule 21 (expression -> expression DIV expression .) ]
 
 
 state 72
 
-    (32) condition -> expression OR expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (30) if_statement -> IF OPEN_PAREN condition . CLOSE_PAREN scope
+    (31) if_statement -> IF OPEN_PAREN condition . CLOSE_PAREN scope ELSE scope
 
-    CLOSE_PAREN     reduce using rule 32 (condition -> expression OR expression .)
-    SEMI_COLON      reduce using rule 32 (condition -> expression OR expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    CLOSE_PAREN     shift and go to state 86
 
 
 state 73
 
-    (33) condition -> expression NOT expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (36) condition -> expression . OR expression
+    (37) condition -> expression . NOT expression
+    (38) condition -> expression . EQUALS expression
+    (39) condition -> expression . GREATER expression
+    (40) condition -> expression . LESSER expression
+    (41) condition -> expression . GREATER_OR_EQUALS expression
+    (42) condition -> expression . LESSER_OR_EQUALS expression
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
 
-    CLOSE_PAREN     reduce using rule 33 (condition -> expression NOT expression .)
-    SEMI_COLON      reduce using rule 33 (condition -> expression NOT expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    OR              shift and go to state 87
+    NOT             shift and go to state 88
+    EQUALS          shift and go to state 89
+    GREATER         shift and go to state 90
+    LESSER          shift and go to state 91
+    GREATER_OR_EQUALS shift and go to state 92
+    LESSER_OR_EQUALS shift and go to state 93
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
 
 
 state 74
 
-    (34) condition -> expression EQUALS expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer . SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
 
-    CLOSE_PAREN     reduce using rule 34 (condition -> expression EQUALS expression .)
-    SEMI_COLON      reduce using rule 34 (condition -> expression EQUALS expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    SEMI_COLON      shift and go to state 94
 
 
 state 75
 
-    (35) condition -> expression GREATER expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (28) for_initilizer -> assignment .
 
-    CLOSE_PAREN     reduce using rule 35 (condition -> expression GREATER expression .)
-    SEMI_COLON      reduce using rule 35 (condition -> expression GREATER expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    SEMI_COLON      reduce using rule 28 (for_initilizer -> assignment .)
 
 
 state 76
 
-    (36) condition -> expression LESSER expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (29) for_initilizer -> declaration .
 
-    CLOSE_PAREN     reduce using rule 36 (condition -> expression LESSER expression .)
-    SEMI_COLON      reduce using rule 36 (condition -> expression LESSER expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    SEMI_COLON      reduce using rule 29 (for_initilizer -> declaration .)
 
 
 state 77
 
-    (37) condition -> expression GREATER_OR_EQUALS expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (15) assignment -> term . ASSING expression
+    (16) assignment -> term . ASSING term
+    (17) assignment -> term . ASSING factor
 
-    CLOSE_PAREN     reduce using rule 37 (condition -> expression GREATER_OR_EQUALS expression .)
-    SEMI_COLON      reduce using rule 37 (condition -> expression GREATER_OR_EQUALS expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    ASSING          shift and go to state 44
 
 
 state 78
 
-    (38) condition -> expression LESSER_OR_EQUALS expression .
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (53) do_while_statement -> DO scope WHILE . OPEN_PAREN condition CLOSE_PAREN SEMI_COLON
 
-    CLOSE_PAREN     reduce using rule 38 (condition -> expression LESSER_OR_EQUALS expression .)
-    SEMI_COLON      reduce using rule 38 (condition -> expression LESSER_OR_EQUALS expression .)
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    OPEN_PAREN      shift and go to state 95
 
 
 state 79
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition . SEMI_COLON expression CLOSE_PAREN scope
+    (54) while_statement -> WHILE OPEN_PAREN condition . CLOSE_PAREN scope
 
-    SEMI_COLON      shift and go to state 81
+    CLOSE_PAREN     shift and go to state 96
 
 
 state 80
 
-    (27) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE . scope
-    (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+    (57) call_function -> IDENTIFIER OPEN_PAREN passing_param . CLOSE_PAREN SEMI_COLON
 
-    OPEN_BRAKETS    shift and go to state 10
+    CLOSE_PAREN     shift and go to state 97
 
-    scope                          shift and go to state 82
 
 state 81
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON . expression CLOSE_PAREN scope
-    (14) expression -> . expression SUM expression
-    (15) expression -> . expression SUB expression
-    (16) expression -> . expression MUL expression
-    (17) expression -> . expression DIV expression
-    (18) expression -> . expression DECREMENT
-    (19) expression -> . expression INCREMENT
-    (20) expression -> . term
-    (21) expression -> . factor
-    (22) term -> . IDENTIFIER
-    (28) factor -> . NUMBER
+    (58) call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN . SEMI_COLON
 
-    IDENTIFIER      shift and go to state 20
-    NUMBER          shift and go to state 32
+    SEMI_COLON      shift and go to state 98
 
-    expression                     shift and go to state 83
-    term                           shift and go to state 52
-    factor                         shift and go to state 29
 
 state 82
 
-    (27) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .
+    (47) passing_param -> term . COMMA passing_param
+    (48) passing_param -> term .
 
-    IF              reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    FOR             reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    IDENTIFIER      reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    NUMBER          reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    INT             reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    FLOAT           reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    CHAR            reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
-    CLOSE_BRAKETS   reduce using rule 27 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    COMMA           shift and go to state 99
+    CLOSE_PAREN     reduce using rule 48 (passing_param -> term .)
 
 
 state 83
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression . CLOSE_PAREN scope
-    (14) expression -> expression . SUM expression
-    (15) expression -> expression . SUB expression
-    (16) expression -> expression . MUL expression
-    (17) expression -> expression . DIV expression
-    (18) expression -> expression . DECREMENT
-    (19) expression -> expression . INCREMENT
+    (49) passing_param -> factor . COMMA passing_param
+    (50) passing_param -> factor .
 
-    CLOSE_PAREN     shift and go to state 84
-    SUM             shift and go to state 38
-    SUB             shift and go to state 39
-    MUL             shift and go to state 40
-    DIV             shift and go to state 41
-    DECREMENT       shift and go to state 42
-    INCREMENT       shift and go to state 43
+    COMMA           shift and go to state 100
+    CLOSE_PAREN     reduce using rule 50 (passing_param -> factor .)
 
 
 state 84
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN . scope
+    (60) return_statement -> RETURN expression SEMI_COLON .
+
+    IF              reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    FOR             reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    DO              reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    WHILE           reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    IDENTIFIER      reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    RETURN          reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    NUMBER          reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    INT             reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    FLOAT           reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    CHAR            reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    PRINT           reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 60 (return_statement -> RETURN expression SEMI_COLON .)
+
+
+state 85
+
+    (55) print_statement -> PRINT OPEN_PAREN STRING_LITERAL . CLOSE_PAREN SEMI_COLON
+    (56) print_statement -> PRINT OPEN_PAREN STRING_LITERAL . COMMA passing_param CLOSE_PAREN SEMI_COLON
+
+    CLOSE_PAREN     shift and go to state 101
+    COMMA           shift and go to state 102
+
+
+state 86
+
+    (30) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN . scope
+    (31) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN . scope ELSE scope
     (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
 
     OPEN_BRAKETS    shift and go to state 10
 
-    scope                          shift and go to state 85
+    scope                          shift and go to state 103
 
-state 85
+state 87
 
-    (23) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .
+    (36) condition -> expression OR . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
 
-    IF              reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    FOR             reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    IDENTIFIER      reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    NUMBER          reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    INT             reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    FLOAT           reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    CHAR            reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
-    CLOSE_BRAKETS   reduce using rule 23 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 104
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 88
+
+    (37) condition -> expression NOT . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 105
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 89
+
+    (38) condition -> expression EQUALS . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 106
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 90
+
+    (39) condition -> expression GREATER . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 107
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 91
+
+    (40) condition -> expression LESSER . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 108
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 92
+
+    (41) condition -> expression GREATER_OR_EQUALS . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 109
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 93
+
+    (42) condition -> expression LESSER_OR_EQUALS . expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 110
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 94
+
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON . condition SEMI_COLON expression CLOSE_PAREN scope
+    (36) condition -> . expression OR expression
+    (37) condition -> . expression NOT expression
+    (38) condition -> . expression EQUALS expression
+    (39) condition -> . expression GREATER expression
+    (40) condition -> . expression LESSER expression
+    (41) condition -> . expression GREATER_OR_EQUALS expression
+    (42) condition -> . expression LESSER_OR_EQUALS expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    condition                      shift and go to state 111
+    expression                     shift and go to state 73
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 95
+
+    (53) do_while_statement -> DO scope WHILE OPEN_PAREN . condition CLOSE_PAREN SEMI_COLON
+    (36) condition -> . expression OR expression
+    (37) condition -> . expression NOT expression
+    (38) condition -> . expression EQUALS expression
+    (39) condition -> . expression GREATER expression
+    (40) condition -> . expression LESSER expression
+    (41) condition -> . expression GREATER_OR_EQUALS expression
+    (42) condition -> . expression LESSER_OR_EQUALS expression
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    condition                      shift and go to state 112
+    expression                     shift and go to state 73
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 96
+
+    (54) while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN . scope
+    (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 113
+
+state 97
+
+    (57) call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN . SEMI_COLON
+
+    SEMI_COLON      shift and go to state 114
+
+
+state 98
+
+    (58) call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .
+
+    IF              reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    FOR             reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    DO              reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    WHILE           reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    IDENTIFIER      reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    RETURN          reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    NUMBER          reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    INT             reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    FLOAT           reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    CHAR            reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    PRINT           reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 58 (call_function -> IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON .)
+
+
+state 99
+
+    (47) passing_param -> term COMMA . passing_param
+    (47) passing_param -> . term COMMA passing_param
+    (48) passing_param -> . term
+    (49) passing_param -> . factor COMMA passing_param
+    (50) passing_param -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    term                           shift and go to state 82
+    passing_param                  shift and go to state 115
+    factor                         shift and go to state 83
+
+state 100
+
+    (49) passing_param -> factor COMMA . passing_param
+    (47) passing_param -> . term COMMA passing_param
+    (48) passing_param -> . term
+    (49) passing_param -> . factor COMMA passing_param
+    (50) passing_param -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    factor                         shift and go to state 83
+    passing_param                  shift and go to state 116
+    term                           shift and go to state 82
+
+state 101
+
+    (55) print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN . SEMI_COLON
+
+    SEMI_COLON      shift and go to state 117
+
+
+state 102
+
+    (56) print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA . passing_param CLOSE_PAREN SEMI_COLON
+    (47) passing_param -> . term COMMA passing_param
+    (48) passing_param -> . term
+    (49) passing_param -> . factor COMMA passing_param
+    (50) passing_param -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    passing_param                  shift and go to state 118
+    term                           shift and go to state 82
+    factor                         shift and go to state 83
+
+state 103
+
+    (30) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .
+    (31) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope . ELSE scope
+
+    IF              reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    FOR             reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    DO              reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    WHILE           reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    IDENTIFIER      reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    RETURN          reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    NUMBER          reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    INT             reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    FLOAT           reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    CHAR            reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    PRINT           reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    CLOSE_BRAKETS   reduce using rule 30 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope .)
+    ELSE            shift and go to state 119
+
+
+state 104
+
+    (36) condition -> expression OR expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 36 (condition -> expression OR expression .)
+    SEMI_COLON      reduce using rule 36 (condition -> expression OR expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 105
+
+    (37) condition -> expression NOT expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 37 (condition -> expression NOT expression .)
+    SEMI_COLON      reduce using rule 37 (condition -> expression NOT expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 106
+
+    (38) condition -> expression EQUALS expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 38 (condition -> expression EQUALS expression .)
+    SEMI_COLON      reduce using rule 38 (condition -> expression EQUALS expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 107
+
+    (39) condition -> expression GREATER expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 39 (condition -> expression GREATER expression .)
+    SEMI_COLON      reduce using rule 39 (condition -> expression GREATER expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 108
+
+    (40) condition -> expression LESSER expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 40 (condition -> expression LESSER expression .)
+    SEMI_COLON      reduce using rule 40 (condition -> expression LESSER expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 109
+
+    (41) condition -> expression GREATER_OR_EQUALS expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 41 (condition -> expression GREATER_OR_EQUALS expression .)
+    SEMI_COLON      reduce using rule 41 (condition -> expression GREATER_OR_EQUALS expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 110
+
+    (42) condition -> expression LESSER_OR_EQUALS expression .
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     reduce using rule 42 (condition -> expression LESSER_OR_EQUALS expression .)
+    SEMI_COLON      reduce using rule 42 (condition -> expression LESSER_OR_EQUALS expression .)
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 111
+
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition . SEMI_COLON expression CLOSE_PAREN scope
+
+    SEMI_COLON      shift and go to state 120
+
+
+state 112
+
+    (53) do_while_statement -> DO scope WHILE OPEN_PAREN condition . CLOSE_PAREN SEMI_COLON
+
+    CLOSE_PAREN     shift and go to state 121
+
+
+state 113
+
+    (54) while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .
+
+    IF              reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    FOR             reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    DO              reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    WHILE           reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    IDENTIFIER      reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    RETURN          reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    NUMBER          reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    INT             reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    FLOAT           reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    CHAR            reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    PRINT           reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+    CLOSE_BRAKETS   reduce using rule 54 (while_statement -> WHILE OPEN_PAREN condition CLOSE_PAREN scope .)
+
+
+state 114
+
+    (57) call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .
+
+    IF              reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    FOR             reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    DO              reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    WHILE           reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    IDENTIFIER      reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    RETURN          reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    NUMBER          reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    INT             reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    FLOAT           reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    CHAR            reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    PRINT           reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 57 (call_function -> IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON .)
+
+
+state 115
+
+    (47) passing_param -> term COMMA passing_param .
+
+    CLOSE_PAREN     reduce using rule 47 (passing_param -> term COMMA passing_param .)
+
+
+state 116
+
+    (49) passing_param -> factor COMMA passing_param .
+
+    CLOSE_PAREN     reduce using rule 49 (passing_param -> factor COMMA passing_param .)
+
+
+state 117
+
+    (55) print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .
+
+    IF              reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    FOR             reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    DO              reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    WHILE           reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    IDENTIFIER      reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    RETURN          reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    NUMBER          reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    INT             reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    FLOAT           reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    CHAR            reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    PRINT           reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 55 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL CLOSE_PAREN SEMI_COLON .)
+
+
+state 118
+
+    (56) print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param . CLOSE_PAREN SEMI_COLON
+
+    CLOSE_PAREN     shift and go to state 122
+
+
+state 119
+
+    (31) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE . scope
+    (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 123
+
+state 120
+
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON . expression CLOSE_PAREN scope
+    (18) expression -> . expression SUM expression
+    (19) expression -> . expression SUB expression
+    (20) expression -> . expression MUL expression
+    (21) expression -> . expression DIV expression
+    (22) expression -> . expression DECREMENT
+    (23) expression -> . expression INCREMENT
+    (24) expression -> . term
+    (25) expression -> . factor
+    (26) term -> . IDENTIFIER
+    (32) factor -> . NUMBER
+
+    IDENTIFIER      shift and go to state 20
+    NUMBER          shift and go to state 41
+
+    expression                     shift and go to state 124
+    term                           shift and go to state 63
+    factor                         shift and go to state 33
+
+state 121
+
+    (53) do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN . SEMI_COLON
+
+    SEMI_COLON      shift and go to state 125
+
+
+state 122
+
+    (56) print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN . SEMI_COLON
+
+    SEMI_COLON      shift and go to state 126
+
+
+state 123
+
+    (31) if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .
+
+    IF              reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    FOR             reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    DO              reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    WHILE           reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    IDENTIFIER      reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    RETURN          reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    NUMBER          reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    INT             reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    FLOAT           reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    CHAR            reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    PRINT           reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+    CLOSE_BRAKETS   reduce using rule 31 (if_statement -> IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope .)
+
+
+state 124
+
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression . CLOSE_PAREN scope
+    (18) expression -> expression . SUM expression
+    (19) expression -> expression . SUB expression
+    (20) expression -> expression . MUL expression
+    (21) expression -> expression . DIV expression
+    (22) expression -> expression . DECREMENT
+    (23) expression -> expression . INCREMENT
+
+    CLOSE_PAREN     shift and go to state 127
+    SUM             shift and go to state 48
+    SUB             shift and go to state 49
+    MUL             shift and go to state 50
+    DIV             shift and go to state 51
+    DECREMENT       shift and go to state 52
+    INCREMENT       shift and go to state 53
+
+
+state 125
+
+    (53) do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .
+
+    IF              reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    FOR             reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    DO              reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    WHILE           reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    IDENTIFIER      reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    RETURN          reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    NUMBER          reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    INT             reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    FLOAT           reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    CHAR            reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    PRINT           reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 53 (do_while_statement -> DO scope WHILE OPEN_PAREN condition CLOSE_PAREN SEMI_COLON .)
+
+
+state 126
+
+    (56) print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .
+
+    IF              reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    FOR             reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    DO              reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    WHILE           reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    IDENTIFIER      reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    RETURN          reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    NUMBER          reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    INT             reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    FLOAT           reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    CHAR            reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    PRINT           reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+    CLOSE_BRAKETS   reduce using rule 56 (print_statement -> PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON .)
+
+
+state 127
+
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN . scope
+    (2) scope -> . OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+
+    OPEN_BRAKETS    shift and go to state 10
+
+    scope                          shift and go to state 128
+
+state 128
+
+    (27) for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .
+
+    IF              reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    FOR             reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    DO              reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    WHILE           reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    IDENTIFIER      reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    RETURN          reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    NUMBER          reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    INT             reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    FLOAT           reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    CHAR            reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    PRINT           reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
+    CLOSE_BRAKETS   reduce using rule 27 (for_statement -> FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for SUM in state 51 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 51 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 51 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 51 resolved as shift
-WARNING: shift/reduce conflict for DECREMENT in state 51 resolved as shift
-WARNING: shift/reduce conflict for INCREMENT in state 51 resolved as shift
-WARNING: shift/reduce conflict for SUM in state 53 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 53 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 53 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 53 resolved as shift
-WARNING: shift/reduce conflict for DECREMENT in state 53 resolved as shift
-WARNING: shift/reduce conflict for INCREMENT in state 53 resolved as shift
-WARNING: shift/reduce conflict for SUM in state 54 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 54 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 54 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 54 resolved as shift
-WARNING: shift/reduce conflict for DECREMENT in state 54 resolved as shift
-WARNING: shift/reduce conflict for INCREMENT in state 54 resolved as shift
-WARNING: shift/reduce conflict for SUM in state 55 resolved as shift
-WARNING: shift/reduce conflict for SUB in state 55 resolved as shift
-WARNING: shift/reduce conflict for MUL in state 55 resolved as shift
-WARNING: shift/reduce conflict for DIV in state 55 resolved as shift
-WARNING: shift/reduce conflict for DECREMENT in state 55 resolved as shift
-WARNING: shift/reduce conflict for INCREMENT in state 55 resolved as shift
-WARNING: reduce/reduce conflict in state 48 resolved using rule (assignment -> term ASSING term)
-WARNING: rejected rule (expression -> term) in state 48
-WARNING: reduce/reduce conflict in state 50 resolved using rule (assignment -> term ASSING factor)
-WARNING: rejected rule (expression -> factor) in state 50
+WARNING: shift/reduce conflict for SUM in state 68 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 68 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 68 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 68 resolved as shift
+WARNING: shift/reduce conflict for DECREMENT in state 68 resolved as shift
+WARNING: shift/reduce conflict for INCREMENT in state 68 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 69 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 69 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 69 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 69 resolved as shift
+WARNING: shift/reduce conflict for DECREMENT in state 69 resolved as shift
+WARNING: shift/reduce conflict for INCREMENT in state 69 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 70 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 70 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 70 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 70 resolved as shift
+WARNING: shift/reduce conflict for DECREMENT in state 70 resolved as shift
+WARNING: shift/reduce conflict for INCREMENT in state 70 resolved as shift
+WARNING: shift/reduce conflict for SUM in state 71 resolved as shift
+WARNING: shift/reduce conflict for SUB in state 71 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 71 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 71 resolved as shift
+WARNING: shift/reduce conflict for DECREMENT in state 71 resolved as shift
+WARNING: shift/reduce conflict for INCREMENT in state 71 resolved as shift
+WARNING: reduce/reduce conflict in state 65 resolved using rule (assignment -> term ASSING term)
+WARNING: rejected rule (expression -> term) in state 65
+WARNING: reduce/reduce conflict in state 67 resolved using rule (assignment -> term ASSING factor)
+WARNING: rejected rule (expression -> factor) in state 67
