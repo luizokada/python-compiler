@@ -44,10 +44,6 @@ class Lexer():
         'IDENTIFIER',
         'MAIN',
     )
-
-    def t_NEWLINE(self, t):
-        r'\n+'
-        self.current_line += 1
     # Print
     def t_PRINT(self, t):
         r'printf'
@@ -94,7 +90,7 @@ class Lexer():
         return t
 
     # Ignore spaces
-    t_ignore=' \t\r\n\f\v'
+    t_ignore=' \t\r\f\v'
 
     # Ignore comments
     def t_comment(self, t):
@@ -160,11 +156,10 @@ class Lexer():
         self.lexer = lex.lex(module=self, **kwargs)
         
         
-    def t_ANY(self,t):
-        r'\S+'
-        print
-        t.lineon = self.current_line
-        return t
+    def t_newline(self,t):
+        r'\n\s*'
+        self.current_line += t.value.count('\n')
+        self.lexer.lineno = self.current_line
         
 
 
