@@ -4,7 +4,9 @@ import ply.lex as lex
 class Lexer():
     def __init__(self,**kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
+        self.current_line = 1
 
+    
     #ALL TOKENS 
     tokens = (
         'PRINT',
@@ -13,6 +15,7 @@ class Lexer():
         'OPEN_BRAKETS',
         'CLOSE_BRAKETS',
         'SEMI_COLON',
+        'COMMA',
         'SUM',
         'SUB',
         'MUL',
@@ -39,8 +42,12 @@ class Lexer():
         'BREAK',
         'RETURN',
         'IDENTIFIER',
+        'MAIN',
     )
 
+    def t_NEWLINE(self, t):
+        r'\n+'
+        self.current_line += 1
     # Print
     def t_PRINT(self, t):
         r'printf'
@@ -57,6 +64,9 @@ class Lexer():
     # Semi Colon
     t_SEMI_COLON = r'\;'
 
+    #COMMA
+    
+    t_COMMA = r'\,'    
     # Operators
     t_SUM = r'\+'
     t_SUB = r'\-'
@@ -72,6 +82,11 @@ class Lexer():
     t_OR = r'\|\|'
     t_NOT = r'\!'
 
+    # MAIN
+    def t_MAIN(self, t):
+        r'main'
+        t.value = t.value
+        return t
     # Number
     def t_NUMBER(self, t):
         r'\d+'
@@ -143,6 +158,15 @@ class Lexer():
 
     def build(self, **kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
+        
+        
+    def t_ANY(self,t):
+        r'\S+'
+        print
+        t.lineon = self.current_line
+        return t
+        
+
 
     def tokenize(self, data):
         return self.lexer.input(data)

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND ASSING BREAK CHAR CLOSE_BRAKETS CLOSE_PAREN DIV DO DOUBLE ELSE EQUALS FLOAT FOR GREATER GREATER_OR_EQUALS IDENTIFIER IF INT LESSER LESSER_OR_EQUALS MUL NOT NUMBER OPEN_BRAKETS OPEN_PAREN OR PRINT RETURN SEMI_COLON SUB SUM WHILE\n        statements : statement SEMI_COLON statements\n                   | statement SEMI_COLON \n        \n        statement : expression\n                  | assignment\n        \n        assignment : IDENTIFIER ASSING expression\n        \n        expression : expression SUM expression\n                   | expression SUB expression\n                   | expression MUL expression\n                   | expression DIV expression\n        \n        expression : term\n        \n        term : IDENTIFIER\n            | NUMBER\n\n        \n        factor : NUMBER\n        '
+_lr_signature = 'AND ASSING BREAK CHAR CLOSE_BRAKETS CLOSE_PAREN COMMA DIV DO DOUBLE ELSE EQUALS FLOAT FOR GREATER GREATER_OR_EQUALS IDENTIFIER IF INT LESSER LESSER_OR_EQUALS MAIN MUL NOT NUMBER OPEN_BRAKETS OPEN_PAREN OR PRINT RETURN SEMI_COLON SUB SUM WHILE\n        main : type MAIN param scope\n        \n        scope : OPEN_BRAKETS statements CLOSE_BRAKETS\n        \n        statements : statement SEMI_COLON statements\n                   | statement SEMI_COLON \n        \n        statement : expression\n                  | assignment\n                  | declaration\n        \n        assignment : term ASSING expression\n                    | term ASSING term\n                    | term ASSING factor \n        \n        expression : expression SUM expression\n                   | expression SUB expression\n                   | expression MUL expression\n                   | expression DIV expression\n        \n        expression : term\n                    | factor\n        \n        term : IDENTIFIER\n\n        \n        factor : NUMBER\n        \n        type : INT\n             | FLOAT\n             | CHAR\n        \n        declaration : type term\n                    | type assignment \n        \n        declarations : declaration COMMA declarations\n                     | declaration\n        \n        param : OPEN_PAREN declarations CLOSE_PAREN\n              | OPEN_PAREN CLOSE_PAREN\n        '
     
-_lr_action_items = {'IDENTIFIER':([0,8,9,10,11,12,13,],[6,6,16,16,16,16,16,]),'NUMBER':([0,8,9,10,11,12,13,],[7,7,7,7,7,7,7,]),'$end':([1,8,14,],[0,-2,-1,]),'SEMI_COLON':([2,3,4,5,6,7,15,16,17,18,19,20,],[8,-3,-4,-10,-11,-12,-6,-11,-7,-8,-9,-5,]),'SUM':([3,5,6,7,15,16,17,18,19,20,],[9,-10,-11,-12,9,-11,9,9,9,9,]),'SUB':([3,5,6,7,15,16,17,18,19,20,],[10,-10,-11,-12,10,-11,10,10,10,10,]),'MUL':([3,5,6,7,15,16,17,18,19,20,],[11,-10,-11,-12,11,-11,11,11,11,11,]),'DIV':([3,5,6,7,15,16,17,18,19,20,],[12,-10,-11,-12,12,-11,12,12,12,12,]),'ASSING':([6,],[13,]),}
+_lr_action_items = {'INT':([0,8,10,25,29,],[3,3,3,3,3,]),'FLOAT':([0,8,10,25,29,],[4,4,4,4,4,]),'CHAR':([0,8,10,25,29,],[5,5,5,5,5,]),'$end':([1,9,28,],[0,-1,-2,]),'MAIN':([2,3,4,5,],[6,-19,-20,-21,]),'IDENTIFIER':([3,4,5,10,14,29,30,31,32,33,34,],[-19,-20,-21,22,22,22,22,22,22,22,22,]),'OPEN_PAREN':([6,],[8,]),'OPEN_BRAKETS':([7,12,24,],[10,-27,-26,]),'CLOSE_PAREN':([8,11,13,21,22,23,26,27,35,37,38,39,40,41,42,43,44,],[12,24,-25,-16,-17,-18,-22,-23,-24,-11,-15,-12,-13,-14,-9,-8,-10,]),'NUMBER':([10,29,30,31,32,33,34,],[23,23,23,23,23,23,23,]),'COMMA':([13,21,22,23,26,27,37,38,39,40,41,42,43,44,],[25,-16,-17,-18,-22,-23,-11,-15,-12,-13,-14,-9,-8,-10,]),'CLOSE_BRAKETS':([15,29,36,],[28,-4,-3,]),'SEMI_COLON':([16,17,18,19,20,21,22,23,26,27,37,38,39,40,41,42,43,44,],[29,-5,-6,-7,-15,-16,-17,-18,-22,-23,-11,-15,-12,-13,-14,-9,-8,-10,]),'SUM':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[30,-15,-16,-17,-18,30,-15,30,30,30,-15,30,-16,]),'SUB':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[31,-15,-16,-17,-18,31,-15,31,31,31,-15,31,-16,]),'MUL':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[32,-15,-16,-17,-18,32,-15,32,32,32,-15,32,-16,]),'DIV':([17,20,21,22,23,37,38,39,40,41,42,43,44,],[33,-15,-16,-17,-18,33,-15,33,33,33,-15,33,-16,]),'ASSING':([20,22,26,],[34,-17,34,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statements':([0,8,],[1,14,]),'statement':([0,8,],[2,2,]),'expression':([0,8,9,10,11,12,13,],[3,3,15,17,18,19,20,]),'assignment':([0,8,],[4,4,]),'term':([0,8,9,10,11,12,13,],[5,5,5,5,5,5,5,]),}
+_lr_goto_items = {'main':([0,],[1,]),'type':([0,8,10,25,29,],[2,14,14,14,14,]),'param':([6,],[7,]),'scope':([7,],[9,]),'declarations':([8,25,],[11,35,]),'declaration':([8,10,25,29,],[13,19,13,19,]),'statements':([10,29,],[15,36,]),'statement':([10,29,],[16,16,]),'expression':([10,29,30,31,32,33,34,],[17,17,37,39,40,41,43,]),'assignment':([10,14,29,],[18,27,18,]),'term':([10,14,29,30,31,32,33,34,],[20,26,20,38,38,38,38,42,]),'factor':([10,29,30,31,32,33,34,],[21,21,21,21,21,21,44,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,18 +26,32 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statements","S'",1,None,None,None),
-  ('statements -> statement SEMI_COLON statements','statements',3,'p_statements','parser.py',28),
-  ('statements -> statement SEMI_COLON','statements',2,'p_statements','parser.py',29),
-  ('statement -> expression','statement',1,'p_statement','parser.py',35),
-  ('statement -> assignment','statement',1,'p_statement','parser.py',36),
-  ('assignment -> IDENTIFIER ASSING expression','assignment',3,'p_assignment','parser.py',42),
-  ('expression -> expression SUM expression','expression',3,'p_expression_binop','parser.py',48),
-  ('expression -> expression SUB expression','expression',3,'p_expression_binop','parser.py',49),
-  ('expression -> expression MUL expression','expression',3,'p_expression_binop','parser.py',50),
-  ('expression -> expression DIV expression','expression',3,'p_expression_binop','parser.py',51),
-  ('expression -> term','expression',1,'p_expression_term','parser.py',57),
-  ('term -> IDENTIFIER','term',1,'p_term','parser.py',63),
-  ('term -> NUMBER','term',1,'p_term','parser.py',64),
-  ('factor -> NUMBER','factor',1,'p_factor_num','parser.py',74),
+  ("S' -> main","S'",1,None,None,None),
+  ('main -> type MAIN param scope','main',4,'p_start','parser.py',30),
+  ('scope -> OPEN_BRAKETS statements CLOSE_BRAKETS','scope',3,'p_scope','parser.py',38),
+  ('statements -> statement SEMI_COLON statements','statements',3,'p_statements','parser.py',44),
+  ('statements -> statement SEMI_COLON','statements',2,'p_statements','parser.py',45),
+  ('statement -> expression','statement',1,'p_statement','parser.py',54),
+  ('statement -> assignment','statement',1,'p_statement','parser.py',55),
+  ('statement -> declaration','statement',1,'p_statement','parser.py',56),
+  ('assignment -> term ASSING expression','assignment',3,'p_assignment','parser.py',62),
+  ('assignment -> term ASSING term','assignment',3,'p_assignment','parser.py',63),
+  ('assignment -> term ASSING factor','assignment',3,'p_assignment','parser.py',64),
+  ('expression -> expression SUM expression','expression',3,'p_expression_binop','parser.py',71),
+  ('expression -> expression SUB expression','expression',3,'p_expression_binop','parser.py',72),
+  ('expression -> expression MUL expression','expression',3,'p_expression_binop','parser.py',73),
+  ('expression -> expression DIV expression','expression',3,'p_expression_binop','parser.py',74),
+  ('expression -> term','expression',1,'p_expression_term','parser.py',80),
+  ('expression -> factor','expression',1,'p_expression_term','parser.py',81),
+  ('term -> IDENTIFIER','term',1,'p_term','parser.py',87),
+  ('factor -> NUMBER','factor',1,'p_factor_num','parser.py',97),
+  ('type -> INT','type',1,'p_type','parser.py',103),
+  ('type -> FLOAT','type',1,'p_type','parser.py',104),
+  ('type -> CHAR','type',1,'p_type','parser.py',105),
+  ('declaration -> type term','declaration',2,'p_declaration','parser.py',113),
+  ('declaration -> type assignment','declaration',2,'p_declaration','parser.py',114),
+  ('declarations -> declaration COMMA declarations','declarations',3,'p_declarations','parser.py',132),
+  ('declarations -> declaration','declarations',1,'p_declarations','parser.py',133),
+  ('param -> OPEN_PAREN declarations CLOSE_PAREN','param',3,'p_param','parser.py',143),
+  ('param -> OPEN_PAREN CLOSE_PAREN','param',2,'p_param','parser.py',144),
 ]
