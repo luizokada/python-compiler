@@ -34,7 +34,7 @@ class Lexer():
         'FLOAT',
         'CHAR',
         'DOUBLE',
-        'T_FOR',
+        'FOR',
         'WHILE',
         'IF',
         'ELSE',
@@ -43,6 +43,8 @@ class Lexer():
         'RETURN',
         'IDENTIFIER',
         'MAIN',
+        'INCREMENT',
+        'DECREMENT',
     )
     # Print
     def t_PRINT(self, t):
@@ -69,14 +71,16 @@ class Lexer():
     t_MUL = r'\*'
     t_DIV = r'\/'
     t_GREATER = r'\>'
-    t_EQUALS = r'\=='
-    t_GREATER_OR_EQUALS = r'\>='
+    t_EQUALS = r'\=\='
+    t_GREATER_OR_EQUALS = r'\>\='
     t_LESSER = r'\<'
-    t_LESSER_OR_EQUALS = r'\<='
+    t_LESSER_OR_EQUALS = r'\<\='
     t_ASSING = r'\='
     t_AND = r'\&&'
     t_OR = r'\|\|'
     t_NOT = r'\!'
+    t_INCREMENT = r'\+\+'
+    t_DECREMENT = r'\-\-'
 
     # MAIN
     def t_MAIN(self, t):

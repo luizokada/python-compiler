@@ -1,14 +1,15 @@
 int main(){
-    
-    5 + 3 + 5;
-    10 + 10;
-    int a = 1 + 5 + 6;
-    a = 10;
-    int b;
-    int c = a + b;
-    if(a==b){
-        b = a;
-    }else{
-        b = b;
+    int a = 30;
+    if (a > 10)
+    {
+        int a = 10;
     }
+    else{
+        a = 20;
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        a++;
+    }
+
 } /*AAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
