@@ -1,6 +1,8 @@
 int main(){
     int a = 30;
-    if (a > 10){
+    char b = '1';
+    if (a > 10)
+    {
         int a = 10;
     }
     else{

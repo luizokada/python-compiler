@@ -71,6 +71,7 @@ class Parser:
         statement : expression SEMI_COLON
                   | assignment SEMI_COLON
                   | declaration SEMI_COLON
+                  | array_declaration SEMI_COLON
                   | if_statement
                   | for_statement
                   | do_while_statement
@@ -86,12 +87,24 @@ class Parser:
         assignment : term ASSING expression
                     | term ASSING term
                     | term ASSING factor 
+                    | term ASSING factor_char
+                    | term array_index ASSING factor
+                    | term array_index ASSING term
+                    | term array_index ASSING factor_char
         """
-        if(len(p)>=3):          
-           p[0] = Node('assignment', [p[1],Node('assing',leaf = p[2]), p[3]])
+        if(p[2]!='='):
+            p[0] = Node('assignment', [p[1],Node('assing',leaf = p[2]), p[3]])
+        else:
+            p[0] = Node('assignment', [p[1], p[3]],p[2])      
+           
        
         pass
     
+    def p_factor_char(self, p):
+        """
+        factor_char : CHARACTER
+        """
+        p[0] = Node('factor_char', leaf=p[1])
 
         
     def p_expression_binop(self, p):
@@ -281,6 +294,46 @@ class Parser:
              p[0] = p[1]
         pass
     
+    
+    
+    def p_array_index(self,p):
+        """
+        array_index : OPEN_INTER factor CLOSE_INTER
+        """
+        p[0] = Node('array_index', [p[2]])
+        pass
+    def p_assignment_array(self,p):
+        """
+        assignment_array : ASSING OPEN_INTER sequence CLOSE_INTER
+        """
+        p[0] = Node('assignment_array', [p[3]])
+        pass
+
+    def p_array_declaration(self,p):
+        """
+        array_declaration : type term OPEN_INTER NUMBER CLOSE_INTER
+                          | type term OPEN_INTER NUMBER CLOSE_INTER assignment_array
+        """
+        variable = (p[2].leaf,self.current_scope[-1])
+        variables[variable] = 'array ' +p[1].leaf
+        if(len(p)==6):
+            p[0] = Node('array_declaration', [p[2], Node('NUMBER',leaf = p[4])])
+        else:
+            p[0] = Node('array_declaration', [p[2], Node('NUMBER',leaf = p[4]),p[6]])
+        pass
+    
+    def p_sequence(self, p):
+        """
+        sequence : NUMBER COMMA sequence
+                 | NUMBER
+                 | CHARACTER COMMA sequence
+                 | CHARACTER
+        """
+        if(len(p)<=2):
+            p[0] = Node('sequence', [Node('SEQUENCE_DATA', leaf=p[1])])
+        else:
+            p[0] = Node('sequence', [Node('SEQUENCE_DATA', leaf=p[1]),Node('SEQUENCE_DATA',leaf=p[2]),p[3]])
+            
     def p_return_statement(self,p):
         """
         return_statement : RETURN expression SEMI_COLON

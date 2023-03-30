@@ -45,6 +45,9 @@ class Lexer():
         'MAIN',
         'INCREMENT',
         'DECREMENT',
+        'OPEN_INTER',
+        'CLOSE_INTER',
+        'CHARACTER',
         'STRING_LITERAL',
     )
     # Print
@@ -59,6 +62,12 @@ class Lexer():
     # Brackets
     t_OPEN_BRAKETS = r'\{'
     t_CLOSE_BRAKETS = r'\}'
+    
+    #INTER
+    
+    t_OPEN_INTER = r'\['
+    t_CLOSE_INTER = r'\]'
+
 
     # Semi Colon
     t_SEMI_COLON = r'\;'
@@ -84,13 +93,17 @@ class Lexer():
     t_DECREMENT = r'\-\-'
 
     # MAIN
+    def t_CHARACTER(self, t):
+        r"'[a-z]|[A-Z]|[0-9]'"
+        return t
+    # MAIN
     def t_MAIN(self, t):
         r'main'
         t.value = t.value
         return t
     # Number
     def t_NUMBER(self, t):
-        r'\d+'
+        r'(?!\d*\'[^\']*)\d+'
         t.value = int(t.value)
         return t
 
@@ -121,7 +134,6 @@ class Lexer():
 
     def t_STRING_LITERAL(self, t):
         r'\"([^\"]*)\"'
-        print(t.value)
         t.value = t.value
         return t
     
@@ -158,7 +170,10 @@ class Lexer():
     # IDENTIFIERS
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
-        return t
+        if(t.value[0] == '"' or t.value[0] == '\''):
+            return self.t_error(t)
+        else:
+            return t
 
     def t_error(self, t):
         print(f"Illegal character {t.value}")
