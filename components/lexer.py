@@ -94,7 +94,8 @@ class Lexer():
 
     # MAIN
     def t_CHARACTER(self, t):
-        r"'[a-z]|[A-Z]|[0-9]'"
+        r"'[a-zA-Z0-9]{1}'"
+        print("token = {}".format(t.value))
         return t
     # MAIN
     def t_MAIN(self, t):
@@ -133,9 +134,12 @@ class Lexer():
         return t
 
     def t_STRING_LITERAL(self, t):
-        r'\"([^\"]*)\"'
-        t.value = t.value
-        return t
+        r'\'([^\']{2,})\''
+        if(len(t.value)<=3):
+            print(len(t.value))
+            return self.t_CHARACTER(t)
+        else:
+            return t
     
     # KEYWORDS
     def t_FOR(self, t):
@@ -171,12 +175,16 @@ class Lexer():
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
         if(t.value[0] == '"' or t.value[0] == '\''):
-            return self.t_error(t)
+            if(len(t.value)<=3):
+                return self.t_CHARACTER(t)
+            else:
+                return self.t_STRING_LITERAL(t)
         else:
             return t
 
     def t_error(self, t):
-        print(f"Illegal character {t.value}")
+        
+        print(f"Illegal character {t.value[0]}")
         t.lexer.skip(1)
 
     def build(self, **kwargs):
