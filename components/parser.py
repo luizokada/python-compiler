@@ -1,15 +1,8 @@
 import ply.yacc as yacc
 from ply.yacc import format_stack_entry
 import uuid
-class Node:
-    def __init__(self,type,children=None,leaf=None):
-         self.type = type
-         if children:
-              self.children = children
-         else:
-              self.children = [ ]
-         self.leaf = leaf
-
+from Tree.Tree import Node
+from components.semanticValidator import SemanticValidator
 
 variables = {}
 current_variable_identifier = None
@@ -27,8 +20,12 @@ class Parser:
             ('left', 'SUM', 'SUB'),
             ('left', 'MUL', 'DIV'),
         )
+        self.semanticValidator = SemanticValidator()
 
-
+    def parse(self, text,lexer)->Node:
+        return self.parser.parse(text, lexer=lexer.lexer)
+    
+    
     def p_start(self,p):
         """
         main : type MAIN param scope
@@ -95,10 +92,20 @@ class Parser:
         if(p[2]!='='):
             p[0] = Node('assignment', [p[1],Node('assing',leaf = p[2]), p[3]])
         else:
-            p[0] = Node('assignment', [p[1], p[3]],p[2])      
-           
-       
-        pass
+            p[0] = Node('assignment', [p[1], p[3]],p[2])   
+        self.semanticValidator.validate_variable(p[1],variables)
+        try:
+            variable = variables[(p[1].leaf,self.current_scope[-1])]
+        except:
+            for key in variables.keys():
+                if p[1].leaf in key[0]:
+                    variable = variables[key]
+                    break
+        if(p[2]=='='):
+            if variable == 'int' or variable == 'float':
+                self.semanticValidator.validate_number(p[3],p[1].leaf)
+            
+        
     
     def p_factor_char(self, p):
         """
@@ -114,20 +121,23 @@ class Parser:
                    | expression MUL expression
                    | expression DIV expression
                    | expression DECREMENT
-                   | expression INCREMENT
-                   
-                   
+                   | expression INCREMENT  
+                   | OPEN_PAREN expression CLOSE_PAREN  
         """
-        if(len(p)==4):       
-            p[0] = Node("binop", [p[1],Node('operation',leaf= p[2]), p[3]])
+        if(p[1]=='('):
+            p[0] = Node("binop", [p[2]])
         else:
-            p[0] = p[0] = Node("iteration_op", [p[1] ,Node('operation',leaf= p[2])])
+            if(len(p)==4):       
+                p[0] = Node("expression", [p[1], p[3]],p[2])
+            else:
+                p[0] = p[0] = Node("iteration_op", [p[1] ,Node('operation',leaf= p[2])])
             
             
     def p_expression_term(self, p):
         """
         expression : term
                     | factor
+                   
         """
         p[0] = Node("expression", [p[1]])
 
@@ -202,18 +212,15 @@ class Parser:
     def p_declaration(self,p):
         """
         declaration : type term
-                    | type assignment 
+    
         """
         
     
         variable = None
-        if(p[2].type != 'assignment'):
-            variable = (p[2].leaf,self.current_scope[-1])
-        else:
-            variable = (p[2].children[0].leaf,self.current_scope[-1])
+        variable = (p[2].leaf,self.current_scope[-1])
+        variables[variable] = (p[1].leaf)
             
                 
-        variables[variable] = p[1].leaf
             
         p[0] = Node('declaration', [p[1], p[2]])
         pass
@@ -247,7 +254,7 @@ class Parser:
               | OPEN_PAREN CLOSE_PAREN
         """
         if(len(p)>3):
-            p[0] = Node('param', [Node('PAREN',leaf=p[1]),p[2],Node('PAREN',leaf=p[3])])
+            p[0] = Node('param', [p[2]])
         else:
             p[0] = Node('param', leaf=p[1]+p[2])
         pass
