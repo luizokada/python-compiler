@@ -92,15 +92,13 @@ class Lexer():
     t_INCREMENT = r'\+\+'
     t_DECREMENT = r'\-\-'
 
-    # MAIN
+    # CHAR
     def t_CHARACTER(self, t):
         r"'[a-zA-Z0-9]{1}'"
-        print("token = {}".format(t.value))
         return t
     # MAIN
     def t_MAIN(self, t):
         r'main'
-        t.value = t.value
         return t
     # Number
     def t_NUMBER(self, t):
@@ -136,7 +134,6 @@ class Lexer():
     def t_STRING_LITERAL(self, t):
         r'\'([^\']{2,})\''
         if(len(t.value)<=3):
-            print(len(t.value))
             return self.t_CHARACTER(t)
         else:
             return t

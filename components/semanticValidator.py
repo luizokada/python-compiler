@@ -7,9 +7,7 @@ class SemanticValidator:
     
     #validate if variable is declared. DOES NOT VALIDATE SCOPE
     def validate_variable(self, node,variables):
-        print(node.leaf)
         variable = node.leaf
-        
         for key in variables.keys():
             if variable in key[0]:
                 return

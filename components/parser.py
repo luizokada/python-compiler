@@ -4,6 +4,20 @@ import uuid
 from Tree.Tree import Node
 from components.semanticValidator import SemanticValidator
 
+
+def search_parent_scope(scope:Node,uuid:str):
+    if scope == None:
+        return None
+    if scope.leaf == uuid:
+        return scope
+    else:
+        for child in scope.children:
+            parent = search_parent_scope(child,uuid)
+            if(parent!=None):
+                return parent
+        return None
+    
+    
 variables = {}
 current_variable_identifier = None
 current_variable_type = None
@@ -11,6 +25,9 @@ class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
         self.current_scope = []
+        self.scopes = None
+        self.current_node_scope = None
+        self.parent_node_scope = None
         self.parser = yacc.yacc(module=self,debug=True)
         self.precedence = (
             ('left', 'OR'),
@@ -41,12 +58,29 @@ class Parser:
         """
         p[0] = Node('scope', [p[3]])
         self.current_scope.pop()
+        if(self.parent_node_scope == None):
+            self.parent_node_scope = self.current_node_scope
+        else:
+            
+            self.current_node_scope = self.parent_node_scope
+            
+            self.parent_node_scope = search_parent_scope(self.scopes,self.current_node_scope.leaf)
+
         
     def p_new_scope(self,p):
         """
         new_scope :
         """
         self.current_scope.append(uuid.uuid4())
+        new_scope = Node('Scope',[],self.current_scope[-1])
+        if(self.scopes == None):
+            self.scopes = new_scope
+        else:
+            self.parent_node_scope = self.current_node_scope
+            self.current_node_scope.children.append(new_scope)
+        self.current_node_scope = new_scope
+        
+            
     
         
         
@@ -182,8 +216,13 @@ class Parser:
     def p_factor_num(self, p):
         """
         factor : NUMBER
+                | SUB NUMBER
         """
-        p[0] =  Node('NUMBER', leaf=p[1])
+        if(p[1] == '-'):
+            p[0] = Node('factor', leaf=-p[2])
+        else:
+            
+            p[0] =  Node('NUMBER', leaf=p[1])
         
     def p_type(self,p):
         """
@@ -292,7 +331,6 @@ class Parser:
                       | print_statement
                       
         """
-        print(len(p))
         if(len(p)>5):
             p[0] = Node('call_function',[Node('IDENTIFIER',leaf=p[1]),p[3]])
         elif (len(p)>2):
@@ -346,7 +384,7 @@ class Parser:
         return_statement : RETURN expression SEMI_COLON
                          | RETURN SEMI_COLON
         """
-        print(len(p))
+     
         if(len(p)>3):
             p[0]= Node('return',[p[2]])
         else:

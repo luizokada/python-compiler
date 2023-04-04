@@ -32,7 +32,7 @@ class Node:
     
     def resolve_binop_as_child(self):
         for child in self.children:
-            print(child)
+            return
             
             
     def reorganize_tree(self,node,father):
@@ -57,7 +57,6 @@ class Node:
         if (self.leaf is not None) and (self.type != type) and self.type != "expression" and self.type!="binop":
             return False
         else:
-            print(self)
             for child in self.children:
                 if not child.validate_all_leafs(type):
                     return False       
