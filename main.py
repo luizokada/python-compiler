@@ -1,6 +1,6 @@
 from components.lexer import Lexer
 from components.parser import Parser
-
+from components.parser import variables
 
 
 fille = open("./tests/simpleSum.c")
@@ -15,10 +15,13 @@ tokens = lexer.lexer.input(text)
 #input_str = [f"{tok[0]}:{tok[1]}" for tok in tokens]
 parser = Parser(lexer.tokens)
 test = parser.parse(text, lexer=lexer) 
+#test.print_tree()
+parser.scopes.print_tree()
+
+print(variables)
 
 node_expresion = test.children[2].children[0].children[1].children[0]
 
-print(node_expresion.validate_all_leafs('NUMBER'))
 
 """print(test.find_expression_with_binop(test))
 print(f'variables: {variables}')

@@ -8,12 +8,14 @@ from components.semanticValidator import SemanticValidator
 def search_parent_scope(scope:Node,uuid:str):
     if scope == None:
         return None
-    if scope.leaf == uuid:
-        return scope
     else:
         for child in scope.children:
-            parent = search_parent_scope(child,uuid)
-            if(parent!=None):
+            if(child.leaf == uuid):
+                return scope
+        
+        for child in scope.children:
+            parent =  search_parent_scope(child,uuid)
+            if(parent != None):
                 return parent
         return None
     
@@ -59,11 +61,9 @@ class Parser:
         p[0] = Node('scope', [p[3]])
         self.current_scope.pop()
         if(self.parent_node_scope == None):
-            self.parent_node_scope = self.current_node_scope
+            self.parent_node_scope = self.scopes
         else:
-            
-            self.current_node_scope = self.parent_node_scope
-            
+            self.current_node_scope = self.parent_node_scope 
             self.parent_node_scope = search_parent_scope(self.scopes,self.current_node_scope.leaf)
 
         
@@ -75,11 +75,12 @@ class Parser:
         new_scope = Node('Scope',[],self.current_scope[-1])
         if(self.scopes == None):
             self.scopes = new_scope
+            self.current_node_scope = new_scope
         else:
-            self.parent_node_scope = self.current_node_scope
             self.current_node_scope.children.append(new_scope)
-        self.current_node_scope = new_scope
-        
+            self.parent_node_scope = self.current_node_scope
+            self.current_node_scope = new_scope
+
             
     
         
@@ -219,7 +220,7 @@ class Parser:
                 | SUB NUMBER
         """
         if(p[1] == '-'):
-            p[0] = Node('factor', leaf=-p[2])
+            p[0] = Node('NUMBER', leaf=-p[2])
         else:
             
             p[0] =  Node('NUMBER', leaf=p[1])
