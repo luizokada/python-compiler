@@ -1,6 +1,7 @@
 import ply.yacc as yacc
 from ply.yacc import format_stack_entry
 import uuid
+from Errors.SemanticError import SemanticError
 from Tree.Tree import Node
 from components.semanticValidator import SemanticValidator
 
@@ -128,17 +129,12 @@ class Parser:
             p[0] = Node('assignment', [p[1],Node('assing',leaf = p[2]), p[3]])
         else:
             p[0] = Node('assignment', [p[1], p[3]],p[2])   
-        self.semanticValidator.validate_variable(p[1],variables)
-        try:
-            variable = variables[(p[1].leaf,self.current_scope[-1])]
-        except:
-            for key in variables.keys():
-                if p[1].leaf in key[0]:
-                    variable = variables[key]
-                    break
+        variable=self.semanticValidator.validate_variable(p[1],variables,self.current_node_scope,self.scopes)
         if(p[2]=='='):
             if variable == 'int' or variable == 'float':
                 self.semanticValidator.validate_number(p[3],p[1].leaf)
+            elif variable == 'char':
+                self.semanticValidator.validate_char(p[3],p[1].leaf)
             
         
     
@@ -146,7 +142,7 @@ class Parser:
         """
         factor_char : CHARACTER
         """
-        p[0] = Node('factor_char', leaf=p[1])
+        p[0] = Node('CHARACTER', leaf=p[1])
 
         
     def p_expression_binop(self, p):
@@ -240,12 +236,26 @@ class Parser:
         condition : expression OR expression
                    | expression NOT expression
                    | expression EQUALS expression
+                   | expression DIFERENT expression
                    | expression GREATER expression
                    | expression LESSER expression
                    | expression GREATER_OR_EQUALS expression
                    | expression LESSER_OR_EQUALS expression
+                   | expression DIFERENT factor_char
+                   | expression EQUALS factor_char
+
                    
         """
+        if(p[3].type == 'CHARACTER'):
+            try:
+                node = p[1].children[0]
+                if(node.type!='term'):
+                    raise Exception
+                variable=self.semanticValidator.validate_variable(node,variables,self.current_node_scope,self.scopes)    
+            except:
+                raise SemanticError("Error: Incompatible types in condition",p[1].leaf)
+            if(variable != 'char'):
+                raise SemanticError("Error: Incompatible types in condition",p[1].leaf)
         p[0] = Node("condition", [p[1],Node('operation',leaf= p[2]), p[3]])
         pass
 

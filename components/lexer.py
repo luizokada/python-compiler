@@ -48,6 +48,7 @@ class Lexer():
         'OPEN_INTER',
         'CLOSE_INTER',
         'CHARACTER',
+        'DIFERENT',
         'STRING_LITERAL',
     )
     # Print
@@ -82,6 +83,7 @@ class Lexer():
     t_DIV = r'\/'
     t_GREATER = r'\>'
     t_EQUALS = r'\=\='
+    t_DIFERENT = r'\!\='
     t_GREATER_OR_EQUALS = r'\>\='
     t_LESSER = r'\<'
     t_LESSER_OR_EQUALS = r'\<\='

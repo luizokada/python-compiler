@@ -1,16 +1,17 @@
 int main(){
     int a;
+    char c;
     a = -1;
     if(a>0){
-        int c;
+        /*int c;*/
         a = 1;
-        if(a<0){
+        if(c!='a'){
             int b;
             a = 0;
         }
         else{
-              int d;
-            a = 2;
+            int d;
+            d = 2;
         }
     }
     else{
