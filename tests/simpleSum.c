@@ -18,4 +18,12 @@ int main(){
         int t;
         a = 2;
     }
+    int i;
+    for (i = 0; i < 0; i++)
+    {
+        if(a>0){
+            a = 10;
+        }
+        1 + 1;
+    }
 }

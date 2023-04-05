@@ -191,13 +191,13 @@ class Parser:
     def p_for_initializer(self,p):
         """
         for_initilizer : assignment
-                       | declaration
         
         """
         if(len(p)==2):
             p[0] = Node('for_initilizer', [p[1]])
         else:
             p[0] = Node('for_initilizer', [p[1],p[2]])
+   
     def p_if_statement(self, p):
         """
         if_statement : IF OPEN_PAREN condition CLOSE_PAREN scope 

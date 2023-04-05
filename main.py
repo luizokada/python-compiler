@@ -16,11 +16,10 @@ tokens = lexer.lexer.input(text)
 parser = Parser(lexer.tokens)
 test = parser.parse(text, lexer=lexer) 
 #test.print_tree()
-parser.scopes.print_tree()
+test.print_tree()
 
 print(variables)
 
-node_expresion = test.children[2].children[0].children[1].children[0]
 
 
 """print(test.find_expression_with_binop(test))
