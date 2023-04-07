@@ -1,3 +1,8 @@
+TYPE_MAPE ={
+    'NUMBER':['int','float','array float','array int'],
+    'CHARACTER':['char','array char'],
+}
+
 class Node:
     def __init__(self,type,children=None,leaf=None):
          self.type = type
@@ -53,12 +58,20 @@ class Node:
             for child in node.children:
                 self.reorganize_tree(child,node)
     
-    def validate_all_leafs(self,type):
-        if (self.leaf is not None) and (self.type != type) and self.type != "expression" and self.type!="binop":
+    def validate_all_leafs(self,type,variables):
+        if (self.type != 'term') and (self.leaf is not None) and (self.type != type) and self.type != "expression" and self.type!="binop":
             return False
+        elif self.type == "term":
+            scope_id  = self.children[0].leaf
+            variable_type = variables[(self.leaf,scope_id)]
+            if variable_type not in TYPE_MAPE[type]:
+                return False
+        elif(self.type == type):
+            return True
+            
         else:
             for child in self.children:
-                if not child.validate_all_leafs(type):
+                if not child.validate_all_leafs(type,variables):
                     return False       
         return True
         

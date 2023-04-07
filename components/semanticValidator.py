@@ -38,25 +38,25 @@ class SemanticValidator:
     def validate_variable(self, node,variables,current_node_scope,scopes):
         variable = node.leaf
         try:
-            return variables[(variable,current_node_scope.leaf)]
+            return variables[(variable,current_node_scope.leaf)],current_node_scope.leaf
         except:
             
             for key in variables.keys():
                 if variable in key[0]:
                     node = self.findNodeInTree(scopes,key[1])
                     if(self.isScopeParent(node,current_node_scope.leaf)):
-                        return variables[key]
+                        return variables[key],key[1]
                     else:
                         break
         raise SemanticError(f"Variavel {variable} nao declarada",node)
         
-    def validate_number(self, node:Node, vairable):
-        if( not node.validate_all_leafs("NUMBER")):
+    def validate_number(self, node:Node, vairable,variables):
+        if( not node.validate_all_leafs("NUMBER",variables)):
             raise SemanticError(f"Atribuiçao invalida na variavel {vairable}",node)
         return
     
-    def validate_char(self, node:Node, vairable):
-        if( not node.validate_all_leafs("CHARACTER")):
+    def validate_char(self, node:Node, vairable,variables):
+        if( not node.validate_all_leafs("CHARACTER",variables)):
             raise SemanticError(f"Atribuiçao invalida na variavel {vairable}",node)
         return
         

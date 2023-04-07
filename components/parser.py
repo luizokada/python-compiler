@@ -9,15 +9,14 @@ from components.semanticValidator import SemanticValidator
 def search_parent_scope(scope:Node,uuid:str):
     if scope == None:
         return None
-    else:
-        for child in scope.children:
-            if(child.leaf == uuid):
-                return scope
-        
+    else:     
         for child in scope.children:
             parent =  search_parent_scope(child,uuid)
             if(parent != None):
                 return parent
+        for child in scope.children:
+            if(child.leaf == uuid):
+                return scope
         return None
     
     
@@ -105,6 +104,7 @@ class Parser:
                   | while_statement
                   | call_function
                   | return_statement
+
                  
         """
         p[0] =  Node('statement', [p[1]])
@@ -129,7 +129,16 @@ class Parser:
                     | factor
                    
         """
-        p[0] = Node("expression", [p[1]])
+        if(p[1].type == 'term'):
+            try:
+                variables[(p[1].leaf,self.current_node_scope.leaf)]
+                p[1].children.append(Node('id_scope',leaf=self.current_node_scope.leaf))
+            except:
+                parent = search_parent_scope(self.scopes,self.current_node_scope.leaf)
+                p[1].children.append(Node('id_scope',leaf=parent.leaf))
+            p[0] = Node("expression", [p[1]])
+        else:     
+            p[0] = Node("expression", [p[1]])
         
         
     def p_term(self, p):
@@ -155,11 +164,13 @@ class Parser:
         factor : NUMBER
                 | SUB NUMBER
         """
+        
         if(p[1] == '-'):
-            p[0] = Node('NUMBER', leaf=-p[2])
+            isFloat = p[2] - int(p[2]) !=0
+            p[0] = Node('NUMBER'[Node('is_float',leaf=isFloat)], leaf=-p[2])
         else:
-            
-            p[0] =  Node('NUMBER', leaf=p[1])
+            isFloat = p[1] - int(p[1]) !=0
+            p[0] =  Node('NUMBER',[Node('is_float',leaf=isFloat)], leaf=p[1])
             
     def p_sequence(self, p):
         """
@@ -195,17 +206,18 @@ class Parser:
                     | term array_index ASSING term
                     | term array_index ASSING factor_char
         """
+        
+        variable,key=self.semanticValidator.validate_variable(p[1],variables,self.current_node_scope,self.scopes)
+        if(p[2]=='='):
+            if variable == 'int' or variable == 'float':
+                self.semanticValidator.validate_number(p[3],p[1].leaf,variables)
+            elif variable == 'char':
+                self.semanticValidator.validate_char(p[3],p[1].leaf,variables)
         if(p[2]!='='):
             p[0] = Node('assignment', [p[1],Node('assing',leaf = p[2]), p[3]])
         else:
+            p[1].children.append(Node('id_scope',leaf=key))
             p[0] = Node('assignment', [p[1], p[3]],p[2])   
-        variable=self.semanticValidator.validate_variable(p[1],variables,self.current_node_scope,self.scopes)
-        if(p[2]=='='):
-            if variable == 'int' or variable == 'float':
-                self.semanticValidator.validate_number(p[3],p[1].leaf)
-            elif variable == 'char':
-                self.semanticValidator.validate_char(p[3],p[1].leaf)
-            
         
     def p_expression_binop(self, p):
         """
@@ -218,7 +230,7 @@ class Parser:
                    | OPEN_PAREN expression CLOSE_PAREN  
         """
         if(p[1]=='('):
-            p[0] = Node("binop", [p[2]])
+            p[0] = Node("expression", [p[2]])
         else:
             if(len(p)==4):       
                 p[0] = Node("expression", [p[1], p[3]],p[2])
@@ -229,7 +241,11 @@ class Parser:
         """
         condition : expression OR expression
                    | expression NOT expression
+                   | expression AND expression
                    | expression EQUALS expression
+                   | condition OR condition
+                   | condition NOT condition
+                   | condition AND condition
                    | expression DIFERENT expression
                    | expression GREATER expression
                    | expression LESSER expression
@@ -237,20 +253,27 @@ class Parser:
                    | expression LESSER_OR_EQUALS expression
                    | expression DIFERENT factor_char
                    | expression EQUALS factor_char
+                   | OPEN_PAREN condition CLOSE_PAREN
+                   | NOT condition
 
                    
         """
-        if(p[3].type == 'CHARACTER'):
+        if((p[3]!=')') and (p[3].type == 'CHARACTER')):
             try:
                 node = p[1].children[0]
                 if(node.type!='term'):
                     raise Exception
-                variable=self.semanticValidator.validate_variable(node,variables,self.current_node_scope,self.scopes)    
+                variable,key=self.semanticValidator.validate_variable(node,variables,self.current_node_scope,self.scopes)    
             except:
                 raise SemanticError("Error: Incompatible types in condition",p[1].leaf)
             if(variable != 'char'):
                 raise SemanticError("Error: Incompatible types in condition",p[1].leaf)
-        p[0] = Node("condition", [p[1],Node('operation',leaf= p[2]), p[3]])
+        
+        if(p[1]!="("):
+            
+            p[0] = Node("condition", [p[1],p[3]], leaf= p[2])
+        else:
+             p[0] = Node("condition", [p[2]])
         pass
 
         
@@ -259,14 +282,12 @@ class Parser:
         declaration : type term
     
         """
-        
-    
         variable = None
         variable = (p[2].leaf,self.current_scope[-1])
         variables[variable] = (p[1].leaf)
             
                 
-            
+        p[2].children.append(Node('id_scope',leaf=self.current_scope[-1]))
         p[0] = Node('declaration', [p[1], p[2]])
         pass
     
@@ -290,6 +311,7 @@ class Parser:
         """
         variable = (p[2].leaf,self.current_scope[-1])
         variables[variable] = 'array ' +p[1].leaf
+        p[2].children.append(Node('id_scope',leaf=self.current_scope[-1]))
         if(len(p)==6):
             p[0] = Node('array_declaration', [p[2], Node('NUMBER',leaf = p[4])])
         else:
@@ -313,7 +335,7 @@ class Parser:
                      | IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
         """
         if len(p) == 6:
-            p[0] = Node('if', [Node('IF', leaf=p[1]), Node('PAREN', leaf=p[2]), p[3], Node('PAREN', leaf=p[4]), p[5]])
+            p[0] = Node('if', [Node('IF', leaf=p[1]),  p[3], p[5]])
         else:
             p[0] = Node('if', [Node('IF', leaf=p[1]), Node('PAREN', leaf=p[2]), p[3], Node('PAREN', leaf=p[4]), p[5], Node('ELSE',[p[7]])])
             
@@ -347,9 +369,9 @@ class Parser:
                         | PRINT OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
         """ 
         if(len(p)<7):
-            p[0] = Node('PRINT',[Node("STRING",leaf=p[3])])
+            p[0] = Node('print',[Node("STRING",leaf=p[3])])
         else:
-            p[0] = Node('PRINT',[Node("STRING",leaf=p[3]),p[5]])
+            p[0] = Node('print',[Node("STRING",leaf=p[3]),p[5]])
             
         
     def p_call_function(self,p):
@@ -402,12 +424,6 @@ class Parser:
         p[0] = Node('WHILE',[p[3],p[5]])
     
 
-    
-    
-   
-            
-   
-      
             
     def p_error(self, p):
         print("Syntax error in input at line: ", p.lineno)
