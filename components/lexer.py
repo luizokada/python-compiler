@@ -77,6 +77,8 @@ class Lexer():
     
     t_COMMA = r'\,'    
     # Operators
+    t_INCREMENT = r'\+\+'
+    t_DECREMENT = r'\-\-'
     t_SUM = r'\+'
     t_SUB = r'\-'
     t_MUL = r'\*'
@@ -91,8 +93,6 @@ class Lexer():
     t_AND = r'\&\&'
     t_OR = r'\|\|'
     t_NOT = r'\!'
-    t_INCREMENT = r'\+\+'
-    t_DECREMENT = r'\-\-'
 
     # CHAR
     def t_CHARACTER(self, t):
@@ -104,8 +104,11 @@ class Lexer():
         return t
     # Number
     def t_NUMBER(self, t):
-        r'(?!\d*\'[^\']*)\d+'
-        t.value = int(t.value)
+        r'(?!\d*\'[^\']*)(\d+\.?\d*|\.\d+)'
+        if '.' in t.value:
+            t.value = float(t.value)
+        else:
+            t.value = int(t.value)
         return t
 
     # Ignore spaces
