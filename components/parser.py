@@ -230,21 +230,19 @@ class Parser:
                    | OPEN_PAREN expression CLOSE_PAREN  
         """
         if(p[1]=='('):
-            p[0] = Node("expression", [p[2]])
+            p[0] = p[2]
         else:
             if(len(p)==4):       
                 p[0] = Node("expression", [p[1], p[3]],p[2])
             else:
-                p[0] = p[0] = Node("iteration_op", [p[1] ,Node('operation',leaf= p[2])])
+                p[0] = p[0] = Node("iteration_op", [p[1] ],leaf=p[2])
             
     def p_condition(self,p):
         """
         condition : expression OR expression
-                   | expression NOT expression
                    | expression AND expression
                    | expression EQUALS expression
                    | condition OR condition
-                   | condition NOT condition
                    | condition AND condition
                    | expression DIFERENT expression
                    | expression GREATER expression
@@ -258,7 +256,7 @@ class Parser:
 
                    
         """
-        if((p[3]!=')') and (p[3].type == 'CHARACTER')):
+        if((p[1]!='(') and (len(p)>=4)and(p[3].type == 'CHARACTER')):
             try:
                 node = p[1].children[0]
                 if(node.type!='term'):
@@ -270,10 +268,12 @@ class Parser:
                 raise SemanticError("Error: Incompatible types in condition",p[1].leaf)
         
         if(p[1]!="("):
-            
-            p[0] = Node("condition", [p[1],p[3]], leaf= p[2])
+            if(len(p)>=4):
+                p[0] = Node("condition", [p[1],p[3]], leaf= p[2])
+            else:
+                p[0] = Node("condition", [p[2]], leaf= p[1])
         else:
-             p[0] = Node("condition", [p[2]])
+             p[0] = p[2]
         pass
 
         
@@ -337,7 +337,7 @@ class Parser:
         if len(p) == 6:
             p[0] = Node('if', [Node('IF', leaf=p[1]),  p[3], p[5]])
         else:
-            p[0] = Node('if', [Node('IF', leaf=p[1]), Node('PAREN', leaf=p[2]), p[3], Node('PAREN', leaf=p[4]), p[5], Node('ELSE',[p[7]])])
+            p[0] = Node('if', [  p[3],  p[5], Node('ELSE',[p[7]])])
             
  
     def p_param(self,p):
