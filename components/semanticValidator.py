@@ -40,14 +40,16 @@ class SemanticValidator:
         try:
             return variables[(variable,current_node_scope.leaf)],current_node_scope.leaf
         except:
-            
+            type= None
+            scopeVar =None
             for key in variables.keys():
                 if variable in key[0]:
                     node = self.findNodeInTree(scopes,key[1])
                     if(self.isScopeParent(node,current_node_scope.leaf)):
-                        return variables[key],key[1]
-                    else:
-                        break
+                        type = variables[key]
+                        scopeVar =  key[1]
+        if(type!=None):
+            return type,scopeVar
         raise SemanticError(f"Variavel {variable} nao declarada",node)
         
     def validate_number(self, node:Node, vairable,variables):
