@@ -12,7 +12,7 @@ class CodeGenerator:
         self.scopes = {}
     
     
-    def append_scope(self,new_scope,scope:ir.Function.entry_basic_block):
+    def append_scope(self,new_scope,scope:ir.Function):
         self.scopes[new_scope] = scope
 
     def _config_llvm(self):
