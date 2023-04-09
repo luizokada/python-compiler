@@ -387,6 +387,12 @@ class Parser:
             p[0] = Node('print',[Node("STRING",leaf=p[3])])
         else:
             p[0] = Node('print',[Node("STRING",leaf=p[3]),p[5]])
+    
+    def p_scan_statement(self,p):
+        """
+        scan_statement : SCAN OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
+        """ 
+        p[0] = Node('scan',[Node("STRING",leaf=p[3]),p[5]])
             
         
     def p_call_function(self,p):
@@ -394,6 +400,7 @@ class Parser:
         call_function : IDENTIFIER OPEN_PAREN passing_param CLOSE_PAREN SEMI_COLON
                       | IDENTIFIER OPEN_PAREN CLOSE_PAREN SEMI_COLON
                       | print_statement
+                      | scan_statement
                       
         """
         if(len(p)>5):
