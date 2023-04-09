@@ -62,6 +62,20 @@ class SemanticValidator:
             raise SemanticError(f"Atribuiçao invalida na variavel {vairable}",node)
         return
         
+    def validate_scan(self, node:Node,params:list,variables):
+        string_scan = node.children[0].leaf
+        string_scan=string_scan.replace("'","")
+        if(string_scan != "%d"):
+            raise SemanticError(f"Tipo de variavel invalido para leitura",node)
+        if(len(params.children)!=1):
+            raise SemanticError(f"Numero de parametros invalido para leitura",node)
+        else:
+            variable_name = params.children[0].leaf
+            variable_scope = params.children[0].children[0].leaf
+            print(variables[(variable_name,variable_scope)] )
+            if(variables[(variable_name,variable_scope)] != "int"):
+                raise SemanticError(f"Tipo de variavel invalido para leitura",node)
+        return
     def validate_string(self, node):
         if node.type == "string":
             return True

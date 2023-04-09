@@ -29,6 +29,8 @@ def get_varible_scope(scope:Node,uuid:str,variable_name:str):
         variables[(variable_name,parent.leaf)]
         return parent
     except:
+        if(parent == None):
+            return None
         return get_varible_scope(scope,parent.leaf,variable_name)
 
 class Parser:
@@ -174,8 +176,8 @@ class Parser:
         """
         
         if(p[1] == '-'):
-            isFloat = p[2] - int(p[2]) !=0
-            p[0] = Node('NUMBER'[Node('is_float',leaf=isFloat)], leaf=-p[2])
+            isFloat = -p[2] +int(p[2]) !=0
+            p[0] = Node('NUMBER',[Node('is_float',leaf=isFloat)], leaf=-p[2])
         else:
             isFloat = p[1] - int(p[1]) !=0
             p[0] =  Node('NUMBER',[Node('is_float',leaf=isFloat)], leaf=p[1])
@@ -367,10 +369,12 @@ class Parser:
                       | factor
         """
         try:
-                variables[(p[1].leaf,self.current_node_scope.leaf)]
+                variables[(p[1].leaf,self.current_scope[-1])]
                 p[1].children.append(Node('id_scope',leaf=self.current_node_scope.leaf))
         except:
-                parent = get_varible_scope(self.scopes,self.current_node_scope.leaf,p[1].leaf)
+                parent = get_varible_scope(self.scopes,self.current_scope[-1],p[1].leaf)
+                if(parent == None):
+                    raise SemanticError("Error: Variable not declared",p[1].leaf)
                 p[1].children.append(Node('id_scope',leaf=parent.leaf))
         if(len(p)>3):
             
@@ -392,8 +396,9 @@ class Parser:
         """
         scan_statement : SCAN OPEN_PAREN STRING_LITERAL COMMA passing_param CLOSE_PAREN SEMI_COLON
         """ 
+        
         p[0] = Node('scan',[Node("STRING",leaf=p[3]),p[5]])
-            
+        self.semanticValidator.validate_scan(p[0],p[5],variables)     
         
     def p_call_function(self,p):
         """

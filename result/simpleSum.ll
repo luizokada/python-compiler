@@ -3,52 +3,74 @@ source_filename = "<string>"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@a3c118ba92f34eacbd7f94a5596abad3 = internal constant [20 x i8] c"'a is less than 5'\0A\00"
-@"5513d642cb954e8d8720bcf8aa00e698" = internal constant [23 x i8] c"'a is greater than 5'\0A\00"
+@"9abf5386a1ee43e883e09aaec7b8d728" = internal constant [21 x i8] c"Digite o valor de a\0A\00"
+@da76e41c5b8d470b93f06542e1ff45dd = constant [3 x i8] c"%d\00"
+@e131ac60114f48768c8e87f18f24ec67 = internal constant [21 x i8] c"Digite o valor de b\0A\00"
+@"696d02bc3cf4410ba442b7ab66cafb20" = constant [3 x i8] c"%d\00"
+@"4eb19da353e74a8cbcf3026b3967b2fc" = internal constant [12 x i8] c"a + b = %d\0A\00"
+@e71f7a4c112a4a72a1a5da3ca6c771be = internal constant [19 x i8] c"Soma maior que 10\0A\00"
+@"412bce5818c84942af299ca0a9bd9bac" = internal constant [19 x i8] c"Soma menor que 10\0A\00"
+@a07c5e2d18ab400896fed3de0e50e95a = internal constant [8 x i8] c"i = %d\0A\00"
 
 declare i32 @printf(i8*, ...)
+
+declare i32 @scanf(i8*, ...)
 
 define void @main() {
 entry:
   %a = alloca i32, align 4
   %b = alloca i32, align 4
+  %soma = alloca i32, align 4
+  %.2 = bitcast [21 x i8]* @"9abf5386a1ee43e883e09aaec7b8d728" to i8*
+  %.3 = call i32 (i8*, ...) @printf(i8* %.2)
+  %.4 = bitcast [3 x i8]* @da76e41c5b8d470b93f06542e1ff45dd to i8*
+  %.5 = call i32 (i8*, ...) @scanf(i8* %.4, i32* %a)
+  %.6 = bitcast [21 x i8]* @e131ac60114f48768c8e87f18f24ec67 to i8*
+  %.7 = call i32 (i8*, ...) @printf(i8* %.6)
+  %.8 = bitcast [3 x i8]* @"696d02bc3cf4410ba442b7ab66cafb20" to i8*
+  %.9 = call i32 (i8*, ...) @scanf(i8* %.8, i32* %b)
+  %.10 = load i32, i32* %a, align 4
+  %.11 = load i32, i32* %b, align 4
+  %.12 = add i32 %.10, %.11
+  store i32 %.12, i32* %soma, align 4
+  %.14 = bitcast [12 x i8]* @"4eb19da353e74a8cbcf3026b3967b2fc" to i8*
+  %.15 = load i32, i32* %soma, align 4
+  %.16 = call i32 (i8*, ...) @printf(i8* %.14, i32 %.15)
+  %.17 = load i32, i32* %soma, align 4
+  %.18 = icmp sgt i32 %.17, 10
+  br i1 %.18, label %entry.if, label %entry.else
+
+entry.if:                                         ; preds = %entry
+  %.20 = bitcast [19 x i8]* @e71f7a4c112a4a72a1a5da3ca6c771be to i8*
+  %.21 = call i32 (i8*, ...) @printf(i8* %.20)
+  br label %entry.endif
+
+entry.else:                                       ; preds = %entry
+  %.23 = bitcast [19 x i8]* @"412bce5818c84942af299ca0a9bd9bac" to i8*
+  %.24 = call i32 (i8*, ...) @printf(i8* %.23)
+  br label %entry.endif
+
+entry.endif:                                      ; preds = %entry.else, %entry.if
   %i = alloca i32, align 4
-  store i32 0, i32* %a, align 4
   store i32 0, i32* %i, align 4
-  br label %entry.for_init
+  br label %entry.endif.for_init
 
-entry.for_init:                                   ; preds = %entry.for_loop.endif, %entry
-  %.5 = load i32, i32* %i, align 4
-  %.6 = icmp slt i32 %.5, 10
-  br i1 %.6, label %entry.for_loop, label %entry.for_end
+entry.endif.for_init:                             ; preds = %entry.endif.for_loop, %entry.endif
+  %.28 = load i32, i32* %i, align 4
+  %.29 = icmp slt i32 %.28, 10
+  br i1 %.29, label %entry.endif.for_loop, label %entry.endif.for_end
 
-entry.for_loop:                                   ; preds = %entry.for_init
-  %.8 = load i32, i32* %a, align 4
-  %.9 = add i32 %.8, 1
-  store i32 %.9, i32* %a, align 4
-  %.11 = load i32, i32* %a, align 4
-  %.12 = icmp slt i32 %.11, 5
-  br i1 %.12, label %entry.for_loop.if, label %entry.for_loop.else
+entry.endif.for_loop:                             ; preds = %entry.endif.for_init
+  %.31 = bitcast [8 x i8]* @a07c5e2d18ab400896fed3de0e50e95a to i8*
+  %.32 = load i32, i32* %i, align 4
+  %.33 = call i32 (i8*, ...) @printf(i8* %.31, i32 %.32)
+  %.34 = load i32, i32* %i, align 4
+  %.35 = add i32 %.34, 1
+  store i32 %.35, i32* %i, align 4
+  br label %entry.endif.for_init
 
-entry.for_end:                                    ; preds = %entry.for_init
-  %c = alloca i32, align 4
+entry.endif.for_end:                              ; preds = %entry.endif.for_init
   ret void
-
-entry.for_loop.if:                                ; preds = %entry.for_loop
-  %.14 = bitcast [20 x i8]* @a3c118ba92f34eacbd7f94a5596abad3 to i8*
-  %.15 = call i32 (i8*, ...) @printf(i8* %.14)
-  br label %entry.for_loop.endif
-
-entry.for_loop.else:                              ; preds = %entry.for_loop
-  %.17 = bitcast [23 x i8]* @"5513d642cb954e8d8720bcf8aa00e698" to i8*
-  %.18 = call i32 (i8*, ...) @printf(i8* %.17)
-  br label %entry.for_loop.endif
-
-entry.for_loop.endif:                             ; preds = %entry.for_loop.else, %entry.for_loop.if
-  %.20 = load i32, i32* %i, align 4
-  %.21 = add i32 %.20, 1
-  store i32 %.21, i32* %i, align 4
-  br label %entry.for_init
 }
 
 ; Function Attrs: nounwind

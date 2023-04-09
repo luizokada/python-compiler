@@ -1,23 +1,25 @@
 int main(){
     int a;
     int b;
-    int i;
-    a = 0;
-    scanf('%d',a);
-    
-    for ( i = 0; i < 10; i++)
+    int soma;
+    printf('Digite o valor de a');
+    scanf('%d', a);
+    printf('Digite o valor de b');
+    scanf('%d', b);
+    soma = a + b;
+    printf('a + b = %d', soma);
+    if (soma>10)
     {
-        a++;
-        if (a < 5)
-        {
-            printf('a is less than 5');
-        }
-        else
-        {
-            printf('a is greater than 5');
-        }
+        printf('Soma maior que 10');
+    }else{
+        printf('Soma menor que 10');
     }
-
-    int c;
+    int i;
+    for (i = 0; i < 10; i++)
+    {
+        printf('i = %d', i);
+    }
+    
+    
     return;
 }
