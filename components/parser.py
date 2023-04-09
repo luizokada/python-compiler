@@ -4,7 +4,10 @@ import uuid
 from Errors.SemanticError import SemanticError
 from Tree.Tree import Node
 from components.semanticValidator import SemanticValidator
-
+    
+variables = {}
+current_variable_identifier = None
+current_variable_type = None
 
 def search_parent_scope(scope:Node,uuid:str):
     if scope == None:
@@ -19,10 +22,15 @@ def search_parent_scope(scope:Node,uuid:str):
                 return scope
         return None
     
-    
-variables = {}
-current_variable_identifier = None
-current_variable_type = None
+
+def get_varible_scope(scope:Node,uuid:str,variable_name:str):
+    try:
+        parent = search_parent_scope(scope,uuid)
+        variables[(variable_name,parent.leaf)]
+        return parent
+    except:
+        return get_varible_scope(scope,parent.leaf,variable_name)
+
 class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
@@ -134,7 +142,7 @@ class Parser:
                 variables[(p[1].leaf,self.current_node_scope.leaf)]
                 p[1].children.append(Node('id_scope',leaf=self.current_node_scope.leaf))
             except:
-                parent = search_parent_scope(self.scopes,self.current_node_scope.leaf)
+                parent = get_varible_scope(self.scopes,self.current_node_scope.leaf,p[1].leaf)
                 p[1].children.append(Node('id_scope',leaf=parent.leaf))
             p[0] = Node("expression", [p[1]])
         else:     
@@ -335,7 +343,7 @@ class Parser:
                      | IF OPEN_PAREN condition CLOSE_PAREN scope ELSE scope
         """
         if len(p) == 6:
-            p[0] = Node('if', [Node('IF', leaf=p[1]),  p[3], p[5]])
+            p[0] = Node('if', [  p[3], p[5]])
         else:
             p[0] = Node('if', [  p[3],  p[5], Node('ELSE',[p[7]])])
             
@@ -358,8 +366,15 @@ class Parser:
                       | factor COMMA passing_param
                       | factor
         """
+        try:
+                variables[(p[1].leaf,self.current_node_scope.leaf)]
+                p[1].children.append(Node('id_scope',leaf=self.current_node_scope.leaf))
+        except:
+                parent = get_varible_scope(self.scopes,self.current_node_scope.leaf,p[1].leaf)
+                p[1].children.append(Node('id_scope',leaf=parent.leaf))
         if(len(p)>3):
-            p[0] = Node('PASSIN_PARAM', [p[1],p[3]])
+            
+            p[0] = Node('PASSIN_PARAM', [p[1],p[3].children[0]])
         else:
             p[0] = Node('PASSIN_PARAM', [p[1]])
     
