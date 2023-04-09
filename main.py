@@ -4,6 +4,7 @@ from components.parser import variables
 from components.codeGenerator import CodeGenerator
 from components.treeWalker import TreeWalker
 import sys
+import subprocess
 
 LANGUAGE_EXTENCION = "c"
 def main(fille_name):
@@ -32,6 +33,15 @@ def main(fille_name):
     walker = TreeWalker(codeGenrator,test)
     walker.walk(test)
     print(walker.codeGen.module)
+    
+
+    codeGenrator.compile(f'result/{fille_name.split(".")[0]}')
+    codeGenrator.save_ir(f'result/{fille_name.split(".")[0]}.ll')
+    comand = f' llc -filetype=obj -relocation-model=pic result/{fille_name.split(".")[0]}.ll -o result/{fille_name.split(".")[0]}.o'
+    gcc_comand = f'gcc result/{fille_name.split(".")[0]}.o -o result/{fille_name.split(".")[0]}'
+
+    subprocess.run(comand, shell=True, universal_newlines=True)
+    subprocess.run(gcc_comand, shell=True, universal_newlines=True)
 
 
 
