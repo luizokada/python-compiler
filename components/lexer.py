@@ -10,6 +10,7 @@ class Lexer():
     #ALL TOKENS 
     tokens = (
         'PRINT',
+        'SCAN',
         'OPEN_PAREN',
         'CLOSE_PAREN',
         'OPEN_BRAKETS',
@@ -54,6 +55,10 @@ class Lexer():
     # Print
     def t_PRINT(self, t):
         r'printf'
+        return t
+    
+    def t_SCAN(self, t):
+        r'scanf'
         return t
 
     # Parenthesis
