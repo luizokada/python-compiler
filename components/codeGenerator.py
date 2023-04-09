@@ -7,6 +7,7 @@ class CodeGenerator:
         self._config_llvm()
         self._create_types()
         self.declare_print()
+        self.declare_scanf()
     
    
     def _config_llvm(self):
@@ -47,9 +48,15 @@ class CodeGenerator:
         self.module=mod
             
     def declare_print(self):
-        self.function_pointer = self.ir.IntType(8).as_pointer()
-        self.printf_ty = self.ir.FunctionType(self.ir.IntType(32), [self.function_pointer], var_arg=True)
-        self.printf = self.ir.Function(self.module, self.printf_ty, name="printf")
+        self.function_pointer = self.ir.PointerType(ir.IntType(8), 0)
+        self.print_pointer = self.ir.FunctionType(self.ir.IntType(32), [self.function_pointer], var_arg=True)
+        self.printf = self.ir.Function(self.module, self.print_pointer, name="printf")
+    
+    def declare_scanf(self):
+        self.function_pointer_scan = self.ir.PointerType(ir.IntType(8), 0)
+        self.scanf_pointer = self.ir.FunctionType(self.ir.IntType(32), [self.function_pointer_scan], var_arg=True)
+        self.scanf = self.ir.Function(self.module, self.scanf_pointer, name="scanf")
+        
     def save_ir(self, filename):
         with open(filename, 'w') as output_file:
             output_file.write(str(self.module))
