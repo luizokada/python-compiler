@@ -1,20 +1,23 @@
 int main(){
     int a;
     int b;
-    a = 10;
+    int i;
+    a = 0;
     scanf('%d',a);
-    if(a == 10){
-
-    printf('Hello World %d',a);
-        if(a==10){
-            printf('Hello World %d',a);
-        }else{
-            printf('Hello ERRO %d',a);
+    
+    for ( i = 0; i < 10; i++)
+    {
+        a++;
+        if (a < 5)
+        {
+            printf('a is less than 5');
         }
-    }else{
-    printf('Hello ERRO %d',a);
+        else
+        {
+            printf('a is greater than 5');
+        }
     }
-    a = 20;
-    printf('Hello World %d',a);
+
+    int c;
     return;
 }
