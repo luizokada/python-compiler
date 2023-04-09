@@ -1,38 +1,27 @@
 from llvmlite import ir,binding
-
+from llvmlite import binding as llvm
 class CodeGenerator:
     def __init__(self):
         self.binding = binding
-        self.binding.initialize()
-        self.binding.initialize_native_target()
-        self.binding.initialize_native_asmprinter()
+        
         self._config_llvm()
         self._create_types()
-        self._declare_print_function()
-        self.scopes = {}
+        self.declare_print()
     
-    
-    def append_scope(self,new_scope,scope:ir.Function):
-        self.scopes[new_scope] = scope
-
+   
     def _config_llvm(self):
         # Config LLVM
-        self.module = ir.Module(name='teste')
+        self.module = ir.Module(name=__file__)
         self.module.triple = self.binding.get_default_triple()
         self.ir = ir
-        
+  
         
     def create_builder(self,block,main:ir.Function):
         self.main_function = main
         self.builder = self.ir.IRBuilder(block)
 
 
-    def _declare_print_function(self):
-        # Declare Printf function
-        voidptr_ty = self.ir.IntType(8).as_pointer()
-        printf_ty = self.ir.FunctionType(self.ir.IntType(32), [voidptr_ty], var_arg=True)
-        printf = self.ir.Function(self.module, printf_ty, name="printf")
-        self.printf = printf
+        
     
     def _create_types(self):
         self.int = self.ir.IntType(32)
@@ -40,6 +29,31 @@ class CodeGenerator:
         self.char = self.ir.IntType(8)
 
         
+    def compile(self, filename):
+        self.binding.initialize()
+        self.binding.initialize_native_target()
+        self.binding.initialize_native_asmprinter()
+        target = self.binding.Target.from_default_triple()
+        target_machine = target.create_target_machine()
+        backing_mod = binding.parse_assembly("")
+        engine = binding.create_mcjit_compiler(backing_mod, target_machine)
+        self.engine = engine
+        llvm_ir = str(self.module)
+        mod = self.binding.parse_assembly(llvm_ir)
+        mod.verify()
+        self.engine.add_module(mod)
+        self.engine.finalize_object()
+        self.engine.run_static_constructors()
+        self.module=mod
+            
+    def declare_print(self):
+        self.function_pointer = self.ir.IntType(8).as_pointer()
+        self.printf_ty = self.ir.FunctionType(self.ir.IntType(32), [self.function_pointer], var_arg=True)
+        self.printf = self.ir.Function(self.module, self.printf_ty, name="printf")
+    def save_ir(self, filename):
+        with open(filename, 'w') as output_file:
+            output_file.write(str(self.module))
+            
     def getVariableType(self, type:str):
         if type == 'int':
             return self.int
