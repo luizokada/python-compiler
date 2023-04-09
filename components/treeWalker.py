@@ -19,6 +19,7 @@ class TreeWalker:
                 args = [] # NAO TEM ARGUMENTO NA LINGUAGEM
                 function_type = self.codeGen.ir.FunctionType(self.codeGen.ir.VoidType(), args)
                 main_function = self.codeGen.ir.Function(self.codeGen.module, function_type, name="main")
+                self.codeGen.main_function = main_function
                 main_scope = main_function.append_basic_block('entry')           
                 mains_builder = self.codeGen.ir.IRBuilder(main_scope) 
                 
@@ -50,7 +51,8 @@ class TreeWalker:
                 variable=self.variables[(variableName,variableScope)][0]
                 builder = lastScope
                 return builder.load(variable)
-
+            elif(currentNode.type == 'for'):
+                return self.build_for(currentNode,lastScope)
             elif(currentNode.type == 'sequence'):
                 return
             elif(currentNode.type == 'return'):
@@ -88,9 +90,12 @@ class TreeWalker:
 
             elif(currentNode.type == 'print'):   
                 return self.build_print(currentNode,lastScope)
+            
+        return
+    
     def build_print(self,node:Node,lastScope:ir.IRBuilder):
             builder = lastScope
-
+            print(self.variables)
             value = node.children[0].leaf + '\n\0'
             str_pointer = self.codeGen.ir.Constant(self.codeGen.ir.ArrayType(self.codeGen.ir.IntType(8), len(value)),
                                 bytearray(value.encode("utf8")))
@@ -119,7 +124,6 @@ class TreeWalker:
                     #print(int_val)
                     variableAddr =  builder.load(int_val)
                     args.append(variableAddr)
-            print(variableAddr)
             builder.call(printf, args = args)
         
     
@@ -204,11 +208,11 @@ class TreeWalker:
         builder = lastScope
         return builder.mul(left,right)
     
-    def build_division(self,node:Node,lastScope:str):
+    def build_division(self,node:Node,lastScope:ir.IRBuilder):
         left = self.walk(node.children[0],lastScope)
         right = self.walk(node.children[1],lastScope)
         builder = lastScope
-        return builder.div(left,right)
+        return builder.sdiv(left,right)
     
     def build_sub(self,node:Node,lastScope:str):
         left = self.walk(node.children[0],lastScope)
@@ -227,4 +231,35 @@ class TreeWalker:
         else:
             result =  builder.sub(builder.load(variable) ,self.codeGen.ir.Constant(self.codeGen.getVariableType('int'),1))
         return builder.store(result,variable)
+    
+    
         
+    def build_for(self,node:Node,lastScope:ir.IRBuilder):
+        builder = lastScope
+        
+        for_init = node.children[0]
+        condition = node.children[1]
+        incrementation = node.children[2]
+        scope_for = node.children[3].children[0]
+        self.walk(for_init.children[0],builder)
+        bb = builder.basic_block
+        for_init = builder.append_basic_block(bb.name+'.for_init')
+        builder.branch(for_init)
+        for_loop = builder.append_basic_block(bb.name+ '.for_loop')
+        for_end = builder.append_basic_block(bb.name+ '.for_end')
+        builder.position_at_start(for_init)
+        condition_function = self.build_condition(condition,builder)
+        builder.cbranch(condition_function, for_loop, for_end)
+        builder.position_at_start(for_loop)
+        loopBuilder = self.codeGen.ir.IRBuilder(for_loop)
+        self.walk(scope_for,loopBuilder)
+        self.build_iteration(incrementation,loopBuilder)
+
+        loopBuilder.branch(for_init)
+        builder.position_at_end(for_end)
+
+
+
+        
+  
+          
