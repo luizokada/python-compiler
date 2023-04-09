@@ -38,7 +38,7 @@ class Parser:
         self.scopes = None
         self.current_node_scope = None
         self.parent_node_scope = None
-        self.parser = yacc.yacc(module=self,debug=True)
+        self.parser = yacc.yacc(module=self,debug=False)
         self.precedence = (
             ('left', 'OR'),
             ('left', 'AND'),
