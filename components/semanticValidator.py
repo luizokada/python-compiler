@@ -72,7 +72,6 @@ class SemanticValidator:
         else:
             variable_name = params.children[0].leaf
             variable_scope = params.children[0].children[0].leaf
-            print(variables[(variable_name,variable_scope)] )
             if(variables[(variable_name,variable_scope)] != "int"):
                 raise SemanticError(f"Tipo de variavel invalido para leitura",node)
         return
