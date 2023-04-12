@@ -1,6 +1,5 @@
 from components.lexer import Lexer
 from components.parser import Parser
-from components.parser import variables
 from components.codeGenerator import CodeGenerator
 from components.treeWalker import TreeWalker
 import sys
@@ -16,7 +15,7 @@ def main(fille_name):
             exit(1)
         fille = open(f"./tests/{fille_name}")
     except:
-        print("Fille not found")
+        print("Fille not found, fille must be in tests folder ")
         exit(1)
         
     text = fille.read()
@@ -25,16 +24,17 @@ def main(fille_name):
     lexer.lexer.input(text)
 
     parser = Parser(lexer.tokens)
-    test = parser.parse(text, lexer=lexer) 
-
-    test.print_tree()
+    AST = parser.parse(text, lexer=lexer) 
+    #print tree
+    AST.print_tree()
 
     codeGenrator = CodeGenerator() 
-    walker = TreeWalker(codeGenrator,test)
-    walker.walk(test)
+    #walk tree
+    walker = TreeWalker(codeGenrator,AST)
+    walker.walk(AST)
     print(walker.codeGen.module)
     
-
+    #compile and save
     codeGenrator.compile(f'result/{fille_name.split(".")[0]}')
     codeGenrator.save_ir(f'result/{fille_name.split(".")[0]}.ll')
     comand = f' llc -filetype=obj -relocation-model=pic result/{fille_name.split(".")[0]}.ll -o result/{fille_name.split(".")[0]}.o'
@@ -44,8 +44,6 @@ def main(fille_name):
     subprocess.run(gcc_comand, shell=True, universal_newlines=True)
 
 
-
-    
 
 if __name__ == "__main__":
     fille_name = sys.argv[1]
