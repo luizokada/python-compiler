@@ -6,8 +6,6 @@ from Tree.Tree import Node
 from components.semanticValidator import SemanticValidator
     
 variables = {}
-current_variable_identifier = None
-current_variable_type = None
 
 def search_parent_scope(scope:Node,uuid:str):
     if scope == None:
@@ -53,6 +51,7 @@ class Parser:
 
     def parse(self, text,lexer)->Node:
         return self.parser.parse(text, lexer=lexer.lexer)
+  
     
     
     def p_start(self,p):
@@ -75,6 +74,7 @@ class Parser:
         else:
             self.current_node_scope = self.parent_node_scope 
             self.parent_node_scope = search_parent_scope(self.scopes,self.current_node_scope.leaf)
+        pass
 
         
     def p_new_scope(self,p):
@@ -90,6 +90,7 @@ class Parser:
             self.current_node_scope.children.append(new_scope)
             self.parent_node_scope = self.current_node_scope
             self.current_node_scope = new_scope
+        pass
 
     def p_statements(self, p):
         """
@@ -101,6 +102,7 @@ class Parser:
         if len(p) > 2:
             statements += p[2].children
         p[0] = Node('statements', statements)
+        pass
             
     def p_statement(self, p):
         """
@@ -118,19 +120,16 @@ class Parser:
                  
         """
         p[0] =  Node('statement', [p[1]])
-    
-        
-        
-        
-        
+        pass
+       
     #PRIMITIVOS
-    
-    
+
     def p_factor_char(self, p):
         """
         factor_char : CHARACTER
         """
         p[0] = Node('CHARACTER', leaf=p[1])
+        pass
 
             
     def p_expression_term(self, p):
@@ -149,6 +148,7 @@ class Parser:
             p[0] = Node("expression", [p[1]])
         else:     
             p[0] = Node("expression", [p[1]])
+        pass
         
         
     def p_term(self, p):
@@ -158,6 +158,7 @@ class Parser:
         """
         
         p[0] = Node('term', leaf=p[1])
+        pass
         
     def p_type(self,p):
         """
@@ -181,7 +182,7 @@ class Parser:
         else:
             isFloat = p[1] - int(p[1]) !=0
             p[0] =  Node('NUMBER',[Node('is_float',leaf=isFloat)], leaf=p[1])
-            
+        pass
     def p_sequence(self, p):
         """
         sequence : NUMBER COMMA sequence
@@ -193,6 +194,7 @@ class Parser:
             p[0] = Node('sequence', [Node('SEQUENCE_DATA', leaf=p[1])])
         else:
             p[0] = Node('sequence', [Node('SEQUENCE_DATA', leaf=p[1]),Node('SEQUENCE_DATA',leaf=p[2]),p[3]])
+        pass
             
     def p_return_statement(self,p):
         """
@@ -204,6 +206,7 @@ class Parser:
             p[0]= Node('return',[p[2]])
         else:
             p[0] = Node('return',leaf=p[1])
+        pass
         
     #STATEMENT TYPES -----------------------
     def p_assignment(self, p):
@@ -228,6 +231,7 @@ class Parser:
         else:
             p[1].children.append(Node('id_scope',leaf=key))
             p[0] = Node('assignment', [p[1], p[3]],p[2])   
+        pass
         
     def p_expression_binop(self, p):
         """
@@ -246,6 +250,7 @@ class Parser:
                 p[0] = Node("expression", [p[1], p[3]],p[2])
             else:
                 p[0] = p[0] = Node("iteration_op", [p[1] ],leaf=p[2])
+        pass
             
     def p_condition(self,p):
         """
@@ -328,7 +333,6 @@ class Parser:
             p[0] = Node('array_declaration', [p[2], Node('NUMBER',leaf = p[4]),p[6]])
         pass
     
-   
     def p_declarations(self,p):
         """
         declarations : declaration COMMA declarations
@@ -338,6 +342,7 @@ class Parser:
             p[0] = Node('declarations', [p[1], p[3]])
         else:
             p[0] = Node('declarations', [p[1]])
+        pass
             
     def p_if_statement(self, p):
         """
@@ -348,6 +353,7 @@ class Parser:
             p[0] = Node('if', [  p[3], p[5]])
         else:
             p[0] = Node('if', [  p[3],  p[5], Node('ELSE',[p[7]])])
+        pass
             
  
     def p_param(self,p):
@@ -381,6 +387,7 @@ class Parser:
             p[0] = Node('PASSIN_PARAM', [p[1],p[3].children[0]])
         else:
             p[0] = Node('PASSIN_PARAM', [p[1]])
+        pass
     
     def p_print_statement(self,p):
         """
@@ -391,6 +398,7 @@ class Parser:
             p[0] = Node('print',[Node("STRING",leaf=p[3])])
         else:
             p[0] = Node('print',[Node("STRING",leaf=p[3]),p[5]])
+        pass
     
     def p_scan_statement(self,p):
         """
@@ -398,7 +406,8 @@ class Parser:
         """ 
         
         p[0] = Node('scan',[Node("STRING",leaf=p[3]),p[5]])
-        self.semanticValidator.validate_scan(p[0],p[5],variables)     
+        self.semanticValidator.validate_scan(p[0],p[5],variables)   
+        pass  
         
     def p_call_function(self,p):
         """
@@ -416,13 +425,13 @@ class Parser:
              p[0] = p[1]
         pass
     
-    
         #LAÇOS DE REPRETICÃO---------------------------------------------
     def p_for_statement(self, p):
         """
         for_statement : FOR OPEN_PAREN for_initilizer SEMI_COLON condition SEMI_COLON expression CLOSE_PAREN scope
         """
         p[0] =  Node('for', [p[3],p[5],p[7],p[9]])
+        pass
          
         
     def p_for_initializer(self,p):
@@ -434,6 +443,7 @@ class Parser:
             p[0] = Node('for_initilizer', [p[1]])
         else:
             p[0] = Node('for_initilizer', [p[1],p[2]])
+        pass
             
         
     def p_do_while_statement(self,p):
@@ -442,6 +452,7 @@ class Parser:
       
         """
         p[0] = Node('DO',[p[2],Node('WHILE',[p[5]])])
+        pass
         
     def p_while_statement(self,p):
         """
@@ -449,7 +460,7 @@ class Parser:
         
         """
         p[0] = Node('WHILE',[p[3],p[5]])
-    
+        pass
 
             
     def p_error(self, p):

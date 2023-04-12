@@ -15,4 +15,9 @@ Instale tambem o llvm e o gcc para o gerador de codigo
 ```bash
 sudo apt install build-essential
 sudo apt install llvm
+
 ```
+
+Para compilar basta executar
+````
+

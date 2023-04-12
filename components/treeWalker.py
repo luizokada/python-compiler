@@ -1,6 +1,5 @@
 from components.codeGenerator import CodeGenerator
 from Tree.Tree import Node
-
 from llvmlite import ir
 import uuid
 class TreeWalker:
@@ -33,8 +32,6 @@ class TreeWalker:
                 for child in currentNode.children:
                     self.walk(child,lastScope)
                 return
-            elif(currentNode.type == 'CHARACTER'):
-                return
             elif(currentNode.type == 'expression'):
                 if(len(currentNode.children) == 1):
                     return self.walk(currentNode.children[0],lastScope)
@@ -45,19 +42,21 @@ class TreeWalker:
                     return self.codeGen.ir.Constant(self.codeGen.getVariableType('int'),int(currentNode.leaf))
                 else:    
                     return self.codeGen.ir.Constant(self.codeGen.getVariableType('float'),currentNode.leaf)
+                
             elif(currentNode.type == 'term'):
                 variableName = currentNode.leaf
                 variableScope = currentNode.children[0].leaf
                 variable=self.variables[(variableName,variableScope)][0]
                 builder = lastScope
                 return builder.load(variable)
+            
             elif(currentNode.type == 'for'):
                 return self.build_for(currentNode,lastScope)
-            elif(currentNode.type == 'sequence'):
-                return
+            
             elif(currentNode.type == 'return'):
                 builder = lastScope
                 return builder.ret_void()
+            
             elif(currentNode.type == 'assignment'):
                 variableName = currentNode.children[0].leaf
                 variableScope = currentNode.children[0].children[0].leaf
@@ -67,7 +66,7 @@ class TreeWalker:
                 expression = self.walk(currentNode.children[1],lastScope)
                 builder = lastScope
                 return builder.store(expression, variable)
-                
+            
             elif(currentNode.type == 'iteration_op'):
                 return self.build_iteration(currentNode,lastScope)
             
@@ -82,17 +81,14 @@ class TreeWalker:
                 return variable
             elif (currentNode.type == 'scan'):
                 return self.build_scan(currentNode,lastScope)
-            elif(currentNode.type == 'array_index'):
-                return
-            elif(currentNode.type == 'assignment_array'):
-                return
-            elif(currentNode.type == 'array_declaration'):
-                return
+            
             elif(currentNode.type == 'if'):
                 return self.build_if(currentNode,lastScope)
 
             elif(currentNode.type == 'print'):   
                 return self.build_print(currentNode,lastScope)
+            else:
+                return
             
         return
     
@@ -104,25 +100,16 @@ class TreeWalker:
         variableName = node.children[1].leaf
         format_str = ir.GlobalVariable(self.codeGen.module, ir.ArrayType(ir.IntType(8), len(value)), name=uuid.uuid4().hex)
         format_str.global_constant = True
-        format_str.initializer = ir.Constant(ir.ArrayType(ir.IntType(8), len(value)), bytearray(value.encode("utf8")))
-        
+        format_str.initializer = ir.Constant(ir.ArrayType(ir.IntType(8), len(value)), bytearray(value.encode("utf8")))  
         function_pointer = builder.bitcast(format_str, self.codeGen.function_pointer_scan)
-      
         args = [function_pointer]
         if(len(node.children)>1):
             child = node.children[1].children[0]      
             variableName = child.leaf
             variableScope = child.children[0].leaf
-            # this val can come from anywhere
-    
             variable =  self.variables[(variableName,variableScope)][0]
-
-
-           
-            variable_ptr_ptr =variable
-                    
+            variable_ptr_ptr =variable                  
             args.append(variable_ptr_ptr)
-        
         scanf = self.codeGen.scanf
         result = builder.call(scanf,args=args)
         return result
@@ -138,12 +125,8 @@ class TreeWalker:
             global_fmt.linkage = 'internal'
             global_fmt.global_constant = True
             global_fmt.initializer = str_pointer
-            
             function_pointer = self.codeGen.function_pointer
-
             printf = self.codeGen.printf
-
-            
             fmt_arg = builder.bitcast(global_fmt, function_pointer)
             args = [fmt_arg]
             if(len(node.children)>1):
@@ -157,7 +140,7 @@ class TreeWalker:
                     variableAddr =  builder.load(variable)
                     args.append(variableAddr)
             
-            builder.call(printf, args = args)
+            return builder.call(printf, args = args)
         
     
     def build_if(self,node:Node,lastScope:ir.IRBuilder):
@@ -198,7 +181,7 @@ class TreeWalker:
         else:
             return
         
-    def build_condition(self,node:Node,lastScope:str):
+    def build_condition(self,node:Node,lastScope:ir.IRBuilder):
         if(node.leaf and node.leaf !='!'):
             left  = self.walk(node.children[0],lastScope)
             right = self.walk(node.children[1],lastScope)
@@ -225,13 +208,13 @@ class TreeWalker:
             return builder.not_(condition)
         
         
-    def build_add(self,node:Node,lastScope:str):
+    def build_add(self,node:Node,lastScope:ir.IRBuilder):
         left = self.walk(node.children[0],lastScope)     
         right = self.walk(node.children[1],lastScope)
         builder = lastScope
         return builder.add(left,right)
     
-    def builg_times(self,node:Node,lastScope:str):
+    def builg_times(self,node:Node,lastScope:ir.IRBuilder):
         left = self.walk(node.children[0],lastScope)
         right = self.walk(node.children[1],lastScope)
         builder = lastScope
@@ -245,13 +228,13 @@ class TreeWalker:
             return builder.sdiv(left,right)
         return builder.fdiv(left,right)
     
-    def build_sub(self,node:Node,lastScope:str):
+    def build_sub(self,node:Node,lastScope:ir.IRBuilder):
         left = self.walk(node.children[0],lastScope)
         right = self.walk(node.children[1],lastScope)
         builder = lastScope
         return builder.sub(left,right)
       
-    def build_iteration(self,node:Node,lastScope:str):
+    def build_iteration(self,node:Node,lastScope:ir.IRBuilder):
         variableName = node.children[0].children[0].leaf
         variableScope = node.children[0].children[0].children[0].leaf
         builder = lastScope

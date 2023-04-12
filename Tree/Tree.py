@@ -35,11 +35,6 @@ class Node:
                 return result
         return None
     
-    def resolve_binop_as_child(self):
-        for child in self.children:
-            return
-            
-            
     def reorganize_tree(self,node,father):
         if node.type == "expression":
             binops = [child for child in node.children if child.type == "binop"]

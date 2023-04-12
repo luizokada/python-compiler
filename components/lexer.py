@@ -189,10 +189,6 @@ class Lexer():
         else:
             return t
 
-    def t_error(self, t):
-        
-        print(f"Illegal character {t.value[0]}")
-        t.lexer.skip(1)
 
     def build(self, **kwargs):
         self.lexer = lex.lex(module=self, **kwargs)
@@ -203,7 +199,11 @@ class Lexer():
         self.current_line += t.value.count('\n')
         self.lexer.lineno = self.current_line
         
-
-
     def tokenize(self, data):
         return self.lexer.input(data)
+    
+    def t_error(self, t):
+        
+        print(f"Illegal character {t.value[0]} on line {t.lineno}")
+        t.lexer.skip(1)
+        exit(-1)
