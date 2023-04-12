@@ -4,6 +4,7 @@ import uuid
 from Errors.SemanticError import SemanticError
 from Tree.Tree import Node
 from components.semanticValidator import SemanticValidator
+from Errors.SintaxError import SintaxError
     
 variables = {}
 
@@ -464,9 +465,7 @@ class Parser:
 
             
     def p_error(self, p):
-        print("Syntax error in input at line: ", p.lineno)
-        print(p)
-        exit(1)
+        raise SintaxError(f"Syntax error at line: {p.lineno} ")
 
         
 

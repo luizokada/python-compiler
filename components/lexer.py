@@ -1,5 +1,6 @@
 
 import ply.lex as lex
+from Errors.LexerError import LexicalError 
 
 class Lexer():
     def __init__(self,**kwargs):
@@ -203,7 +204,5 @@ class Lexer():
         return self.lexer.input(data)
     
     def t_error(self, t):
+        raise LexicalError(f"Illegal character '{t.value[0]}' on line {t.lineno}")
         
-        print(f"Illegal character {t.value[0]} on line {t.lineno}")
-        t.lexer.skip(1)
-        exit(-1)
