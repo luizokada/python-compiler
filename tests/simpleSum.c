@@ -10,12 +10,15 @@ int main(){
     printf('a + b = %d', soma);
     if (soma>10)
     {
-        printf('Soma maior que 10');
+        printf('Soma maior que 10');  
     }else{
         printf('Soma menor que 10');
     }
+    if(soma>10){
+        printf('Soma maior que 10');
+    }
     int i;
-    for (i = 0; i < 10; i++)
+    for (soma = 0; i < 10; i++)
     {
         printf('i = %d', i);
     }

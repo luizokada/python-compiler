@@ -5,6 +5,23 @@ class SemanticValidator:
     def __init__(self) -> None:
         pass
     
+    def find_expresion_type(self,node:Node,variables):
+        if(node.type == 'CHARACTER'):
+            return 'CHARACTER'
+        elif(node.type =='NUMBER'):
+            return 'NUMBER'
+        elif(node.type == 'term'):
+            type = str(variables[(node.leaf,node.children[0].leaf)])
+            if(type == 'char' or type == 'array string'):
+                return 'CHARACTER'
+            else:
+                return 'NUMBER'
+        else:
+            for child in node.children:
+                type = self.find_expresion_type(child,variables)
+                if(type):
+                    return type
+    
     def isScopeParent(self, node:Node, uuid:str):
         if(node ==None):
             return False
@@ -75,6 +92,18 @@ class SemanticValidator:
             if(variables[(variable_name,variable_scope)] != "int"):
                 raise SemanticError(f"Tipo de variavel invalido para leitura",node)
         return
+    
+    def validate_condition(self, node_recep:Node,node_exp:Node,variables):
+        receptor_type = self.find_expresion_type(node_recep,variables)
+        if( not node_recep.validate_all_leafs(receptor_type,variables)):
+            raise SemanticError(f"Expressão Inválida",node_recep)
+        exp_type  = self.find_expresion_type(node_exp,variables)
+        if( not node_recep.validate_all_leafs(exp_type,variables)):
+            raise SemanticError(f"Expressão Inválida",node_recep)
+        if(receptor_type != exp_type):
+            raise SemanticError(f"Expressão Inválida",node_recep)
+        return
+ 
     def validate_string(self, node):
         if node.type == "string":
             return True

@@ -117,8 +117,7 @@ class Parser:
                   | while_statement
                   | call_function
                   | return_statement
-
-                 
+ 
         """
         p[0] =  Node('statement', [p[1]])
         pass
@@ -275,9 +274,10 @@ class Parser:
         if((p[1]!='(') and (len(p)>=4)and(p[3].type == 'CHARACTER')):
             try:
                 node = p[1].children[0]
+             
                 if(node.type!='term'):
                     raise Exception
-                variable,key=self.semanticValidator.validate_variable(node,variables,self.current_node_scope,self.scopes)    
+                variable,key=self.semanticValidator.validate_variable(node,variables,self.current_node_scope,self.scopes)  
             except:
                 raise SemanticError("Error: Incompatible types in condition",p[1].leaf)
             if(variable != 'char'):
@@ -285,6 +285,7 @@ class Parser:
         
         if(p[1]!="("):
             if(len(p)>=4):
+                self.semanticValidator.validate_condition(p[1],p[3],variables)
                 p[0] = Node("condition", [p[1],p[3]], leaf= p[2])
             else:
                 p[0] = Node("condition", [p[2]], leaf= p[1])
