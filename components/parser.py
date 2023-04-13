@@ -72,7 +72,7 @@ class Parser:
               | OPEN_BRAKETS new_scope statements return_statement CLOSE_BRAKETS
               
         """
-        print(len(p))
+
         if(len(p)==6):
             p[0] = Node('scope', [p[3],p[4]])
         else:
