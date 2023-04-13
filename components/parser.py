@@ -253,7 +253,13 @@ class Parser:
         if(p[1]=='('):
             p[0] = p[2]
         else:
+            expresion_type = self.semanticValidator.find_expresion_type(p[1],variables)
+            if(expresion_type =='CHARACTER' or expresion_type =='STRING' or expresion_type =='char'):	
+                raise SemanticError("Error: Incompatible types in expression",p[1])
             if(len(p)==4):       
+                expresion_type = self.semanticValidator.find_expresion_type(p[3],variables)
+                if(expresion_type != 'int' or expresion_type != 'float'):	
+                    raise SemanticError("Error: Incompatible types in expression",p[3])
                 p[0] = Node("expression", [p[1], p[3]],p[2])
             else:
                 p[0] = p[0] = Node("iteration_op", [p[1] ],leaf=p[2])
@@ -292,8 +298,8 @@ class Parser:
         
         if(p[1]!="("):
             if(len(p)>=4):
-                if(p[2]=='=='):           
-                    self.semanticValidator.validate_condition(p[1],p[3],variables)
+                if(p[2]!='&&' and p[2]!='||'):                   
+                     self.semanticValidator.validate_condition(p[1],p[3],variables)
                 p[0] = Node("condition", [p[1],p[3]], leaf= p[2])
             else:
                 p[0] = Node("condition", [p[2]], leaf= p[1])
@@ -450,6 +456,13 @@ class Parser:
         for_initilizer : assignment
         
         """
+        
+        variable  = p[1].children[0].leaf
+        id_scope = p[1].children[0].children[0].leaf
+        variable_type = variables[(variable,id_scope)]
+        expression_type = self.semanticValidator.find_expresion_type(p[1].children[1],variables)
+        if(variable_type =='char' or expression_type == 'CHARACTER'):
+            raise SemanticError(f"Error: Type of variable {variable} not valid",variable) 
         if(len(p)==2):
             p[0] = Node('for_initilizer', [p[1]])
         else:

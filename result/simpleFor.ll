@@ -3,7 +3,7 @@ source_filename = "<string>"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@ac9d823a10ab47e9a45512bbfb8e83a2 = internal constant [22 x i8] c"i = %d j = %d k = %d\0A\00"
+@"68c18f3c1b1c446991da80261d1be611" = internal constant [22 x i8] c"i = %d j = %d k = %d\0A\00"
 
 declare i32 @printf(i8*, ...)
 
@@ -50,7 +50,7 @@ entry.for_loop.for_loop.for_init:                 ; preds = %entry.for_loop.for_
   br i1 %.15, label %entry.for_loop.for_loop.for_loop, label %entry.for_loop.for_loop.for_end
 
 entry.for_loop.for_loop.for_loop:                 ; preds = %entry.for_loop.for_loop.for_init
-  %.17 = bitcast [22 x i8]* @ac9d823a10ab47e9a45512bbfb8e83a2 to i8*
+  %.17 = bitcast [22 x i8]* @"68c18f3c1b1c446991da80261d1be611" to i8*
   %.18 = load i32, i32* %i, align 4
   %.19 = load i32, i32* %j, align 4
   %.20 = load i32, i32* %k, align 4
