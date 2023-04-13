@@ -24,6 +24,7 @@ class TreeWalker:
                 mains_builder = self.codeGen.ir.IRBuilder(main_scope) 
                 
                 self.walk(currentNode.children[2].children[0],mains_builder)
+                self.walk(currentNode.children[2].children[1],mains_builder)
             elif(currentNode.type == 'statements'):
                 for child in currentNode.children:
                     self.walk(child,lastScope)

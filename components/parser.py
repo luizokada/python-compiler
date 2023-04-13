@@ -59,6 +59,9 @@ class Parser:
         """
         main : type MAIN param scope
         """
+        print(p[4].children)
+        if(len(p[4].children)<2):
+            raise SemanticError("Funçao main deve ter um return",p[4])
         p[0] = Node('main', [p[1], p[3], p[4]])
         pass
     
@@ -66,9 +69,14 @@ class Parser:
     def p_scope(self,p):
         """
         scope : OPEN_BRAKETS new_scope statements CLOSE_BRAKETS
+              | OPEN_BRAKETS new_scope statements return_statement CLOSE_BRAKETS
               
         """
-        p[0] = Node('scope', [p[3]])
+        print(len(p))
+        if(len(p)==6):
+            p[0] = Node('scope', [p[3],p[4]])
+        else:
+            p[0] = Node('scope', [p[3]])
         self.current_scope.pop()
         if(self.parent_node_scope == None):
             self.parent_node_scope = self.scopes
@@ -116,7 +124,6 @@ class Parser:
                   | do_while_statement
                   | while_statement
                   | call_function
-                  | return_statement
  
         """
         p[0] =  Node('statement', [p[1]])
@@ -386,8 +393,9 @@ class Parser:
                     raise SemanticError("Error: Variable not declared",p[1].leaf)
                 p[1].children.append(Node('id_scope',leaf=parent.leaf))
         if(len(p)>3):
-            
-            p[0] = Node('PASSIN_PARAM', [p[1],p[3].children[0]])
+            new_children = p[3].children
+            new_children = [p[1]]+new_children       
+            p[0] = Node('PASSIN_PARAM', new_children)
         else:
             p[0] = Node('PASSIN_PARAM', [p[1]])
         pass
@@ -467,6 +475,7 @@ class Parser:
 
             
     def p_error(self, p):
+        print(p)
         raise SintaxError(f"Syntax error at line: {p.lineno} ")
 
         

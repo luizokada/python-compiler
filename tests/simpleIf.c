@@ -6,7 +6,12 @@ int main(){
     scanf('%d', a);
     printf('Digite o valor de b');
     scanf('%d', b);
-    soma = a + b;
-    printf('%d + %d = %d', a, b, soma);
+    if(a>0 && b>0){
+        soma = a + b;
+        printf('%d + %d = %d', a, b, soma);
+    }
+    else{
+        printf('Valores invalidos');
+    }
     return;
 }
