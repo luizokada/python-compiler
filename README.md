@@ -21,3 +21,10 @@ sudo apt install llvm
 Para compilar basta executar
 ````
 
+python3 ./main.py <nome-do-arquivo-na-pasta-test>
+
+cd ./result
+./<nome-do-arquivo-na-pasta-result>
+
+````
+

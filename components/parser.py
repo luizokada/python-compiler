@@ -285,7 +285,8 @@ class Parser:
         
         if(p[1]!="("):
             if(len(p)>=4):
-                self.semanticValidator.validate_condition(p[1],p[3],variables)
+                if(p[2]=='=='):           
+                    self.semanticValidator.validate_condition(p[1],p[3],variables)
                 p[0] = Node("condition", [p[1],p[3]], leaf= p[2])
             else:
                 p[0] = Node("condition", [p[2]], leaf= p[1])

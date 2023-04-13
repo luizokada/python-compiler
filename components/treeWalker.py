@@ -27,6 +27,8 @@ class TreeWalker:
             elif(currentNode.type == 'statements'):
                 for child in currentNode.children:
                     self.walk(child,lastScope)
+            elif(currentNode.type == 'condition'):
+                return self.build_condition(currentNode,lastScope)
                 
             elif(currentNode.type == 'statement'):
                 for child in currentNode.children:
